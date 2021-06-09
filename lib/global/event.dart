@@ -1,0 +1,3 @@
+class EventCache {
+  String realTimeData;
+}
