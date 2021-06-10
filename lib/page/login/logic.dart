@@ -8,8 +8,10 @@ import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/model/login.dart';
 import 'package:transaction_plus/model/user.dart';
 import 'package:transaction_plus/page/home_main/view.dart';
+import 'package:transaction_plus/page/management/home_page.dart';
 import 'package:transaction_plus/utils/dio/dio_helper.dart';
 import 'package:transaction_plus/utils/mqtt_helper.dart';
+import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/store.dart';
 import 'package:transaction_plus/utils/toast_utils.dart';
 import 'package:transaction_plus/widget/api_call_back.dart';
@@ -79,11 +81,10 @@ class LoginLogic extends GetxController {
             //check mqtt client
             MqttHelper.init();
             if (Platform.isAndroid || Platform.isIOS) {
-              Navigator.of(Get.context).push(
-                MaterialPageRoute(
-                    builder: (BuildContext ctx) => HomeMainPage()),
-              );
-            } else if (Platform.isWindows) {}
+              NavigatorUtils.pushWidget(Get.context, HomeMainPage());
+            } else if (Platform.isWindows || Platform.isMacOS) {
+              NavigatorUtils.pushWidget(Get.context, ManagePage());
+            }
           } else if (loginModel != null && loginModel.code == 10002) {
             ToastUtils.showToast(msg: '用户名或密码不正确');
             return;
