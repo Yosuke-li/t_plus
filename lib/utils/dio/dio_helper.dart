@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:transaction_plus/utils/dio/interceptor.dart';
 import 'package:transaction_plus/utils/store.dart';
 
@@ -33,6 +35,9 @@ class Request {
     //dio拦截器
     _dio.interceptors.add(DioInterceptor());
 
+    CookieJar cookie = CookieJar();
+    _dio.interceptors.add(CookieManager(cookie));
+
     // restful 请求处理
     final Map<String, dynamic> headers = <String, dynamic>{};
 
@@ -42,7 +47,6 @@ class Request {
       // headers['set-cookie'] = token;
       headers['Cookie'] = token;
       _options.headers = headers;
-      _dio.options = _options;
     } else {
       _loginOptions.headers = headers;
       _dio.options = _loginOptions;

@@ -14,40 +14,40 @@ class OrderSubmit {
   String usingCode;
   double price;
   int ordQty;
-  int side;
-  int ordType;
-  int tif;
+  int rawSide;
+  int rawOrdType;
+  int rawTif;
   String refId;
   String account;
   String username;
-  int openFlag;
-  int hedgeFlag;
+  int rawOpenFlag;
+  int rawHedgeFlag;
 
   OrderSubmit(
       {String usingCode,
       double price,
       int ordQty,
-      int side,
-      int ordType,
-      int tif,
+      int rawside,
+      int rawordType,
+      int rawtif,
       String refId,
       String account,
       String username,
-      int openFlag,
-      int hedgeFlag});
+      int rawOpenFlag,
+      int rawHedgeFlag});
 
   OrderSubmit.fromJson(dynamic json) {
     usingCode = json["usingCode"];
     price = json["price"];
     ordQty = json["ordQty"];
-    side = json["side"];
-    ordType = json["ordType"];
-    tif = json["tif"];
+    rawSide = json["rawSide"];
+    rawOrdType = json["rawOrdType"];
+    rawTif = json["rawTif"];
     refId = json["refId"];
     account = json["account"];
     username = json["username"];
-    openFlag = json["openFlag"];
-    hedgeFlag = json["hedgeFlag"];
+    rawOpenFlag = json["rawOpenFlag"];
+    rawHedgeFlag = json["rawHedgeFlag"];
   }
 
   Map<String, dynamic> toJson() {
@@ -55,14 +55,14 @@ class OrderSubmit {
     map["usingCode"] = usingCode;
     map["price"] = price;
     map["ordQty"] = ordQty;
-    map["side"] = side;
-    map["ordType"] = ordType;
-    map["tif"] = tif;
+    map["rawSide"] = rawSide;
+    map["rawOrdType"] = rawOrdType;
+    map["rawTif"] = rawTif;
     map["refId"] = refId;
     map["account"] = account;
     map["username"] = username;
-    map["openFlag"] = openFlag;
-    map["hedgeFlag"] = hedgeFlag;
+    map["rawOpenFlag"] = rawOpenFlag;
+    map["rawHedgeFlag"] = rawHedgeFlag;
     return map;
   }
 }

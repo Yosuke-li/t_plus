@@ -71,6 +71,7 @@ class MqttHelper {
   // 连接断开
   static void onDisconnected() {
     print('${client.hashCode} Disconnected');
+    client = null;
     throw ApiException(401, 'mqtt disConnected');
   }
 

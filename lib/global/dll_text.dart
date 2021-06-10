@@ -1,15 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'dart:ffi' as ffi;
 import 'package:call/call.dart';
 
-/// typedef FuncNative = ffi.Int32 Function(ffi.Int32, ffi.Int32);
-/// typedef FuncDart = int Function(int, int);
-///
-/// var dll = getDyLibModule('assets/libadd.dll');
-/// var add = dll.lookupFunction<FuncNative, FuncDart>('add');
-///
-/// print(add(999, 54639));
-///
+///just use windows
 
 typedef FuncVersion = ffi.Void Function();
 typedef FuncDartV = void Function();
@@ -26,7 +21,9 @@ class _DllTextPageState extends State<DllTextPage> {
   @override
   void initState() {
     super.initState();
-    _setVoid();
+    if (Platform.isWindows) {
+      _setVoid();
+    }
   }
 
   void _setVoid() {
