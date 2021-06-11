@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/widget/down_menu.dart';
 import 'package:transaction_plus/utils/navigator_helper.dart';
 
@@ -19,6 +20,18 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext ctx) => Container(
+            child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  Scaffold.of(ctx).openDrawer();
+                },
+                child: Icon(Icons.settings),
+              ),
+            ),
+          ),
+        ),
         title: Text('奥统平技术有限公司'),
       ),
       body: Center(
@@ -135,6 +148,32 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
+        ),
+      ),
+      drawerEdgeDragWidth: 0.0,
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              title: Text('设置'),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Checkbox(
+                  value: Global.isMqttLog ?? false,
+                  onChanged: (bool value) {
+                    Global.isMqttLog = value;
+                    setState(() {});
+                  },
+                ),
+                Text(
+                  "是否打开MQTT LOG",
+                  style: TextStyle(fontSize: 13.0),
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );

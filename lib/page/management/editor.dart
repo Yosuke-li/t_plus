@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transaction_plus/page/home_main/view.dart';
 import 'package:transaction_plus/widget/management/common/listenable.dart';
 import 'package:transaction_plus/widget/management/common/view_key.dart';
 import 'package:transaction_plus/widget/management/widget/stack_view.dart';
@@ -165,10 +166,12 @@ class _EditorState extends State<Editor> implements EditorListener {
               ),
             ),
           Expanded(
-              child: StackView(
-            controller: controller,
-            onCurrentIndexChanged: _onCurrentIndexChanged,
-          ))
+            child: StackView(
+              controller: controller,
+              child: HomeMainPage(),
+              onCurrentIndexChanged: _onCurrentIndexChanged,
+            ),
+          ),
         ],
       ),
     );

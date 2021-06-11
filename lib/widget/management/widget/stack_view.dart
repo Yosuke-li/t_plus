@@ -27,9 +27,10 @@ class StackController with GenericListenable<StackViewListener> {
 
 class StackView extends StatefulWidget {
   final StackController controller;
+  final Widget child;
   final ValueChanged<ViewKey> onCurrentIndexChanged;
 
-  const StackView({Key key, this.controller, this.onCurrentIndexChanged}) : super(key: key);
+  const StackView({Key key, this.controller, this.onCurrentIndexChanged, this.child}) : super(key: key);
 
   @override
   _StackViewState createState() => _StackViewState();
@@ -112,9 +113,11 @@ class _StackViewState extends State<StackView> implements StackViewListener {
 
   @override
   Widget build(BuildContext context) {
-    return IndexedStack(
+    return _list.isNotEmpty ? IndexedStack(
       index: _currentIndex,
       children: _list,
+    ) : Container(
+      child: widget.child,
     );
   }
 }

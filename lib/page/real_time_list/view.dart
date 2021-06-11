@@ -41,12 +41,5 @@ class _RealTimeListPageState extends State<RealTimeListPage>
   }
 
   @override
-  void dispose() {
-    Get.delete<RealTimeListLogic>();
-    state.voidCallback?.call();
-    super.dispose();
-  }
-
-  @override
   bool get wantKeepAlive => true;
 }

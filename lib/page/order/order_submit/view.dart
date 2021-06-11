@@ -17,10 +17,10 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return Obx(() => Scaffold(
+      appBar: state.isShowBar.value ? AppBar(
         title: Text('下单'),
-      ),
+      ) : null,
       body: SingleChildScrollView(
         child: Form(
           key: state.formKey,
@@ -152,7 +152,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
           ),
         ),
       ),
-    );
+    ),);
   }
 
   @override

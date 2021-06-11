@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-
 class ViewKey implements LocalKey {
   final String namespace;
 
@@ -34,7 +33,15 @@ class ViewKeyWidget extends StatelessWidget {
 }
 
 class ConstViewKey {
-  static const ViewKey promotionalInfo = ViewKey(namespace: 'promotional', id: 'info');
-  static const ViewKey manageListPage = ViewKey(namespace: 'manageList', id: 'manageList');
+  static const ViewKey order =
+      ViewKey(namespace: 'order', id: 'order');
+  static const ViewKey RealTimeList =
+      ViewKey(namespace: 'RealTimeList', id: 'RealTimeList');
 
+  static List<ViewKey> get getAllKey => _getAllKey();
+
+  //返回所有key
+  static List<ViewKey> _getAllKey() {
+    return [order, RealTimeList];
+  }
 }

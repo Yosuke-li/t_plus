@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:transaction_plus/global/event.dart';
+import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/utils/api_exception.dart';
 import 'package:transaction_plus/utils/event_bus_helper.dart';
 import 'package:transaction_plus/utils/lock.dart';
@@ -26,7 +27,7 @@ class MqttHelper {
     // client = MqttServerClient('ws://172.31.41.83/mqtt', '');
     // client.port = 8888;
     // client.useWebSocket = true;
-    client.logging(on: false);
+    client.logging(on: Global.isMqttLog);
     client.keepAlivePeriod = 20;
     client.onConnected = onConnected;
     client.onDisconnected = onDisconnected;

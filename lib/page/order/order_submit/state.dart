@@ -6,6 +6,8 @@ class OrderSubmitState {
   GlobalKey<FormState> formKey;
   OrderSubmit create;
 
+  RxBool isShowBar;
+
   RxInt side;
   RxInt tif;
   RxInt ordType;
@@ -26,6 +28,7 @@ class OrderSubmitState {
     ordTypes = <int>[];
     openFlags = <int>[];
     hedgeFlags = <int>[];
+    isShowBar = true.obs;
     side = 0.obs;
     tif = 0.obs;
     ordType = 0.obs;

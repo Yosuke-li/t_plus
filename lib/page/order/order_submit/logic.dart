@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:transaction_plus/global/global.dart';
@@ -10,6 +12,9 @@ class OrderSubmitLogic extends GetxController {
 
   @override
   void onReady() {
+    if (Platform.isWindows || Platform.isMacOS) {
+      state.isShowBar.value = false;
+    }
     _setData();
     super.onReady();
   }
