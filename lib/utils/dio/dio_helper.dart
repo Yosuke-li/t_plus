@@ -4,6 +4,7 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/utils/dio/interceptor.dart';
 import 'package:transaction_plus/utils/store.dart';
 
@@ -52,6 +53,11 @@ class Request {
       _dio.options = _loginOptions;
     }
 
+    //检查抓包
+    if (Global.isFiddle == true) {
+      setProxy();
+    }
+
     try {
       final Response response = await _dio.request(path,
           data: data,
@@ -92,6 +98,18 @@ class Request {
       default:
         return error.message;
     }
+  }
+
+  //设置抓包
+  static void setProxy() {
+    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (HttpClient client){
+      client.findProxy = (Uri url){
+        return 'PROXY ${Global.fiddleIp}:8888';
+      };
+      //抓Https包设置
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+    };
   }
 
   // 处理 Http 错误码

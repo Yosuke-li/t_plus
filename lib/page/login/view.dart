@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:transaction_plus/global/global.dart';
+import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/down_menu.dart';
 import 'package:transaction_plus/utils/navigator_helper.dart';
 
@@ -158,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
               title: Text('设置'),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Checkbox(
                   value: Global.isMqttLog ?? false,
@@ -172,7 +174,41 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(fontSize: 13.0),
                 ),
               ],
-            )
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Checkbox(
+                  value: Global.isFiddle ?? false,
+                  onChanged: (bool value) {
+                    Global.isFiddle = value;
+                    setState(() {});
+                  },
+                ),
+                Text(
+                  "是否打开Fiddle抓包, 地址：",
+                  style: TextStyle(fontSize: 13.0),
+                ),
+                Expanded(
+                  child: TextFormField(
+                    readOnly: Global.isFiddle == false,
+                    keyboardType: TextInputType.number,
+                    initialValue: Global.fiddleIp ?? '',
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
+                    ],
+                    decoration: InputDecoration(hintText: '例如：192.168.1.101'),
+                    onChanged: (String val) {
+                      Global.fiddleIp = val;
+                      setState(() {});
+                    },
+                  ),
+                ),
+                Container(
+                  width: screenUtil.adaptive(10),
+                ),
+              ],
+            ),
           ],
         ),
       ),

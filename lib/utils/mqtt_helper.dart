@@ -28,11 +28,12 @@ class MqttHelper {
     // client.port = 8888;
     // client.useWebSocket = true;
     client.logging(on: Global.isMqttLog);
-    client.keepAlivePeriod = 20;
+    client.keepAlivePeriod = 60;
     client.onConnected = onConnected;
     client.onDisconnected = onDisconnected;
     client.onUnsubscribed = onUnsubscribed;
     client.onSubscribed = onSubscribed;
+    client.onAutoReconnected = onAutoConnected;
     client.onSubscribeFail = onSubscribeFail;
     client.pongCallback = pong;
 
@@ -62,6 +63,10 @@ class MqttHelper {
           .add(EventCache()..realTimeData = payload);
       print('${c[0].topic} Received message: $payload');
     });
+  }
+
+  static void onAutoConnected() {
+
   }
 
   // 连接成功
