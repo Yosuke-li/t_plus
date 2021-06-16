@@ -45,13 +45,13 @@ class OrderSubmitLogic extends GetxController {
           'username': Global.user.username,
           'price': state.create.price,
           'ordQty': state.create.ordQty,
-          'side': state.side.value,
-          'ordType': state.ordType.value,
-          'tif': state.tif.value,
+          'rawSide': state.side.value,
+          'rawOrdType': state.ordType.value,
+          'rawTif': state.tif.value,
           'refId': state.create.refId,
           'account': state.create.account,
-          'openFlag': state.openFlag.value,
-          'hedgeFlag': state.hedgeFlag.value,
+          'rawOpenFlag': state.openFlag.value,
+          'rawHedgeFlag': state.hedgeFlag.value,
         });
         Log.info(res);
         ToastUtils.showToast(msg: '${res.data}');

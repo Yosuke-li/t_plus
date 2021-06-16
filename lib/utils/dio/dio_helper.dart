@@ -11,9 +11,10 @@ import 'package:transaction_plus/utils/store.dart';
 import '../api_exception.dart';
 
 class Request {
+  static String baseUrl = '';
+
   // 配置 Dio 实例
   static final BaseOptions _options = BaseOptions(
-    baseUrl: 'http://172.31.41.83:8080',
     connectTimeout: 10000,
     receiveTimeout: 3000,
     contentType: 'application/json',
@@ -21,7 +22,6 @@ class Request {
   );
 
   static final BaseOptions _loginOptions = BaseOptions(
-      baseUrl: 'http://172.31.41.83:8080',
       connectTimeout: 10000,
       receiveTimeout: 3000,
       contentType: 'multipart/form-data',
@@ -33,6 +33,8 @@ class Request {
   // _request 是核心函数，所有的请求都会走这里
   static Future<Response> _request<T>(String path,
       {String method, Map<String, dynamic> params, data}) async {
+    //选择服务器
+    _dio.options.baseUrl = baseUrl;
     //dio拦截器
     _dio.interceptors.add(DioInterceptor());
 
@@ -71,9 +73,9 @@ class Request {
         throw ApiException(response.statusCode, response.statusMessage);
       }
     } on DioError catch (e, s) {
-      throw ApiException(400, _dioError(e));
+      throw ApiException(e.response?.statusCode ?? 400, _dioError(e));
     } catch (e, s) {
-      throw ApiException(0, _dioError(e));
+      throw ApiException(0, e);
     }
   }
 

@@ -42,7 +42,7 @@ class _IndexPageState extends State<IndexPage> {
   @override
   void initState() {
     super.initState();
-    Log.init(isDebug: Global.isRelease);
+    Log.init(isDebug: !Global.isRelease);
   }
 
   @override

@@ -1,8 +1,8 @@
 [
   {
-    "server": "https://123"
+    "server": "http://172.31.41.83:8080"
   },
   {
-    "server": "https://456"
+    "server": "http://172.31.41.66:8888"
   }
 ]

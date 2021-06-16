@@ -9,6 +9,7 @@ import 'package:transaction_plus/model/login.dart';
 import 'package:transaction_plus/model/user.dart';
 import 'package:transaction_plus/page/home_main/view.dart';
 import 'package:transaction_plus/page/management/home_page.dart';
+import 'package:transaction_plus/utils/array_helper.dart';
 import 'package:transaction_plus/utils/dio/dio_helper.dart';
 import 'package:transaction_plus/utils/log_utils.dart';
 import 'package:transaction_plus/utils/mqtt_helper.dart';
@@ -45,7 +46,7 @@ class LoginLogic extends GetxController {
       list.forEach((element) {
         state.servers.add(element['server']);
       });
-      state.server.value = state.servers[0];
+      state.server.value = ArrayHelper.get(state.servers, 0);
     });
   }
 
@@ -55,6 +56,8 @@ class LoginLogic extends GetxController {
     if (from.validate()) {
       bool c = _check();
       if (c == true) {
+        Request.baseUrl = state.server.value;
+        Log.info(Request.baseUrl);
         try {
           final res = await loadingCallback(
             () => Request.login(params: {
