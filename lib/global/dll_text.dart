@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:ffi' as ffi;
 import 'package:call/call.dart';
+import 'package:transaction_plus/utils/log_utils.dart';
 
 ///just use windows
 
@@ -29,7 +30,7 @@ class _DllTextPageState extends State<DllTextPage> {
   void _setVoid() {
     var dll = getDyLibModule('assets/dll/HsFutuSystemInfo.dll');
     var getVersion = dll.lookupFunction<FuncVersion, FuncDartV>('hundsun_getversion');
-    print(getVersion);
+    Log.info(getVersion);
     version = getVersion;
     setState(() {});
   }

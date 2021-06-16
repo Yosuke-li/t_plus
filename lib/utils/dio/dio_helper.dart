@@ -71,9 +71,9 @@ class Request {
         throw ApiException(response.statusCode, response.statusMessage);
       }
     } on DioError catch (e, s) {
-      throw ApiException(e.response?.statusCode ?? 0, _dioError(e));
+      throw ApiException(400, _dioError(e));
     } catch (e, s) {
-      throw ApiException(0, e);
+      throw ApiException(0, _dioError(e));
     }
   }
 
@@ -155,16 +155,19 @@ class Request {
   }
 
   static Future<Response> get<T>(String path, {Map<String, dynamic> params}) {
+    _dio.options = _options;
     return _request(path, method: 'get', params: params);
   }
 
   static Future<Response> post<T>(String path,
       {data}) {
+    _dio.options = _options;
     return _request(path, method: 'post', data: data);
   }
 
   static Future<Response> login<T>({Map<String, dynamic> params}) {
     LocateStorage.clean(key: 'cookie');
+    _dio.options = _loginOptions;
     return _request('/fospot/api/login', method: 'post', data: params);
   }
 }

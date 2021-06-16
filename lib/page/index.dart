@@ -2,7 +2,9 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/page/login/view.dart';
+import 'package:transaction_plus/utils/log_utils.dart';
 import 'package:transaction_plus/utils/navigator_helper.dart';
 import 'package:transaction_plus/utils/screen.dart';
 
@@ -40,7 +42,7 @@ class _IndexPageState extends State<IndexPage> {
   @override
   void initState() {
     super.initState();
-    LogUtil.init(isDebug: true);
+    Log.init(isDebug: Global.isRelease);
   }
 
   @override

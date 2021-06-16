@@ -10,6 +10,7 @@ import 'package:transaction_plus/model/user.dart';
 import 'package:transaction_plus/page/home_main/view.dart';
 import 'package:transaction_plus/page/management/home_page.dart';
 import 'package:transaction_plus/utils/dio/dio_helper.dart';
+import 'package:transaction_plus/utils/log_utils.dart';
 import 'package:transaction_plus/utils/mqtt_helper.dart';
 import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/store.dart';
@@ -64,7 +65,7 @@ class LoginLogic extends GetxController {
 
           String cookie = res.headers.map['set-cookie'].toString().substring(
               1, res.headers.map['set-cookie'].toString().length - 1);
-          print(cookie);
+          Log.info(cookie);
 
           final LoginModel loginModel =
               LoginModel.fromJson(json.decode(res.data));
@@ -92,8 +93,8 @@ class LoginLogic extends GetxController {
             ToastUtils.showToast(msg: '内部异常');
             return;
           }
-        } catch (error) {
-          print(error);
+        } catch (error, stack) {
+          Log.error(error, stackTrace: stack);
           rethrow;
         }
       }

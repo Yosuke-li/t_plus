@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/utils/dio/dio_helper.dart';
+import 'package:transaction_plus/utils/log_utils.dart';
+import 'package:transaction_plus/utils/toast_utils.dart';
 
 import 'state.dart';
 
@@ -51,9 +53,10 @@ class OrderSubmitLogic extends GetxController {
           'openFlag': state.openFlag.value,
           'hedgeFlag': state.hedgeFlag.value,
         });
-        print(res);
+        Log.info(res);
+        ToastUtils.showToast(msg: '${res.data}');
       } catch (error, stack) {
-        print(error);
+        Log.error(error, stackTrace: stack);
         rethrow;
       }
     }
