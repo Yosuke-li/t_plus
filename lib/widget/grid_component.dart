@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:transaction_plus/global/dll_text.dart';
 import 'package:transaction_plus/page/order/order_submit/view.dart';
@@ -21,9 +23,10 @@ class GridComponentPageState extends State<GridComponentPage> {
       PageModel()
         ..name = '下单'
         ..pageUrl = OrderSubmitPage(),
-      PageModel()
-        ..name = 'dll'
-        ..pageUrl = DllTextPage(),
+      if (Platform.isWindows)
+        PageModel()
+          ..name = 'dll'
+          ..pageUrl = DllTextPage(),
     ];
   }
 

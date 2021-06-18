@@ -19,6 +19,7 @@ void main() {
 
 //错误信息处理
 void _errorHandler(FlutterErrorDetails details) async {
+  FlutterError.dumpErrorToConsole(details);
   if (details.exception != null) {
     if (details.exception is ApiException) {
       final ApiException e = details.exception as ApiException;
