@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transaction_plus/global/dll_text.dart';
 import 'package:transaction_plus/page/order/order_submit/view.dart';
 
 class PageModel {
@@ -19,7 +20,10 @@ class GridComponentPageState extends State<GridComponentPage> {
     _page = [
       PageModel()
         ..name = '下单'
-        ..pageUrl = OrderSubmitPage()
+        ..pageUrl = OrderSubmitPage(),
+      PageModel()
+        ..name = 'dll'
+        ..pageUrl = DllTextPage(),
     ];
   }
 
