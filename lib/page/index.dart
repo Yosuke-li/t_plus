@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
     return NavigatorInitializer(
       child: ScreenWidget(
         child: GetMaterialApp(
-          title: '',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),

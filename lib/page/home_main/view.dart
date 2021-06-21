@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:transaction_plus/global/dll_text.dart';
 import 'package:transaction_plus/page/index/view.dart';
+import 'package:transaction_plus/page/my/view.dart';
 import 'package:transaction_plus/page/real_time_list/view.dart';
 import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/toast_utils.dart';
@@ -37,14 +38,7 @@ class _HomeMainPageState extends State<HomeMainPage>
           body: TabBarView(controller: state.tabController, children: [
             IndexPage(),
             RealTimeListPage(),
-            Center(
-              child: InkWell(
-                onTap: () {
-                  NavigatorUtils.pushWidget(context, DllTextPage());
-                },
-                child: Text('3'),
-              ),
-            )
+            MyPage(),
           ]),
           bottomNavigationBar: Obx(
                 () => BottomNavigationBar(
