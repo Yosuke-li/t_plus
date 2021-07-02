@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:transaction_plus/global/api.dart';
 import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/utils/dio/dio_helper.dart';
 import 'package:transaction_plus/utils/log_utils.dart';
@@ -41,7 +42,7 @@ class OrderSubmitLogic extends GetxController {
     if (from.validate()) {
 
       try {
-        final res = await Request.post('/fospot/api/order/new', data: {
+        final res = await Request.post(ApiCenter.order, data: {
           'username': Global.user.username,
           'price': state.create.price,
           'ordQty': state.create.ordQty,

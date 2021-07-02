@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:transaction_plus/global/global.dart';
+import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/screen.dart';
 
 import 'logic.dart';
@@ -171,28 +172,31 @@ class _MyPageState extends State<MyPage> {
               bottom: screenUtil.adaptive(100),
             ),
             child: GestureDetector(
-                child: Container(
-                  alignment: Alignment.center,
-                  width: screenUtil.adaptive(300),
-                  height: screenUtil.adaptive(100),
-                  decoration: BoxDecoration(
-                    color: Colors.redAccent,
-                    borderRadius: BorderRadius.only(
-                      //border边框圆角
-                      topRight: Radius.circular(10.0),
-                      topLeft: Radius.circular(10.0),
-                      bottomLeft: Radius.circular(10.0),
-                      bottomRight: Radius.circular(10.0),
-                    ),
-                  ),
-                  child: Text(
-                    '退出登陆',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+              child: Container(
+                alignment: Alignment.center,
+                width: screenUtil.adaptive(300),
+                height: screenUtil.adaptive(100),
+                decoration: BoxDecoration(
+                  color: Colors.redAccent,
+                  borderRadius: BorderRadius.only(
+                    //border边框圆角
+                    topRight: Radius.circular(10.0),
+                    topLeft: Radius.circular(10.0),
+                    bottomLeft: Radius.circular(10.0),
+                    bottomRight: Radius.circular(10.0),
                   ),
                 ),
-                onTap: () {}),
+                child: Text(
+                  '退出登陆',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              onTap: () {
+                NavigatorUtils.pop(context);
+              },
+            ),
           ),
         ],
       ),

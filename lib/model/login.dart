@@ -1,10 +1,12 @@
 class LoginModel {
   String msg;
   int code;
-  dynamic data;
+  String accessToken;
+  String refreshToken;
 
   LoginModel({
-    this.data,
+    this.accessToken,
+    this.refreshToken,
     this.code,
     this.msg,
   });
@@ -13,18 +15,20 @@ class LoginModel {
     var map = Map<String, dynamic>();
     map['msg'] = msg;
     map['code'] = code;
-    map['data'] = data;
+    map['refreshToken'] = refreshToken;
+    map['accessToken'] = accessToken;
     return map;
   }
 
   LoginModel.fromJson(Map<String, dynamic> map) {
     this.msg = map['msg'];
     this.code = map['code'];
-    this.data = map['data'];
+    this.accessToken = map['access_token'];
+    this.refreshToken = map['refresh_token'];
   }
 
   String toString() {
-    return 'LoginModel[msg=$msg, code=$code, data=$data]';
+    return 'LoginModel[msg=$msg, code=$code, refreshToken=$refreshToken, accessToken=$accessToken]';
   }
 
   static List<LoginModel> listFromJson(List<dynamic> json) {

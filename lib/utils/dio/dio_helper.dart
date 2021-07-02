@@ -4,6 +4,7 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:transaction_plus/global/api.dart';
 import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/utils/dio/interceptor.dart';
 import 'package:transaction_plus/utils/store.dart';
@@ -38,21 +39,23 @@ class Request {
     //dio拦截器
     _dio.interceptors.add(DioInterceptor());
 
-    CookieJar cookie = CookieJar();
-    _dio.interceptors.add(CookieManager(cookie));
-
     // restful 请求处理
     final Map<String, dynamic> headers = <String, dynamic>{};
 
-    //一般情况下，未登陆前没token。
-    final String token = LocateStorage.getString('cookie');
-    if (token != null && token.isNotEmpty == true) {
-      // headers['set-cookie'] = token;
-      headers['Cookie'] = token;
+    //一般情况下，登陆后修改cookie。
+    final String cookieJson = LocateStorage.getStringWithExpire('cookie');
+    if (cookieJson != null && cookieJson.isNotEmpty == true) {
+      headers['Cookie'] = cookieJson;
       _options.headers = headers;
     } else {
       _loginOptions.headers = headers;
       _dio.options = _loginOptions;
+    }
+
+    final String token = Global.user?.accessToken ?? '';
+    if (token != null && token.isNotEmpty == true) {
+      headers['Authorization'] = 'Bearer ' + token;
+      _options.headers = headers;
     }
 
     //检查抓包
@@ -170,6 +173,6 @@ class Request {
   static Future<Response> login<T>({Map<String, dynamic> params}) {
     LocateStorage.clean(key: 'cookie');
     _dio.options = _loginOptions;
-    return _request('/fospot/api/login', method: 'post', data: params);
+    return _request(ApiCenter.login, method: 'post', data: params);
   }
 }

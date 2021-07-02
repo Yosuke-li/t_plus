@@ -32,6 +32,9 @@ class LoginLogic extends GetxController {
 
   void _checkStore() {
     final String value = LocateStorage.getStringWithExpire('User');
+    if (value == null) {
+      return;
+    }
     User user = User.fromJson(jsonDecode(value));
     state.isRead.value = user.isRead;
     state.name.value = user.username;
@@ -73,15 +76,18 @@ class LoginLogic extends GetxController {
           final LoginModel loginModel =
               LoginModel.fromJson(json.decode(res.data));
           if (loginModel != null && loginModel.code == 0) {
-            User user = User(
-                username: state.name.value,
-                password: state.password.value,
-                isRead: true,
-                accessToken: '');
+            User user = User()
+              ..username = state.name.value
+              ..password = state.password.value
+              ..isRead = true
+              ..accessToken = loginModel.accessToken
+              ..refreshToken = loginModel.refreshToken;
             Global.user = user;
             LocateStorage.setStringWithExpire(
                 'User', jsonEncode(user), Duration(days: 7));
-            LocateStorage.setString('cookie', cookie);
+
+            LocateStorage.setStringWithExpire(
+                'cookie', cookie, Duration(days: 1));
             //check mqtt client
             MqttHelper.init();
             if (Platform.isAndroid || Platform.isIOS) {
