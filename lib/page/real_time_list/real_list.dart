@@ -19,6 +19,7 @@ class _RealListWidgetState extends State<RealListWidget> {
   Widget build(BuildContext context) {
     return ListView(
       shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       children: widget.realDatas
           ?.map(
             (e) => Container(

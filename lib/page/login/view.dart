@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_doraemonkit/flutter_doraemonkit.dart';
 import 'package:get/get.dart';
 import 'package:transaction_plus/global/global.dart';
+import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/screen.dart';
+import 'package:transaction_plus/widget/common/main.dart';
 import 'package:transaction_plus/widget/down_menu.dart';
-import 'package:transaction_plus/utils/navigator_helper.dart';
 
 import 'logic.dart';
 import 'state.dart';
@@ -35,6 +37,19 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         title: Text('奥统平技术有限公司'),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              NavigatorUtils.pushWidget(context, DockingMainPage());
+            },
+            child: Center(
+              child: Container(
+                margin: EdgeInsets.only(right: screenUtil.adaptive(50)),
+                child: Text('测试'),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Container(
@@ -171,6 +186,23 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Text(
                   "是否打开MQTT LOG",
+                  style: TextStyle(fontSize: 13.0),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Checkbox(
+                  value: Global.isDoraemonkit ?? false,
+                  onChanged: (bool value) {
+                    Global.isDoraemonkit = value;
+                    FlutterDoraemonkit.toggle();
+                    setState(() {});
+                  },
+                ),
+                Text(
+                  "是否打开哆啦A梦(仅适用于安卓手机）",
                   style: TextStyle(fontSize: 13.0),
                 ),
               ],

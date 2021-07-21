@@ -1,9 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.transaction_plus">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
    <application
+        tools:replace="android:label"
+        android:name="io.flutter.app.FlutterApplication"
         android:label="transaction_plus"
         android:icon="@mipmap/ic_launcher">
         <activity

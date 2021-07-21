@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transaction_plus/widget/management/common/function_util.dart';
 
@@ -56,6 +57,7 @@ class CommonForm<T> extends StatefulWidget {
 class _CommonFormState<T> extends State<CommonForm<T>> {
   Widget buildTitleRow() {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: widget.columns
           .map(
               (e) => warpWidget(child: Text(e.title), color: Color(0xfff5fafe)))
@@ -72,16 +74,15 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
   }
 
   Widget warpWidget({Widget child, Color color}) {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(width: 0.4, color: Colors.black26),
-            color: color),
-        height: 40,
-        padding: const EdgeInsets.all(4),
-        alignment: Alignment.center,
-        child: child,
-      ),
+    return Container(
+      decoration: BoxDecoration(
+          border: Border.all(width: 0.4, color: Colors.black26),
+          color: color),
+      height: 40,
+      width: 100,
+      padding: const EdgeInsets.all(4),
+      alignment: Alignment.center,
+      child: child,
     );
   }
 
@@ -91,9 +92,12 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
     children.add(buildTitleRow());
     children.addAll(widget.values.map((e) => buildRow(e)));
 
-    return Container(
-      child: Column(
-        children: children,
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Container(
+        child: Column(
+          children: children,
+        ),
       ),
     );
   }

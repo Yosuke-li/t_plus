@@ -6,6 +6,7 @@ class Global {
 
   static User user;
   static bool isMqttLog = false; //开启mqttlog
+  static bool isDoraemonkit = false; //开启哆啦A梦
 
   //开启fiddle
   static bool isFiddle = false;

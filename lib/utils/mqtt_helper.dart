@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
@@ -40,7 +41,7 @@ class MqttHelper {
     client.pongCallback = pong;
 
     final connMessage = MqttConnectMessage()
-        .withClientIdentifier('Mqtt_MyClientUniqueId')
+        .withClientIdentifier('${Random(1000)}')
         .withWillTopic('willtopic')
         .withWillMessage('Will message')
         .startClean()

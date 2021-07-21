@@ -20,6 +20,7 @@ class _RealTimeListPageState extends State<RealTimeListPage>
     super.build(context);
     return Scaffold(
       body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
         child: Obx(
           () => RealListWidget(realDatas: state.realDatas.value),
         ),
@@ -32,7 +33,16 @@ class _RealTimeListPageState extends State<RealTimeListPage>
             heroTag: 'add',
             child: const Icon(Icons.add),
             onPressed: () {
-              logic.publish('123');
+              int count = 0;
+              Future.wait(
+                Iterable.generate(
+                  100,
+                  (_) => Future(() async {
+                    count++;
+                    logic.publish('$count');
+                  }),
+                ),
+              );
             },
           )
         ],
