@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:transaction_plus/helper/security_keyboard.dart';
 import 'package:transaction_plus/widget/down_menu.dart';
-import 'package:transaction_plus/widget/keyboard/keyboard_manager.dart';
-import 'package:transaction_plus/widget/keyboard/keyboard_media_query.dart';
 
 import 'logic.dart';
 import 'state.dart';

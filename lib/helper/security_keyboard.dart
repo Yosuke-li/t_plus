@@ -24,8 +24,9 @@ extension SecurityKeyboardTypeTxt on SecurityKeyboardType {
 }
 
 class SecurityKeyboard extends StatelessWidget {
-  static SecurityTextInputType number =
-      SecurityTextInputType(name: SecurityKeyboardType.number.enumToString);
+  static SecurityTextInputType number = Platform.isWindows || Platform.isMacOS
+      ? TextInputType.number
+      : SecurityTextInputType(name: SecurityKeyboardType.number.enumToString);
 
   static double getHeight(BuildContext ctx) {
     MediaQueryData mediaQuery = MediaQuery.of(ctx);
@@ -37,6 +38,9 @@ class SecurityKeyboard extends StatelessWidget {
   const SecurityKeyboard({@required this.controller});
 
   static register() {
+    if (Platform.isWindows || Platform.isMacOS) {
+      return;
+    }
     KeyboardManager.addKeyboard(
         SecurityKeyboard.number,
         KeyboardConfig(
