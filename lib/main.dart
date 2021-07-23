@@ -7,8 +7,12 @@ import 'package:transaction_plus/utils/api_exception.dart';
 import 'package:transaction_plus/utils/mqtt_helper.dart';
 import 'package:transaction_plus/utils/navigator_helper.dart';
 import 'package:transaction_plus/utils/toast_utils.dart';
+import 'package:transaction_plus/widget/keyboard/keyboard_root.dart';
+
+import 'helper/security_keyboard.dart';
 
 void main() {
+  SecurityKeyboard.register();
   runZonedGuarded<Future<void>>(() async {
     FlutterError.onError = _errorHandler;
     runApp(MyApp());

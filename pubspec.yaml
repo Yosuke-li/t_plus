@@ -23,6 +23,7 @@ dependencies:
   event_bus: ^2.0.0
   tabbed_view: ^1.1.0+1
   multi_split_view: ^1.5.0
+  back_button_interceptor: ^5.0.1
   flutter_doraemonkit:
     git:
       url: https://github.com/NayoLx/flutter_doraemonkit_plugin.git

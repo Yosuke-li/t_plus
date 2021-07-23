@@ -30,7 +30,7 @@ class _DockingExamplePageState extends State<DockingExamplePage> {
       root: DockingColumn([
         DockingItem(name: '实时表', widget: RealTimeListPage()),
         DockingRow([
-          DockingItem(name: '标准下单表', widget: OrderSubmitPage()),
+          DockingItem(name: '标准下单表', widget: OrderSubmitPage(showTitle: false,)),
           DockingTabs([
             DockingItem(name: '所有委托单', widget: EntrustPage()),
             DockingItem(name: '未成交单', widget: UnsettledPage()),

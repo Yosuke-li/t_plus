@@ -61,15 +61,7 @@ class _HomeMainPageState extends State<HomeMainPage>
           ),
         ),
         onWillPop: () async {
-          if (state.lastPressedAt == null ||
-              state.lastPressedAt.value != 3) {
-            //两次点击间隔超过1秒则重新计时
-            Timer(Duration(seconds: 1), () => state.lastPressedAt++);
-            ToastUtils.showToast(msg: '再次点击退出应用');
-            return false;
-          }
-          state.lastPressedAt.value = 0;
-          return true;
+          return await logic.willPop();
         });
   }
 

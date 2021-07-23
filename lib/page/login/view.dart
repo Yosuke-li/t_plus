@@ -3,10 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_doraemonkit/flutter_doraemonkit.dart';
 import 'package:get/get.dart';
 import 'package:transaction_plus/global/global.dart';
+import 'package:transaction_plus/helper/security_keyboard.dart';
 import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common/main.dart';
 import 'package:transaction_plus/widget/down_menu.dart';
+import 'package:transaction_plus/widget/keyboard/keyboard_manager.dart';
+import 'package:transaction_plus/widget/keyboard/keyboard_media_query.dart';
 
 import 'logic.dart';
 import 'state.dart';
@@ -56,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Form(
             key: state.formKey,
             child: Obx(
-              () => Column(
+                  () => Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
@@ -90,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(60.0),
                       ),
                       child: TextFormField(
+                        keyboardType: SecurityKeyboard.number,
                         controller: state.nameController,
                         decoration: new InputDecoration(
                           labelText: '账户',
@@ -229,7 +233,8 @@ class _LoginPageState extends State<LoginPage> {
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
                     ],
-                    decoration: InputDecoration(hintText: '例如：192.168.1.101'),
+                    decoration:
+                    InputDecoration(hintText: '例如：192.168.1.101'),
                     onChanged: (String val) {
                       Global.fiddleIp = val;
                       setState(() {});

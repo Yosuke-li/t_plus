@@ -82,7 +82,9 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
       width: 100,
       padding: const EdgeInsets.all(4),
       alignment: Alignment.center,
-      child: child,
+      child: RepaintBoundary(
+        child: child,
+      ),
     );
   }
 
