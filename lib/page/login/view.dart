@@ -93,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(60.0),
                       ),
                       child: TextFormField(
+                        keyboardType: SecurityKeyboardCenter.number,
                         controller: state.nameController,
                         decoration: new InputDecoration(
                           labelText: '账户',
@@ -119,6 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.only(right: 20, left: 20),
                       child: TextFormField(
                         controller: state.passController,
+                        keyboardType: SecurityKeyboardCenter.text,
                         decoration: InputDecoration(
                           labelText: '密码',
                         ),

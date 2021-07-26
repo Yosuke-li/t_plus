@@ -12,7 +12,7 @@ import 'package:transaction_plus/widget/keyboard/keyboard_root.dart';
 import 'helper/security_keyboard.dart';
 
 void main() {
-  SecurityKeyboard.register();
+  SecurityKeyboardCenter.register();
   runZonedGuarded<Future<void>>(() async {
     FlutterError.onError = _errorHandler;
     runApp(MyApp());

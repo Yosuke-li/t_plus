@@ -59,7 +59,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                   },
                 ),
                 TextFormField(
-                  keyboardType: SecurityKeyboard.number,
+                  keyboardType: SecurityKeyboardCenter.number,
                   decoration: InputDecoration(
                     labelText: '手数',
                   ),

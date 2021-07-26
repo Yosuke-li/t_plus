@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:transaction_plus/helper/keyboard_list/number.dart';
+import 'package:transaction_plus/helper/keyboard_list/text.dart';
 import 'package:transaction_plus/widget/keyboard/keyboard_controller.dart';
 import 'package:transaction_plus/widget/keyboard/keyboard_manager.dart';
 
@@ -23,10 +25,46 @@ extension SecurityKeyboardTypeTxt on SecurityKeyboardType {
   }
 }
 
-class SecurityKeyboard extends StatelessWidget {
+class SecurityKeyboardCenter {
+
   static SecurityTextInputType number = Platform.isWindows || Platform.isMacOS
       ? TextInputType.number
       : SecurityTextInputType(name: SecurityKeyboardType.number.enumToString);
+
+  static SecurityTextInputType text = Platform.isWindows || Platform.isMacOS
+      ? TextInputType.text
+      : SecurityTextInputType(name: SecurityKeyboardType.text.enumToString);
+
+  static register() {
+    if (Platform.isWindows || Platform.isMacOS) {
+      return;
+    }
+    KeyboardManager.addKeyboard(
+      SecurityKeyboardCenter.number,
+      KeyboardConfig(
+          builder: (context, controller, params) {
+            return SecurityKeyboard(
+              controller: controller,
+              type: SecurityKeyboardType.number,
+            );
+          },
+          getHeight: SecurityKeyboard.getHeight),
+    );
+    KeyboardManager.addKeyboard(
+      SecurityKeyboardCenter.text,
+      KeyboardConfig(
+          builder: (context, controller, params) {
+            return SecurityKeyboard(
+              controller: controller,
+              type: SecurityKeyboardType.text,
+            );
+          },
+          getHeight: SecurityKeyboard.getHeight),
+    );
+  }
+}
+
+class SecurityKeyboard extends StatelessWidget {
 
   static double getHeight(BuildContext ctx) {
     MediaQueryData mediaQuery = MediaQuery.of(ctx);
@@ -35,92 +73,21 @@ class SecurityKeyboard extends StatelessWidget {
 
   final KeyboardController controller;
 
-  const SecurityKeyboard({@required this.controller});
+  final SecurityKeyboardType type;
 
-  static register() {
-    if (Platform.isWindows || Platform.isMacOS) {
-      return;
-    }
-    KeyboardManager.addKeyboard(
-        SecurityKeyboard.number,
-        KeyboardConfig(
-            builder: (context, controller, params) {
-              return SecurityKeyboard(controller: controller);
-            },
-            getHeight: SecurityKeyboard.getHeight));
-  }
+  const SecurityKeyboard({@required this.controller, this.type});
 
   @override
   Widget build(BuildContext context) {
     Widget keyboard;
-    keyboard = DefaultTextStyle(
-        style: TextStyle(
-            fontWeight: FontWeight.w500, color: Colors.black, fontSize: 23.0),
-        child: Container(
-          height: MediaQuery.of(context).size.height / 3 / 2 * 2,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: Color(0xffafafaf),
-          ),
-          child: GridView.count(
-              childAspectRatio: 2 / 1,
-              mainAxisSpacing: 0.5,
-              crossAxisSpacing: 0.5,
-              padding: EdgeInsets.all(0.0),
-              crossAxisCount: 3,
-              children: <Widget>[
-                buildButton('1'),
-                buildButton('2'),
-                buildButton('3'),
-                buildButton('4'),
-                buildButton('5'),
-                buildButton('6'),
-                buildButton('7'),
-                buildButton('8'),
-                buildButton('9'),
-                Container(
-                  color: Color(0xFFd3d6dd),
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    child: Center(
-                      child: Icon(Icons.expand_more),
-                    ),
-                    onTap: () {
-                      controller.doneAction();
-                    },
-                  ),
-                ),
-                buildButton('0'),
-                Container(
-                  color: Color(0xFFd3d6dd),
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    child: Center(
-                      child: Text('X'),
-                    ),
-                    onTap: () {
-                      controller.deleteOne();
-                    },
-                  ),
-                ),
-              ]),
-        ));
-
+    switch (type) {
+      case SecurityKeyboardType.number:
+        keyboard = SecurityKeyboardNumber(controller: controller,);
+        break;
+      case SecurityKeyboardType.text:
+        keyboard = SecurityKeyboardText(controller: controller,);
+        break;
+    }
     return keyboard;
-  }
-
-  Widget buildButton(String title, {String value}) {
-    return Container(
-      color: Colors.white,
-      child: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        child: Center(
-          child: Text(title),
-        ),
-        onTap: () {
-          controller.addText(value ?? title);
-        },
-      ),
-    );
   }
 }
