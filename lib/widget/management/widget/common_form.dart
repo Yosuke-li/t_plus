@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/widget/management/common/function_util.dart';
 
 FormColumn<T> buildTextFormColumn<T>(
@@ -38,9 +39,10 @@ FormColumn<T> buildIconButtonFormColumn<T>(
 
 class FormColumn<T> {
   final String title;
+  final double width;
   final Widget Function(BuildContext context, T value) builder;
 
-  FormColumn({@required this.title, @required this.builder});
+  FormColumn({@required this.title, @required this.builder, this.width});
 }
 
 class CommonForm<T> extends StatefulWidget {
@@ -60,7 +62,7 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: widget.columns
           .map(
-              (e) => warpWidget(child: Text(e.title), color: Color(0xfff5fafe)))
+              (e) => warpWidget(child: Text(e.title), color: Global.formTitleColor, width: e.width))
           .toList(growable: false),
     );
   }
@@ -73,13 +75,13 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
     );
   }
 
-  Widget warpWidget({Widget child, Color color}) {
+  Widget warpWidget({Widget child, Color color, double width}) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(width: 0.4, color: Colors.black26),
+          border: Border.all(width: 0.4, color: Global.formBorderColor),
           color: color),
-      height: 40,
-      width: 100,
+      height: 25,
+      width: width ?? 125,
       padding: const EdgeInsets.all(4),
       alignment: Alignment.center,
       child: RepaintBoundary(

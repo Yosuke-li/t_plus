@@ -27,11 +27,11 @@ extension SecurityKeyboardTypeTxt on SecurityKeyboardType {
 
 class SecurityKeyboardCenter {
 
-  static SecurityTextInputType number = Platform.isWindows || Platform.isMacOS
+  static dynamic number = Platform.isWindows || Platform.isMacOS
       ? TextInputType.number
       : SecurityTextInputType(name: SecurityKeyboardType.number.enumToString);
 
-  static SecurityTextInputType text = Platform.isWindows || Platform.isMacOS
+  static dynamic text = Platform.isWindows || Platform.isMacOS
       ? TextInputType.text
       : SecurityTextInputType(name: SecurityKeyboardType.text.enumToString);
 

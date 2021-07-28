@@ -49,8 +49,7 @@ abstract class DockingArea {
 
   /// Print used in debug.
   void _printDebug() {
-    print(
-        '$path - index: $_index - id: $_id - layoutId: $_layoutId');
+    print('$path - index: $_index - id: $_id - layoutId: $_layoutId');
   }
 
   /// Gets the type of this area.
@@ -185,14 +184,17 @@ abstract class DockingParentArea extends DockingArea {
 /// Represents an area for a single widget.
 class DockingItem extends DockingArea with DropArea {
   /// Builds a [DockingItem].
-  DockingItem({this.name, @required this.widget});
+  DockingItem({this.name, @required this.widget, this.unDragged});
 
   factory DockingItem._clone(DockingItem item) {
-    return DockingItem(name: item.name, widget: item.widget);
+    return DockingItem(
+        name: item.name, widget: item.widget, unDragged: item.unDragged);
   }
 
   final String name;
   final Widget widget;
+
+  final bool unDragged;
 
   bool _dragged = false;
 

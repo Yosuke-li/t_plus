@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
         child: GetMaterialApp(
           theme: ThemeData(
             primarySwatch: Colors.blue,
+            brightness: Brightness.dark
           ),
           builder: BotToastInit(),
           navigatorObservers: <NavigatorObserver>[BotToastNavigatorObserver()],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/model/user.dart';
 import 'package:transaction_plus/widget/management/widget/common_form.dart';
 
@@ -13,7 +14,9 @@ class _OptionQuotationState extends State<OptionQuotation> {
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
-      child: Column(
+      child: Container(
+        color: Global.formBackColor,
+        child: Column(
         children: [
           CommonForm<User>(
             columns: [
@@ -46,6 +49,6 @@ class _OptionQuotationState extends State<OptionQuotation> {
           )
         ],
       ),
-    );
+    ),);
   }
 }

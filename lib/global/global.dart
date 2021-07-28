@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:transaction_plus/model/user.dart';
 
 class Global {
@@ -11,4 +12,17 @@ class Global {
   //开启fiddle
   static bool isFiddle = false;
   static String fiddleIp = '192.168.9.136';
+
+  static bool isDarkTheme = true;
+  static ThemeData themeData = isDarkTheme
+      ? ThemeData(
+          primarySwatch: Colors.blue,
+          brightness: Brightness.dark)
+      : ThemeData(primarySwatch: Colors.blue, brightness: Brightness.light);
+
+  static Color formTitleColor = isDarkTheme ? null : Color(0xfff5fafe);
+  static Color formBorderColor = isDarkTheme ? Colors.white :Colors.black26;
+  static Color formBackColor = isDarkTheme ? Color(0xff000000) :Colors.white;
+  static Color appBarBackColor = isDarkTheme ? Color(0xCC77787b) :Colors.white;
+  static Color dockingTitleColor = isDarkTheme ? null : Colors.grey[200];
 }

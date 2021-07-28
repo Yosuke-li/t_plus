@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 import 'package:tabbed_view/tabbed_view.dart';
+import 'package:transaction_plus/global/global.dart';
 
 import 'docking_layout.dart';
 
@@ -91,7 +92,7 @@ class _DockingAreaWidget extends StatelessWidget {
     row.forEach((child) {
       children.add(_DockingAreaWidget(child, theme: theme,));
     });
-    return MultiSplitView(children: children, axis: Axis.horizontal);
+    return MultiSplitView(children: children, axis: Axis.horizontal, minimalSize: 400, resizable: false);
   }
 
   Widget _column(DockingColumn column) {
@@ -123,7 +124,7 @@ abstract class _DraggableBuilderState<T extends StatefulWidget>
         onDragStarted: () {
           print('onDragStarted');
           DockingState state = DockingState.of(context);
-          state.dragging = true;
+          state.dragging = item.unDragged ?? false ? false : true;
         },
         onDragCompleted: () {
           print('onDragCompleted');
@@ -168,7 +169,7 @@ class _DockingItemWidgetState
   Widget build(BuildContext context) {
     String name = widget.item.name != null ? widget.item.name : '';
     Widget titleBar = Container(
-        child: Text(name), padding: EdgeInsets.all(4), color: Colors.grey[200]);
+        child: Text(name), padding: EdgeInsets.all(4), color: Global.dockingTitleColor);
 
     Widget content = Container(
         child: Column(children: [

@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/model/entrust.dart';
+import 'package:transaction_plus/widget/common/button.dart';
 import 'package:transaction_plus/widget/management/widget/common_form.dart';
 
 //委托单
@@ -46,10 +48,11 @@ class _EntrustState extends State<EntrustPage> {
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
-      child: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
+      child: Container(
+        color: Global.formBackColor,
+        child: Stack(
+          children: [
+            SingleChildScrollView(
               child: CommonForm<Entrust>(
                 columns: [
                   FormColumn<Entrust>(
@@ -61,7 +64,7 @@ class _EntrustState extends State<EntrustPage> {
                   FormColumn<Entrust>(
                     title: '合约',
                     builder: (_, v) => Container(
-                      child: Text('${v.cell ?? ''}'),
+                      child: Text('${v.cell ?? ''}', style: TextStyle(color: Colors.amberAccent),),
                     ),
                   ),
                   FormColumn<Entrust>(
@@ -116,20 +119,20 @@ class _EntrustState extends State<EntrustPage> {
                 values: entrusts,
               ),
             ),
-          ),
-          Container(
-            child: Row(
-              children: [
-                CupertinoButton(
-                    child: Text('撤单'),
-                    onPressed: () {
-                      getRandom();
-                    }),
-                CupertinoButton(child: Text('全撤'), onPressed: () {}),
-              ],
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Row(
+                children: [
+                  commonButton(title: '撤单', onTap: () {
+                    getRandom();
+                  }),
+                  commonButton(title: '全撤', onTap: () {}),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
