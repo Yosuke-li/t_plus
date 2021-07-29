@@ -184,17 +184,22 @@ abstract class DockingParentArea extends DockingArea {
 /// Represents an area for a single widget.
 class DockingItem extends DockingArea with DropArea {
   /// Builds a [DockingItem].
-  DockingItem({this.name, @required this.widget, this.unDragged});
+  DockingItem({this.name, @required this.widget, this.unDragged, this.weight});
 
   factory DockingItem._clone(DockingItem item) {
     return DockingItem(
-        name: item.name, widget: item.widget, unDragged: item.unDragged);
+        name: item.name,
+        widget: item.widget,
+        unDragged: item.unDragged,
+        weight: item.weight);
   }
 
   final String name;
   final Widget widget;
 
   final bool unDragged;
+
+  final double weight;
 
   bool _dragged = false;
 
@@ -206,10 +211,12 @@ class DockingItem extends DockingArea with DropArea {
 /// Children will be arranged horizontally.
 class DockingRow extends DockingParentArea {
   /// Builds a [DockingRow].
-  DockingRow._(List<DockingArea> children) : super(children);
+  DockingRow._(List<DockingArea> children, {this.canDrag}) : super(children);
+
+  final bool canDrag;
 
   /// Builds a [DockingRow].
-  factory DockingRow(List<DockingArea> children) {
+  factory DockingRow(List<DockingArea> children, {bool canDrag}) {
     List<DockingArea> newChildren = [];
     for (DockingArea child in children) {
       if (child is DockingRow) {
@@ -218,7 +225,7 @@ class DockingRow extends DockingParentArea {
         newChildren.add(child);
       }
     }
-    return DockingRow._(newChildren);
+    return DockingRow._(newChildren, canDrag: canDrag);
   }
 
   @override

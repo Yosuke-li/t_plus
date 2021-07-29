@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:transaction_plus/helper/security_keyboard.dart';
+import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/down_menu.dart';
 
 import 'logic.dart';
@@ -30,150 +31,373 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-          () => Scaffold(
+      () => Scaffold(
         appBar: state.isShowBar.value
             ? AppBar(
-          title: Text('下单'),
-        )
+                title: Text('下单'),
+              )
             : null,
         body: SingleChildScrollView(
-          child: Form(
-            key: state.formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: '资金账户',
-                  ),
-                  onSaved: (String value) {
-                    state.create.account = value;
-                  },
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: '价格',
-                  ),
-                  onSaved: (String value) {
-                    state.create.price = double.tryParse(value);
-                  },
-                ),
-                TextFormField(
-                  keyboardType: SecurityKeyboardCenter.number,
-                  decoration: InputDecoration(
-                    labelText: '手数',
-                  ),
-                  onSaved: (String value) {
-                    state.create.ordQty = int.tryParse(value);
-                  },
-                ),
-                Container(
-                  width: 300.0,
-                  padding: EdgeInsets.only(right: 20, left: 10),
-                  child: Row(
-                    children: [
-                      Text('方向：'),
-                      Obx(
-                            () => DownMenuWidget(
-                          select: state.side.value,
-                          menus: state.sides,
-                          selectFunc: (value) {
-                            state.side.value = value;
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 300.0,
-                  padding: EdgeInsets.only(right: 20, left: 10),
-                  child: Row(
-                    children: [
-                      Text('单类型：'),
-                      Obx(
-                            () => DownMenuWidget(
-                          select: state.ordType.value,
-                          menus: state.ordTypes,
-                          selectFunc: (value) {
-                            state.ordType.value = value;
-                          },
-                        ),
+          child: Container(
+            alignment: Alignment.center,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 500, minWidth: 300),
+              child: Form(
+                key: state.formKey,
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: screenUtil.adaptive(30),
+                        right: screenUtil.adaptive(30),),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: screenUtil.adaptive(200),
+                            child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: EdgeInsets.only(
+                                      top: screenUtil.adaptive(15),
+                                      bottom: screenUtil.adaptive(10)),
+                                  child: Text(
+                                    '合约',
+                                    style: TextStyle(
+                                        fontSize: screenUtil.adaptive(18)),
+                                  ),
+                                ),
+                                Container(
+                                  height: screenUtil.adaptive(30),
+                                  alignment: Alignment.centerLeft,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: TextFormField(
+                                    keyboardType: SecurityKeyboardCenter.number,
+                                    onSaved: (String value) {
+                                      state.create.ordQty = int.tryParse(value);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: screenUtil.adaptive(200),
+                            child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: EdgeInsets.only(
+                                      top: screenUtil.adaptive(15),
+                                      bottom: screenUtil.adaptive(10)),
+                                  child: Text(
+                                    '手数',
+                                    style: TextStyle(
+                                        fontSize: screenUtil.adaptive(18)),
+                                  ),
+                                ),
+                                Container(
+                                  height: screenUtil.adaptive(30),
+                                  alignment: Alignment.centerLeft,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: TextFormField(
+                                    keyboardType: SecurityKeyboardCenter.number,
+                                    onSaved: (String value) {
+                                      state.create.ordQty = int.tryParse(value);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 300.0,
-                  padding: EdgeInsets.only(right: 20, left: 10),
-                  child: Row(
-                    children: [
-                      Text('tif：'),
-                      Obx(
-                            () => DownMenuWidget(
-                          select: state.tif.value,
-                          menus: state.tifs,
-                          selectFunc: (value) {
-                            state.tif.value = value;
-                          },
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: screenUtil.adaptive(30),
+                        right: screenUtil.adaptive(30),),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: screenUtil.adaptive(122),
+                            child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: EdgeInsets.only(
+                                      top: screenUtil.adaptive(15),
+                                      bottom: screenUtil.adaptive(10)),
+                                  child: Text(
+                                    '价格',
+                                    style: TextStyle(
+                                        fontSize: screenUtil.adaptive(18)),
+                                  ),
+                                ),
+                                Container(
+                                  height: screenUtil.adaptive(30),
+                                  alignment: Alignment.centerLeft,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.number,
+                                    onSaved: (String value) {
+                                      state.create.price = double.tryParse(value);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: screenUtil.adaptive(122),
+                            child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: EdgeInsets.only(
+                                      top: screenUtil.adaptive(15),
+                                      bottom: screenUtil.adaptive(10)),
+                                  child: Text(
+                                    '方向',
+                                    style: TextStyle(
+                                        fontSize: screenUtil.adaptive(18)),
+                                  ),
+                                ),
+                                Container(
+                                  height: screenUtil.adaptive(30),
+                                  alignment: Alignment.centerLeft,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: Obx(
+                                        () => DownMenuWidget(
+                                      select: state.side.value,
+                                      menus: state.sides,
+                                      selectFunc: (value) {
+                                        state.side.value = value;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: screenUtil.adaptive(122),
+                            child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: EdgeInsets.only(
+                                      top: screenUtil.adaptive(15),
+                                      bottom: screenUtil.adaptive(10)),
+                                  child: Text(
+                                    '开平',
+                                    style: TextStyle(
+                                        fontSize: screenUtil.adaptive(18)),
+                                  ),
+                                ),
+                                Container(
+                                  height: screenUtil.adaptive(30),
+                                  alignment: Alignment.centerLeft,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: Obx(
+                                        () => DownMenuWidget(
+                                      select: state.openFlag.value,
+                                      menus: state.openFlags,
+                                      selectFunc: (value) {
+                                        state.openFlag.value = value;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: screenUtil.adaptive(30),
+                        right: screenUtil.adaptive(30),),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: screenUtil.adaptive(122),
+                            child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: EdgeInsets.only(
+                                      top: screenUtil.adaptive(15),
+                                      bottom: screenUtil.adaptive(10)),
+                                  child: Text(
+                                    '投保',
+                                    style: TextStyle(
+                                        fontSize: screenUtil.adaptive(18)),
+                                  ),
+                                ),
+                                Container(
+                                  height: screenUtil.adaptive(30),
+                                  alignment: Alignment.centerLeft,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: Obx(
+                                        () => DownMenuWidget(
+                                      select: state.hedgeFlag.value,
+                                      menus: state.hedgeFlags,
+                                      selectFunc: (value) {
+                                        state.hedgeFlag.value = value;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: screenUtil.adaptive(122),
+                            child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: EdgeInsets.only(
+                                      top: screenUtil.adaptive(15),
+                                      bottom: screenUtil.adaptive(10)),
+                                  child: Text(
+                                    '类型',
+                                    style: TextStyle(
+                                        fontSize: screenUtil.adaptive(18)),
+                                  ),
+                                ),
+                                Container(
+                                  height: screenUtil.adaptive(30),
+                                  alignment: Alignment.centerLeft,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: Obx(
+                                        () => DownMenuWidget(
+                                      select: state.ordType.value,
+                                      menus: state.ordTypes,
+                                      selectFunc: (value) {
+                                        state.ordType.value = value;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: screenUtil.adaptive(122),
+                            child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: EdgeInsets.only(
+                                      top: screenUtil.adaptive(15),
+                                      bottom: screenUtil.adaptive(10)),
+                                  child: Text(
+                                    'TIF',
+                                    style: TextStyle(
+                                        fontSize: screenUtil.adaptive(18)),
+                                  ),
+                                ),
+                                Container(
+                                  height: screenUtil.adaptive(30),
+                                  alignment: Alignment.centerLeft,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: Obx(
+                                        () => DownMenuWidget(
+                                      select: state.tif.value,
+                                      menus: state.tifs,
+                                      selectFunc: (value) {
+                                        state.tif.value = value;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        logic.onSubmit();
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          bottom: screenUtil.adaptive(20),
+                          top: screenUtil.adaptive(20),
                         ),
-                      )
-                    ],
-                  ),
+                        decoration: BoxDecoration(color: Colors.blue),
+                        padding: EdgeInsets.only(
+                            top: screenUtil.adaptive(5),
+                            bottom: screenUtil.adaptive(5),
+                            right: screenUtil.adaptive(100),
+                            left: screenUtil.adaptive(100)),
+                        child: Text('下单'),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 0.5,
+                      color: Colors.white,
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.only(
+                          left: screenUtil.adaptive(30),
+                          right: screenUtil.adaptive(30),
+                          bottom: screenUtil.adaptive(5),
+                          top: screenUtil.adaptive(5)),
+                      child: Text('合约名称 *品种 每手x吨 保证金xxx.x元 交易所'),
+                    ),
+                  ],
                 ),
-                Container(
-                  width: 300.0,
-                  padding: EdgeInsets.only(right: 20, left: 10),
-                  child: Row(
-                    children: [
-                      Text('开平标记：'),
-                      Obx(
-                            () => DownMenuWidget(
-                          select: state.openFlag.value,
-                          menus: state.openFlags,
-                          selectFunc: (value) {
-                            state.openFlag.value = value;
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 300.0,
-                  padding: EdgeInsets.only(right: 20, left: 10),
-                  child: Row(
-                    children: [
-                      Text('套保标记：'),
-                      Obx(
-                            () => DownMenuWidget(
-                          select: state.hedgeFlag.value,
-                          menus: state.hedgeFlags,
-                          selectFunc: (value) {
-                            state.hedgeFlag.value = value;
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'refId',
-                  ),
-                  onSaved: (String value) {
-                    state.create.refId = value;
-                  },
-                ),
-                InkWell(
-                  onTap: () {
-                    logic.onSubmit();
-                  },
-                  child: Container(
-                    child: Text('提交'),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),

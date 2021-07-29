@@ -18,7 +18,9 @@ class _PositionState extends State<PositionPage> {
     return RepaintBoundary(
       child: Container(
         color: Global.formBackColor,
+        alignment: Alignment.centerLeft,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: CommonForm<User>(
@@ -99,25 +101,28 @@ class _PositionState extends State<PositionPage> {
                 values: users,
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    commonButton(title: '持仓', onTap: () {}),
-                    commonButton(title: '明细', onTap: () {}),
-                    commonButton(title: '组合', onTap: () {}),
-                  ],
-                ),
-                Row(
-                  children: [
-                    commonButton(title: '对价平仓', onTap: () {}),
-                    commonButton(title: '市价平仓', onTap: () {}),
-                    commonButton(title: '市价反手', onTap: () {}),
-                    commonButton(title: '大商所组合', onTap: () {}),
-                  ],
-                ),
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      commonButton(title: '持仓', onTap: () {}),
+                      commonButton(title: '明细', onTap: () {}),
+                      commonButton(title: '组合', onTap: () {}),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      commonButton(title: '对价平仓', onTap: () {}),
+                      commonButton(title: '市价平仓', onTap: () {}),
+                      commonButton(title: '市价反手', onTap: () {}),
+                      commonButton(title: '大商所组合', onTap: () {}),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

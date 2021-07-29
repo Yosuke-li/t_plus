@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:multi_split_view/multi_split_view.dart';
 import 'package:tabbed_view/tabbed_view.dart';
 import 'package:transaction_plus/global/global.dart';
+import 'package:transaction_plus/widget/multi_split_view/controller.dart';
+import 'package:transaction_plus/widget/multi_split_view/multi_split_view.dart';
 
 import 'docking_layout.dart';
 
@@ -39,7 +40,8 @@ class DockingState extends State<Docking> {
   Widget build(BuildContext context) {
     if (widget.layout.root != null) {
       return _DockingInheritedWidget(
-          state: this, child: _DockingAreaWidget(widget.layout.root, theme: widget.theme));
+          state: this,
+          child: _DockingAreaWidget(widget.layout.root, theme: widget.theme));
     }
     return Container();
   }
@@ -89,10 +91,29 @@ class _DockingAreaWidget extends StatelessWidget {
 
   Widget _row(DockingRow row) {
     List<Widget> children = [];
+    List<double> weights = [];
+    double sum = 0;
     row.forEach((child) {
-      children.add(_DockingAreaWidget(child, theme: theme,));
+      children.add(_DockingAreaWidget(
+        child,
+        theme: theme,
+      ));
+      if (child is DockingItem && child.weight != null) {
+        weights.add(child.weight);
+        sum += child.weight;
+      }
     });
-    return MultiSplitView(children: children, axis: Axis.horizontal, minimalSize: 400, resizable: false);
+    for (int i = 0; i< children.length - weights.length; i++) {
+      final double weight = 1 - sum;
+      weights.add(weight / (children.length - weights.length));
+    }
+    return MultiSplitView(
+        children: children,
+        axis: Axis.horizontal,
+        minimalWeight: .30,
+        resizable: row.canDrag ?? true,
+      controller: MultiSplitViewController(weights: weights),
+        );
   }
 
   Widget _column(DockingColumn column) {
@@ -169,7 +190,9 @@ class _DockingItemWidgetState
   Widget build(BuildContext context) {
     String name = widget.item.name != null ? widget.item.name : '';
     Widget titleBar = Container(
-        child: Text(name), padding: EdgeInsets.all(4), color: Global.dockingTitleColor);
+        child: Text(name),
+        padding: EdgeInsets.all(4),
+        color: Global.dockingTitleColor);
 
     Widget content = Container(
         child: Column(children: [
@@ -202,7 +225,7 @@ class _DockingTabsWidget extends StatefulWidget {
 class _DockingTabsWidgetState
     extends _DraggableBuilderState<_DockingTabsWidget> {
   int lastSelectedTabIndex;
-  TabbedWiewController controller;
+  TabbedViewController controller;
 
   @override
   void initState() {
@@ -223,7 +246,7 @@ class _DockingTabsWidgetState
           buttons: <TabButton>[],
           content: child.widget));
     });
-    TabbedWiewController controller = TabbedWiewController(tabs);
+    TabbedViewController controller = TabbedViewController(tabs);
 
     if (lastSelectedTabIndex != null &&
         lastSelectedTabIndex >= widget.dockingTabs.childrenCount &&
@@ -233,13 +256,14 @@ class _DockingTabsWidgetState
       controller.selectedIndex = 0;
     }
 
-    Widget content = TabbedWiew(
+    Widget content = TabbedView(
         controller: controller,
         draggableTabBuilder: (int tabIndex, TabData tab, Widget tabWidget) =>
             buildDraggable(tab.value as DockingItem, tabWidget),
         onTabSelection: (int index) {
           lastSelectedTabIndex = index;
-        }, theme: widget.theme);
+        },
+        theme: widget.theme);
 
     DockingState state = DockingState.of(context);
     if (state.dragging) {
@@ -361,8 +385,8 @@ class _DropAnchorWidget extends StatelessWidget {
         });
   }
 
-  Widget _buildDropWidget(BuildContext context,
-      List<DockingItem> candidateData, List<dynamic> rejectedData) {
+  Widget _buildDropWidget(BuildContext context, List<DockingItem> candidateData,
+      List<dynamic> rejectedData) {
     Color color;
     if (candidateData.isNotEmpty) {
       color = Colors.black.withOpacity(.5);

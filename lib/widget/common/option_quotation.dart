@@ -16,6 +16,7 @@ class _OptionQuotationState extends State<OptionQuotation> {
     return RepaintBoundary(
       child: Container(
         color: Global.formBackColor,
+        alignment: Alignment.centerLeft,
         child: Column(
         children: [
           CommonForm<User>(

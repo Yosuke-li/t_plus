@@ -7,7 +7,7 @@ import 'package:transaction_plus/helper/security_keyboard.dart';
 import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common/main.dart';
-import 'package:transaction_plus/widget/common/order.dart';
+import 'package:transaction_plus/widget/common/disk_port.dart';
 import 'package:transaction_plus/widget/down_menu.dart';
 import 'package:transaction_plus/widget/keyboard/keyboard_manager.dart';
 import 'package:transaction_plus/widget/keyboard/keyboard_media_query.dart';
@@ -70,12 +70,14 @@ class _LoginPageState extends State<LoginPage> {
                     child: Row(
                       children: [
                         Text('服务器：'),
-                        DownMenuWidget(
-                          select: state.server.value,
-                          menus: state.servers,
-                          selectFunc: (value) {
-                            state.server.value = value;
-                          },
+                        Expanded(
+                          child: DownMenuWidget(
+                            select: state.server.value,
+                            menus: state.servers,
+                            selectFunc: (value) {
+                              state.server.value = value;
+                            },
+                          ),
                         ),
                       ],
                     ),

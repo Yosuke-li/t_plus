@@ -12,7 +12,7 @@ import 'package:transaction_plus/widget/common/unsettled.dart';
 import 'package:transaction_plus/widget/docking/docking.dart';
 import 'package:transaction_plus/widget/docking/docking_layout.dart';
 
-import 'order.dart';
+import 'disk_port.dart';
 
 class DockingExamplePage extends StatefulWidget {
   @override
@@ -31,35 +31,19 @@ class _DockingExamplePageState extends State<DockingExamplePage>
 
     MqttHelper.init();
     final DockingArea area = DockingColumn([
-      DockingTabs([
-        DockingItem(name: '报价表', widget: Quotation()),
-        DockingItem(name: '期权报价表', widget: OptionQuotation())
-      ]),
       DockingRow([
-        DockingItem(name: '标准下单表', widget: OrderPage(), unDragged: true),
+        DockingItem(name: '盘口信息[合约名称]', widget: DiskPortDetailPage(), unDragged: true, weight: 0.15),
+        DockingItem(name: '标准下单表', widget: OrderSubmitPage(showTitle: false,), unDragged: true, weight: 0.28),
         DockingTabs([
           DockingItem(name: '所有委托单', widget: EntrustPage(), unDragged: true),
           DockingItem(name: '未成交单', widget: UnsettledPage()),
         ]),
-      ]),
+      ], canDrag: false),
       DockingRow([
-        DockingItem(name: '持仓', widget: PositionPage()),
+        DockingItem(name: '持仓', widget: PositionPage(), weight: 0.4),
         DockingItem(name: '成交记录', widget: PositionPage()),
       ]),
     ]);
-
-    final List<List<int>> i = [
-      [1],
-      [2, 3],
-      [],
-      []
-    ];
-
-    if (area is DockingColumn) {
-      print(area);
-    } else if (area is DockingRow) {
-    } else if (area is DockingItem) {
-    } else if (area is DockingTabs) {}
 
     layout = DockingLayout(root: area);
   }
