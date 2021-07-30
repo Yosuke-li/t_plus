@@ -81,6 +81,7 @@ class _DockingMainState extends State<DockingMainPage>
           ),
           Expanded(
             child: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
                 Column(

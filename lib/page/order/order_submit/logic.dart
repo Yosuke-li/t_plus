@@ -43,7 +43,7 @@ class OrderSubmitLogic extends GetxController {
 
       try {
         final res = await Request.post(ApiCenter.order, data: {
-          'username': Global.user.username,
+          'username': Global.user?.username,
           'price': state.create.price,
           'ordQty': state.create.ordQty,
           'rawSide': state.side.value,

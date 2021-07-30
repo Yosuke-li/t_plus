@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transaction_plus/utils/screen.dart';
 
 class DownMenuWidget<T> extends StatefulWidget {
   T select;
@@ -17,14 +18,19 @@ class _DownMenuWidget<T> extends State<DownMenuWidget> {
     return DropdownButtonHideUnderline(
       child: DropdownButton<T>(
           value: widget.select ?? widget.menus[0],
+          style: TextStyle(
+            color: Color(0xBFffffff),
+          ),
           isExpanded: true,
+          icon: Icon(Icons.keyboard_arrow_down, size: screenUtil.adaptive(24),),
           items: widget.menus?.map((e) {
                 return DropdownMenuItem<T>(child: Text('$e'), value: e);
               })?.toList() ??
               [],
           onChanged: (T value) {
             widget.selectFunc?.call(value);
-          }),
+          },
+      ),
     );
   }
 }

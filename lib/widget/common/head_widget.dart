@@ -7,6 +7,7 @@ import 'package:transaction_plus/widget/down_menu.dart';
 import 'package:transaction_plus/widget/management/widget/common_form.dart';
 
 class HeadWidgetPage extends StatefulWidget {
+
   @override
   _HeadWidgetState createState() => _HeadWidgetState();
 }
@@ -15,6 +16,7 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
   List<User> users = [];
   List<String> list = ['1', '2', '3'];
   String value;
+  bool isHide = false;
 
   Widget headCell({String title, String value}) {
     return Row(
@@ -23,14 +25,14 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
         Container(
           child: Text(
             '$title ：',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Color(0xBFFFFFFF)),
           ),
         ),
         Container(
           child: Text(
-            '  $value',
+            '  ${isHide ? '*****' : value}',
             style: TextStyle(
-                color: Colors.white, fontSize: screenUtil.adaptive(20)),
+                color: Color(0xBFFFFFFF), fontSize: screenUtil.adaptive(20)),
           ),
         ),
       ],
@@ -52,7 +54,6 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
       child: Container(
         color: Colors.black54,
         height: screenUtil.adaptive(35),
-        margin: EdgeInsets.only(right: 16, left: 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -62,6 +63,9 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
                 Container(
                   height: screenUtil.adaptive(30),
                   width: screenUtil.adaptive(150),
+                  margin: EdgeInsets.only(
+                      left: screenUtil.adaptive(10),
+                      right: screenUtil.adaptive(20)),
                   alignment: Alignment.center,
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
@@ -69,7 +73,11 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
                         isExpanded: true,
                         items: list?.map((e) {
                               return DropdownMenuItem(
-                                  child: Text('$e'), value: e);
+                                  child: Text(
+                                    '$e',
+                                    style: TextStyle(color: Color(0xBFFFFFFF)),
+                                  ),
+                                  value: e);
                             })?.toList() ??
                             [],
                         onChanged: (key) {
@@ -99,12 +107,17 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
                   child: headCell(title: '可用资金', value: '10200'),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    isHide = !isHide;
+                    setState(() {});
+                  },
                   child: Container(
                     margin: EdgeInsets.only(left: screenUtil.adaptive(30)),
                     child: Icon(
-                      Icons.remove_red_eye,
-                      size: 18,
+                      isHide
+                          ? Icons.remove_red_eye_outlined
+                          : Icons.remove_red_eye,
+                      size: screenUtil.adaptive(24),
                     ),
                   ),
                 )
@@ -115,9 +128,36 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+
+                    },
                     child: Container(
-                      child: Icon(Icons.settings, size: 18,),
+                      child: Icon(
+                        Icons.settings,
+                        size: 18,
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+
+                    },
+                    child: Container(
+                      child: Icon(
+                        Icons.minimize,
+                        size: 18,
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+
+                    },
+                    child: Container(
+                      child: Icon(
+                        Icons.window,
+                        size: 18,
+                      ),
                     ),
                   ),
                 ],

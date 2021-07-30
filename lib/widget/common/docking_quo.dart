@@ -29,10 +29,10 @@ class _DockingQuoPageState extends State<DockingQuoPage> {
   @override
   void initState() {
     super.initState();
-     area = [
-       DockingItem(name: '报价表', widget: Quotation()),
-       DockingItem(name: '期权报价表', widget: OptionQuotation())
-     ];
+    area = [
+      DockingItem(name: '自选', widget: Quotation()),
+      DockingItem(name: '自选板块', widget: OptionQuotation())
+    ];
     setState(() {});
   }
 
@@ -61,14 +61,14 @@ class _DockingQuoPageState extends State<DockingQuoPage> {
       width: MediaQuery.of(context).size.width,
       height: screenUtil.adaptive(300),
       child: TabbedView(
-          controller: controller,
-          contentBuilder: (BuildContext context, int index) =>
-              ArrayHelper.get(area, index).widget,
-          onTabSelection: (int index) {
-            lastSelectedTabIndex = index;
-          },
-          theme: theme),
-      padding: EdgeInsets.only(right: 16, left: 16),
+        controller: controller,
+        contentBuilder: (BuildContext context, int index) =>
+            ArrayHelper.get(area, index).widget,
+        onTabSelection: (int index) {
+          lastSelectedTabIndex = index;
+        },
+        theme: theme,
+      ),
     );
   }
 }

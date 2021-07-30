@@ -56,61 +56,61 @@ class _EntrustState extends State<EntrustPage> {
               child: CommonForm<Entrust>(
                 columns: [
                   FormColumn<Entrust>(
-                    title: '报价编号',
+                    title: Text('报价编号', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.id ?? ''}'),
                     ),
                   ),
                   FormColumn<Entrust>(
-                    title: '合约',
+                    title: Text('合约', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.cell ?? ''}', style: TextStyle(color: Colors.amberAccent),),
                     ),
                   ),
                   FormColumn<Entrust>(
-                    title: '买卖',
+                    title: Text('买卖', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.buy ?? ''}'),
                     ),
                   ),
                   FormColumn<Entrust>(
-                    title: '开平',
+                    title: Text('开平', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.open ?? ''}'),
                     ),
                   ),
                   FormColumn<Entrust>(
-                    title: '挂单状态',
+                    title: Text('挂单状态', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.status ?? ''}'),
                     ),
                   ),
                   FormColumn<Entrust>(
-                    title: '报单价格',
+                    title: Text('报单价格', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.price ?? ''}'),
                     ),
                   ),
                   FormColumn<Entrust>(
-                    title: '报单手数',
+                    title: Text('报单手数', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.head ?? ''}'),
                     ),
                   ),
                   FormColumn<Entrust>(
-                    title: '未成交数',
+                    title: Text('未成交数', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.unsettled ?? ''}'),
                     ),
                   ),
                   FormColumn<Entrust>(
-                    title: '成交手数',
+                    title: Text('成交手数', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.settled ?? ''}'),
                     ),
                   ),
                   FormColumn<Entrust>(
-                    title: '详细状态',
+                    title: Text('详细状态', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.detail ?? ''}'),
                     ),
@@ -124,10 +124,10 @@ class _EntrustState extends State<EntrustPage> {
               right: 0,
               child: Row(
                 children: [
-                  commonButton(title: '撤单', onTap: () {
+                  CommonButton(title: '撤单', onTap: () {
                     getRandom();
                   }),
-                  commonButton(title: '全撤', onTap: () {}),
+                  CommonButton(title: '全撤', onTap: () {}),
                 ],
               ),
             ),

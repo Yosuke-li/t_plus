@@ -25,7 +25,11 @@ class _DiskPortDetailState extends State<DiskPortDetailPage> {
       DiskPortDetail()
         ..code = '146190'
         ..name = '卖五'
-        ..value = '15',
+        ..value = '2',
+      DiskPortDetail()
+        ..code = '146190'
+        ..name = '卖五'
+        ..value = '4',
       DiskPortDetail()
         ..code = '146190'
         ..name = '卖五'
@@ -33,11 +37,7 @@ class _DiskPortDetailState extends State<DiskPortDetailPage> {
       DiskPortDetail()
         ..code = '146190'
         ..name = '卖五'
-        ..value = '15',
-      DiskPortDetail()
-        ..code = '146190'
-        ..name = '卖五'
-        ..value = '15',
+        ..value = '10',
       DiskPortDetail()
         ..code = '146190'
         ..name = '卖五'

@@ -26,73 +26,73 @@ class _PositionState extends State<PositionPage> {
               child: CommonForm<User>(
                 columns: [
                   FormColumn<User>(
-                    title: '合约',
+                    title: Text('合约', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.username.hashCode ?? ''}'),
                     ),
                   ),
                   FormColumn<User>(
-                    title: '合约名',
+                    title: Text('合约名', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.username ?? ''}'),
                     ),
                   ),
                   FormColumn<User>(
-                    title: '最新价',
+                    title: Text('最新价', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.password ?? ''}'),
                     ),
                   ),
                   FormColumn<User>(
-                    title: '涨跌',
+                    title: Text('涨跌', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.password ?? ''}'),
                     ),
                   ),
                   FormColumn<User>(
-                    title: '买价',
+                    title: Text('买价', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.password ?? ''}'),
                     ),
                   ),
                   FormColumn<User>(
-                    title: '买量',
+                    title: Text('买量', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.password ?? ''}'),
                     ),
                   ),
                   FormColumn<User>(
-                    title: '成交量',
+                    title: Text('成交量', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.password ?? ''}'),
                     ),
                   ),
                   FormColumn<User>(
-                    title: '持仓量',
+                    title: Text('持仓量', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.password ?? ''}'),
                     ),
                   ),
                   FormColumn<User>(
-                    title: '涨停价',
+                    title: Text('涨停价', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.password ?? ''}'),
                     ),
                   ),
                   FormColumn<User>(
-                    title: '跌停价',
+                    title: Text('跌停价', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.password ?? ''}'),
                     ),
                   ),
                   FormColumn<User>(
-                    title: '今开盘',
+                    title: Text('今开盘', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.password ?? ''}'),
                     ),
                   ),
                   FormColumn<User>(
-                    title: '昨结算',
+                    title: Text('昨结算', style: TextStyle(color: Color(0xBFffffff)),),
                     builder: (_, v) => Container(
                       child: Text('${v.password ?? ''}'),
                     ),
@@ -108,17 +108,17 @@ class _PositionState extends State<PositionPage> {
                 children: [
                   Row(
                     children: [
-                      commonButton(title: '持仓', onTap: () {}),
-                      commonButton(title: '明细', onTap: () {}),
-                      commonButton(title: '组合', onTap: () {}),
+                      CommonButton(title: '持仓', onTap: () {}),
+                      CommonButton(title: '明细', onTap: () {}),
+                      CommonButton(title: '组合', onTap: () {}),
                     ],
                   ),
                   Row(
                     children: [
-                      commonButton(title: '对价平仓', onTap: () {}),
-                      commonButton(title: '市价平仓', onTap: () {}),
-                      commonButton(title: '市价反手', onTap: () {}),
-                      commonButton(title: '大商所组合', onTap: () {}),
+                      CommonButton(title: '对价平仓', onTap: () {}),
+                      CommonButton(title: '市价平仓', onTap: () {}),
+                      CommonButton(title: '市价反手', onTap: () {}),
+                      CommonButton(title: '大商所组合', onTap: () {}),
                     ],
                   ),
                 ],

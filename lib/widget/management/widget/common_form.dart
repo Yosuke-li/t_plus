@@ -4,13 +4,13 @@ import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/widget/management/common/function_util.dart';
 
 FormColumn<T> buildTextFormColumn<T>(
-    {@required String title, @required String text(T value)}) {
+    {@required Widget title, @required String text(T value)}) {
   return FormColumn<T>(
       title: title, builder: (_, T value) => Text(text(value) ?? ''));
 }
 
 FormColumn<T> buildButtonFormColumn<T>(
-    {@required String title, @required String text(T value), InFunc<T> onTap}) {
+    {@required Widget title, @required String text(T value), InFunc<T> onTap}) {
   return FormColumn<T>(
       title: title,
       builder: (_, T value) => ElevatedButton(
@@ -24,7 +24,7 @@ FormColumn<T> buildButtonFormColumn<T>(
 }
 
 FormColumn<T> buildIconButtonFormColumn<T>(
-    {String title, IconData icon, InFunc<T> onTap}) {
+    {Widget title, IconData icon, InFunc<T> onTap}) {
   return FormColumn<T>(
       title: title,
       builder: (_, T value) => IconButton(
@@ -38,7 +38,7 @@ FormColumn<T> buildIconButtonFormColumn<T>(
 }
 
 class FormColumn<T> {
-  final String title;
+  final Widget title;
   final double width;
   final Widget Function(BuildContext context, T value) builder;
 
@@ -62,7 +62,7 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: widget.columns
           .map(
-              (e) => warpWidget(child: Text(e.title), color: Global.formTitleColor, width: e.width))
+              (e) => warpWidget(child: e.title, color: Global.formTitleColor, width: e.width))
           .toList(growable: false),
     );
   }

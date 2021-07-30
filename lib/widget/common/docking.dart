@@ -53,7 +53,6 @@ class _DockingExamplePageState extends State<DockingExamplePage>
     super.build(context);
     return Container(
       child: Docking(layout: layout, theme: theme),
-      padding: EdgeInsets.all(16),
     );
   }
 

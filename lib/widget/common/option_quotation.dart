@@ -22,25 +22,25 @@ class _OptionQuotationState extends State<OptionQuotation> {
           CommonForm<User>(
             columns: [
               FormColumn<User>(
-                title: 'id',
+                title: Text('id', style: TextStyle(color: Color(0xBFffffff)),),
                 builder: (_, v) => Container(
                   child: Text('${v.username.hashCode ?? ''}'),
                 ),
               ),
               FormColumn<User>(
-                title: '姓名',
+                title: Text('姓名', style: TextStyle(color: Color(0xBFffffff)),),
                 builder: (_, v) => Container(
                   child: Text('${v.username ?? ''}'),
                 ),
               ),
               FormColumn<User>(
-                title: '详情',
+                title: Text('详情', style: TextStyle(color: Color(0xBFffffff)),),
                 builder: (_, v) => Container(
                   child: Text('${v.password ?? ''}'),
                 ),
               ),
               FormColumn<User>(
-                title: '操作',
+                title: Text('操作', style: TextStyle(color: Color(0xBFffffff)),),
                 builder: (_, v) => GestureDetector(
                   child: const Icon(Icons.edit),
                 ),
