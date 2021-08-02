@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:transaction_plus/global/event.dart';
+import 'package:transaction_plus/utils/event_bus_helper.dart';
 import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common/bottom_widget.dart';
@@ -21,6 +23,7 @@ class _DockingMainState extends State<DockingMainPage>
   @override
   void initState() {
     super.initState();
+    EventBusHelper.asyncStreamController.add(EventCache()..isDarkTheme = true);
     tabTitles = [
       "自选",
       "期货",
@@ -32,6 +35,12 @@ class _DockingMainState extends State<DockingMainPage>
           currentIndex = tabController.index;
         });
       });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    EventBusHelper.asyncStreamController.add(EventCache()..isDarkTheme = false);
   }
 
   @override
@@ -88,7 +97,9 @@ class _DockingMainState extends State<DockingMainPage>
                   children: [
                     DockingQuoPage(),
                     HeadWidgetPage(),
-                    Expanded(child: DockingExamplePage()),
+                    Expanded(
+                      child: DockingExamplePage(),
+                    ),
                     BottomWidgetPage(),
                   ],
                 ),

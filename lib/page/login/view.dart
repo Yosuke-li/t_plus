@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_doraemonkit/flutter_doraemonkit.dart';
 import 'package:get/get.dart';
+import 'package:transaction_plus/global/event.dart';
 import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/helper/security_keyboard.dart';
+import 'package:transaction_plus/utils/event_bus_helper.dart';
 import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common/main.dart';
-import 'package:transaction_plus/widget/common/disk_port.dart';
 import 'package:transaction_plus/widget/down_menu.dart';
-import 'package:transaction_plus/widget/keyboard/keyboard_manager.dart';
-import 'package:transaction_plus/widget/keyboard/keyboard_media_query.dart';
 
 import 'logic.dart';
 import 'state.dart';
@@ -45,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
           GestureDetector(
             onTap: () {
               NavigatorUtils.pushWidget(context, DockingMainPage());
-              // NavigatorUtils.pushWidget(context, OrderPage());
+              // NavigatorUtils.pushWidget(context, DemoPage(MediaQuery.of(context).size));
             },
             child: Center(
               child: Container(
@@ -195,6 +194,23 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Text(
                   "是否打开MQTT LOG",
+                  style: TextStyle(fontSize: 13.0),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Checkbox(
+                  value: Global.isDarkTheme ?? false,
+                  onChanged: (bool value) {
+                    Global.isDarkTheme = value;
+                    EventBusHelper.asyncStreamController.add(EventCache()..isDarkTheme = value);
+                    setState(() {});
+                  },
+                ),
+                Text(
+                  "切换主题",
                   style: TextStyle(fontSize: 13.0),
                 ),
               ],
