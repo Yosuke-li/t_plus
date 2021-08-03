@@ -38,6 +38,7 @@ class _IndexPageState extends State<IndexPage> {
   void eventListen() {
     voidCallback = EventBusHelper.listen<EventCache>((EventCache event) {
       if (event.isDarkTheme != null) {
+        Global.isDarkTheme = event.isDarkTheme;
         isDarkTheme = event.isDarkTheme;
         setState(() {});
       }

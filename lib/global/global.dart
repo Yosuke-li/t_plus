@@ -13,7 +13,7 @@ class Global {
   static bool isFiddle = false;
   static String fiddleIp = '192.168.9.136';
 
-  static bool isDarkTheme = false;
+  static bool isDarkTheme = true;
 
   static Color formTitleColor = isDarkTheme ? null : Color(0xfff5fafe);
   static Color formBorderColor = isDarkTheme ? Color(0xE6797979) :Colors.black26;

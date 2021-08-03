@@ -49,7 +49,7 @@ class _EntrustState extends State<EntrustPage> {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: Container(
-        color: Global.formBackColor,
+        color: Color(0xff000000),
         child: Stack(
           children: [
             SingleChildScrollView(

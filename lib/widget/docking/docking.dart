@@ -191,8 +191,7 @@ class _DockingItemWidgetState
     String name = widget.item.name != null ? widget.item.name : '';
     Widget titleBar = Container(
         child: Text(name),
-        padding: EdgeInsets.all(4),
-        color: Global.dockingTitleColor);
+        padding: EdgeInsets.all(4));
 
     Widget content = Container(
         child: Column(children: [

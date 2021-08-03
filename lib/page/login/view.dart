@@ -204,7 +204,6 @@ class _LoginPageState extends State<LoginPage> {
                 Checkbox(
                   value: Global.isDarkTheme ?? false,
                   onChanged: (bool value) {
-                    Global.isDarkTheme = value;
                     EventBusHelper.asyncStreamController.add(EventCache()..isDarkTheme = value);
                     setState(() {});
                   },

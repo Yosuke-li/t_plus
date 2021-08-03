@@ -62,7 +62,7 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: widget.columns
           .map(
-              (e) => warpWidget(child: e.title, color: Global.formTitleColor, width: e.width))
+              (e) => warpWidget(child: e.title, width: e.width))
           .toList(growable: false),
     );
   }
@@ -78,7 +78,7 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
   Widget warpWidget({Widget child, Color color, double width}) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(width: 0.4, color: Global.formBorderColor),
+          border: Border.all(width: 0.4, color: Color(0xE6797979)),
           color: color),
       height: 25,
       width: width ?? 125,

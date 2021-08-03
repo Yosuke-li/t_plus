@@ -15,7 +15,7 @@ class _OptionQuotationState extends State<OptionQuotation> {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: Container(
-        color: Global.formBackColor,
+        color: Color(0xff000000),
         alignment: Alignment.centerLeft,
         child: Column(
         children: [

@@ -40,7 +40,6 @@ class _DockingMainState extends State<DockingMainPage>
   @override
   void dispose() {
     super.dispose();
-    EventBusHelper.asyncStreamController.add(EventCache()..isDarkTheme = false);
   }
 
   @override
@@ -53,6 +52,7 @@ class _DockingMainState extends State<DockingMainPage>
               children: [
                 GestureDetector(
                   onTap: () {
+                    EventBusHelper.asyncStreamController.add(EventCache()..isDarkTheme = false);
                     NavigatorUtils.pop(context);
                   },
                   child: Container(
