@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:searchfield/searchfield.dart';
 import 'package:transaction_plus/helper/security_keyboard.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common_input/text_input_lock.dart';
 import 'package:transaction_plus/widget/common_input/text_input_number.dart';
 import 'package:transaction_plus/widget/down_menu.dart';
+import 'package:transaction_plus/widget/search_text_field.dart';
 
 import 'logic.dart';
 import 'state.dart';
@@ -22,6 +24,50 @@ class OrderSubmitPage extends StatefulWidget {
 class _OrderSubmitPageState extends State<OrderSubmitPage> {
   final OrderSubmitLogic logic = Get.put(OrderSubmitLogic());
   final OrderSubmitState state = Get.find<OrderSubmitLogic>().state;
+
+  final List<String> _suggestions = [
+    'United States',
+    'Germany',
+    'Washington',
+    'Paris',
+    'Jakarta',
+    'Australia',
+    'India',
+    'Czech Republic',
+    'Lorem Ipsum',
+  ];
+  final List<String> _statesOfIndia = [
+    'Andhra Pradesh',
+    'Assam',
+    'Arunachal Pradesh',
+    'Bihar',
+    'Goa',
+    'Gujarat',
+    'Jammu and Kashmir',
+    'Jharkhand',
+    'West Bengal',
+    'Karnataka',
+    'Kerala',
+    'Madhya Pradesh',
+    'Maharashtra',
+    'Manipur',
+    'Meghalaya',
+    'Mizoram',
+    'Nagaland',
+    'Orissa',
+    'Punjab',
+    'Rajasthan',
+    'Sikkim',
+    'Tamil Nadu',
+    'Tripura',
+    'Uttaranchal',
+    'Uttar Pradesh',
+    'Haryana',
+    'Himachal Pradesh',
+    'Chhattisgarh'
+  ];
+
+  final _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -155,15 +201,21 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   height: screenUtil.adaptive(30),
                                   alignment: Alignment.centerLeft,
                                   decoration: BoxDecoration(
+                                    color: Color(0xffffffff),
                                     border: Border.all(
                                       color: Color(0xE6797979),
                                       width: 1.0,
                                     ),
                                   ),
-                                  child: TextInputNumberUpDown(
-                                    onSave: (String value) {
-                                      state.create.price =
-                                          double.tryParse(value);
+                                  child: SearchField(
+                                    suggestions: _suggestions,
+                                    controller: _searchController,
+                                    hint: 'SearchField Sample 1',
+                                    initialValue: _suggestions[2],
+                                    maxSuggestionsInViewPort: 3,
+                                    itemHeight: screenUtil.adaptive(45),
+                                    onTap: (x) {
+                                      print('selected =$x ${_searchController.text}');
                                     },
                                   ),
                                 ),

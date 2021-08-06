@@ -213,7 +213,7 @@ packages:
       name: get
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.3.0"
+    version: "4.3.4"
   http_parser:
     dependency: transitive
     description:
@@ -248,7 +248,7 @@ packages:
       name: mqtt_client
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "9.3.2"
+    version: "9.4.2"
   path:
     dependency: transitive
     description:
@@ -305,6 +305,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.2.1"
+  searchfield:
+    dependency: "direct main"
+    description:
+      name: searchfield
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.5.2"
   shared_preferences:
     dependency: "direct main"
     description:

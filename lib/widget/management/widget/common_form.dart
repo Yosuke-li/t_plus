@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:transaction_plus/global/global.dart';
+import 'package:transaction_plus/utils/array_helper.dart';
 import 'package:transaction_plus/widget/management/common/function_util.dart';
 
 FormColumn<T> buildTextFormColumn<T>(
@@ -48,8 +48,9 @@ class FormColumn<T> {
 class CommonForm<T> extends StatefulWidget {
   final List<FormColumn<T>> columns;
   final List<T> values;
+  final bool canDrag;
 
-  const CommonForm({Key key, @required this.columns, @required this.values})
+  const CommonForm({Key key, @required this.columns, @required this.values, this.canDrag})
       : super(key: key);
 
   @override
@@ -64,6 +65,56 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
           .map(
               (e) => warpWidget(child: e.title, width: e.width))
           .toList(growable: false),
+    );
+  }
+
+  Widget buildDragTitleRow(int index) {
+    return LongPressDraggable(
+      data: index,
+      child: DragTarget<int>(
+        onAccept: (data) {
+          setState(() {
+            final temp = widget.values[data];
+            widget.values.remove(temp);
+            widget.values.insert(index, temp);
+          });
+        },
+        //绘制widget
+        builder: (context, data, rejects) {
+          return Row(
+            children: widget.columns
+                .map((e) => warpWidget(child: e.builder(context, ArrayHelper.get(widget.values, index))))
+                .toList(growable: false),
+          );
+        },
+        onLeave: (data) {
+          print('$data is Leaving item $index');
+        },
+        onWillAccept: (data) {
+          print('$index will accept item $data');
+          return true;
+        },
+      ),
+      onDragStarted: () {
+        print('item $index ---------------------------onDragStarted');
+      },
+      onDraggableCanceled: (Velocity velocity, Offset offset) {
+        print(
+            'item $index ---------------------------onDraggableCanceled,velocity = $velocity,offset = $offset');
+      },
+      onDragCompleted: () {
+        print("item $index ---------------------------onDragCompleted");
+      },
+      feedback: Container(
+        decoration: BoxDecoration(
+          border: Border.all(width: 0.4, color: Colors.red),
+        ),
+        child: Row(
+          children: widget.columns
+              .map((e) => warpWidget(child: e.builder(context, ArrayHelper.get(widget.values, index))))
+              .toList(growable: false),
+        ),
+      ),
     );
   }
 
@@ -94,7 +145,13 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
   Widget build(BuildContext context) {
     final List<Widget> children = <Widget>[];
     children.add(buildTitleRow());
-    children.addAll(widget.values.map((e) => buildRow(e)));
+    if (widget.canDrag == true) {
+      for (int x = 0; x < widget.values.length; x++) {
+        children.add(buildDragTitleRow(x));
+      }
+    } else {
+      children.addAll(widget.values.map((e) => buildRow(e)));
+    }
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,

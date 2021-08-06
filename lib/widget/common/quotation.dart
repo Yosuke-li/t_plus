@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/model/user.dart';
 import 'package:transaction_plus/utils/screen.dart';
+import 'package:transaction_plus/widget/drag_overlay.dart';
 import 'package:transaction_plus/widget/management/widget/common_form.dart';
 
 class Quotation extends StatefulWidget {
@@ -15,7 +16,6 @@ class _QuotationState extends State<Quotation> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -29,10 +29,25 @@ class _QuotationState extends State<Quotation> {
             CommonForm<User>(
               columns: [
                 FormColumn<User>(
-                  title: Icon(
-                    Icons.settings,
-                    size: screenUtil.adaptive(20),
-                    color: Color(0xBFffffff),
+                  title: InkWell(
+                    onTap: () {
+                      DragOverlay.show(
+                        context: context,
+                        view: OverlayWidget(
+                          title: '添加自选合约',
+                          child: Container(
+                            height: 200,
+                            width: 100,
+                            color: Colors.red,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Icon(
+                      Icons.settings,
+                      size: screenUtil.adaptive(20),
+                      color: Color(0xBFffffff),
+                    ),
                   ),
                   width: 50,
                   builder: (_, v) => Container(

@@ -54,6 +54,7 @@ class _EntrustState extends State<EntrustPage> {
           children: [
             SingleChildScrollView(
               child: CommonForm<Entrust>(
+                canDrag: true,
                 columns: [
                   FormColumn<Entrust>(
                     title: Text('报价编号', style: TextStyle(color: Color(0xBFffffff)),),

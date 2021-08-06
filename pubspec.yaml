@@ -24,6 +24,7 @@ dependencies:
   tabbed_view: ^1.1.0+1
   back_button_interceptor: ^5.0.1
   bitsdojo_window: ^0.1.1+1
+  searchfield: ^0.5.2
   flutter_doraemonkit:
     git:
       url: https://github.com/NayoLx/flutter_doraemonkit_plugin.git
