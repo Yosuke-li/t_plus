@@ -24,7 +24,6 @@ class DockingQuoPage extends StatefulWidget {
 class _DockingQuoPageState extends State<DockingQuoPage> {
   List<DockingItem> area;
   int lastSelectedTabIndex;
-  TabbedViewTheme theme = TabbedViewTheme.dark();
 
   @override
   void initState() {
@@ -67,7 +66,6 @@ class _DockingQuoPageState extends State<DockingQuoPage> {
         onTabSelection: (int index) {
           lastSelectedTabIndex = index;
         },
-        theme: theme,
       ),
     );
   }

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:searchfield/searchfield.dart';
-import 'package:transaction_plus/helper/security_keyboard.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common_input/text_input_lock.dart';
 import 'package:transaction_plus/widget/common_input/text_input_number.dart';
 import 'package:transaction_plus/widget/down_menu.dart';
-import 'package:transaction_plus/widget/search_text_field.dart';
+import 'package:transaction_plus/widget/search_field.dart';
 
 import 'logic.dart';
 import 'state.dart';
@@ -119,17 +116,26 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   ),
                                 ),
                                 Container(
-                                  height: screenUtil.adaptive(30),
-                                  alignment: Alignment.centerLeft,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Color(0xE6797979),
-                                      width: 1.0,
+                                  child: SearchField(
+                                    suggestions: _suggestions,
+                                    controller: _searchController,
+                                    width: screenUtil.adaptive(200),
+                                    hint: 'SearchField Sample 1',
+                                    initialValue: _suggestions[2],
+                                    searchInputDecoration: InputDecoration(
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.black.withOpacity(0.8),
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.red),
+                                      ),
                                     ),
-                                  ),
-                                  child: TextInputLock(
-                                    onSave: (String value) {
-                                      state.create.ordQty = int.tryParse(value);
+                                    maxSuggestionsInViewPort: 4,
+                                    itemHeight: screenUtil.adaptive(50),
+                                    onTap: (x) {
+                                      print('selected =$x ${_searchController.text}');
                                     },
                                   ),
                                 ),
@@ -201,21 +207,14 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   height: screenUtil.adaptive(30),
                                   alignment: Alignment.centerLeft,
                                   decoration: BoxDecoration(
-                                    color: Color(0xffffffff),
                                     border: Border.all(
                                       color: Color(0xE6797979),
                                       width: 1.0,
                                     ),
                                   ),
-                                  child: SearchField(
-                                    suggestions: _suggestions,
-                                    controller: _searchController,
-                                    hint: 'SearchField Sample 1',
-                                    initialValue: _suggestions[2],
-                                    maxSuggestionsInViewPort: 3,
-                                    itemHeight: screenUtil.adaptive(45),
-                                    onTap: (x) {
-                                      print('selected =$x ${_searchController.text}');
+                                  child: TextInputNumberUpDown(
+                                    onSave: (String value) {
+                                      state.create.ordQty = int.tryParse(value);
                                     },
                                   ),
                                 ),

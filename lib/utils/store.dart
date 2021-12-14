@@ -1,7 +1,5 @@
-import 'dart:convert';
-
-import 'package:common_utils/common_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'log_utils.dart';
 
 class LocateStorage {
   static SharedPreferences lStorage;
@@ -54,7 +52,7 @@ class LocateStorage {
   //设置String缓存
   static void setString(String key, String val) {
     lStorage.setString('$key', val);
-    LogUtil.v(val, tag: 'setString: $key');
+    Log.info('setString: $key');
   }
 
   //获取String缓存
@@ -66,7 +64,7 @@ class LocateStorage {
   //设置bool缓存
   static void setBool(String key, bool val) {
     lStorage.setBool('$key', val);
-    LogUtil.v(val.toString(), tag: 'setBool: $key');
+    Log.info('setBool: $key');
   }
 
   //获取bool缓存
@@ -78,7 +76,7 @@ class LocateStorage {
   //设置int缓存
   static void setInt(String key, int val) {
     lStorage.setInt('$key', val);
-    LogUtil.v(val.toString(), tag: 'setInt: $key');
+    Log.info('setInt: $key');
   }
 
   //获取int缓存
@@ -90,7 +88,7 @@ class LocateStorage {
   //设置字符串数组
   static void setStringList(String key, List<String> lists) {
     lStorage.setStringList(key, lists);
-    LogUtil.v(lists.toString(), tag: 'setStringList: $key');
+    Log.info('setStringList: $key');
   }
 
   //获取字符串数组
@@ -112,7 +110,7 @@ class LocateStorage {
       clean(key: hasKey);
     }
     lStorage.setString('$key $exTime', val);
-    LogUtil.v(val, tag: 'setStringWithExpire: $key $exTime');
+    Log.info('setStringWithExpire: $key $exTime');
   }
 
   //获取String缓存
@@ -134,7 +132,7 @@ class LocateStorage {
       clean(key: hasKey);
     }
     lStorage.setBool('$key $exTime', val);
-    LogUtil.v(val, tag: 'setBoolWithExpire: $key $exTime');
+    Log.info('setBoolWithExpire: $key $exTime');
   }
 
   //获取bool缓存
@@ -156,7 +154,7 @@ class LocateStorage {
       clean(key: hasKey);
     }
     lStorage.setInt('$key $exTime', val);
-    LogUtil.v(val, tag: 'setIntWithExpire: $key $exTime');
+    Log.info('setIntWithExpire: $key $exTime');
   }
 
   //获取int缓存
@@ -179,7 +177,7 @@ class LocateStorage {
       clean(key: hasKey);
     }
     lStorage.setStringList('$key $exTime', lists);
-    LogUtil.v(json.encode(lists), tag: 'setStringListWithExpire: $key $exTime');
+    Log.info('setStringListWithExpire: $key $exTime');
   }
 
   //获取字符串数组

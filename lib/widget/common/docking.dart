@@ -23,7 +23,6 @@ class _DockingExamplePageState extends State<DockingExamplePage>
     with AutomaticKeepAliveClientMixin {
   DockingLayout layout;
   static const String _key = 'docking';
-  TabbedViewTheme theme = TabbedViewTheme.dark();
 
   @override
   void initState() {
@@ -52,7 +51,7 @@ class _DockingExamplePageState extends State<DockingExamplePage>
   Widget build(BuildContext context) {
     super.build(context);
     return Container(
-      child: Docking(layout: layout, theme: theme),
+      child: Docking(layout: layout),
     );
   }
 

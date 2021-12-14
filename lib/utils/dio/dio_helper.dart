@@ -12,7 +12,7 @@ import 'package:transaction_plus/utils/store.dart';
 import '../api_exception.dart';
 
 class Request {
-  static String baseUrl = '';
+  static String baseUrl = 'http://39.108.117.149:8081';
 
   // 配置 Dio 实例
   static final BaseOptions _options = BaseOptions(
