@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transaction_plus/global/event.dart';
 import 'package:transaction_plus/utils/event_bus_helper.dart';
@@ -6,8 +7,13 @@ import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common/bottom_widget.dart';
 import 'package:transaction_plus/widget/common/head_widget.dart';
 import 'package:transaction_plus/widget/common/docking.dart';
+import 'package:transaction_plus/widget/common/quotation.dart';
 
+import '../../page/order/order_submit/view.dart';
+import 'disk_port.dart';
 import 'docking_quo.dart';
+import 'entrustment.dart';
+import 'position.dart';
 
 class DockingMainPage extends StatefulWidget {
   @override
@@ -16,25 +22,12 @@ class DockingMainPage extends StatefulWidget {
 
 class _DockingMainState extends State<DockingMainPage>
     with SingleTickerProviderStateMixin {
-  TabController tabController;
   int currentIndex = 0;
-  List<String> tabTitles;
 
   @override
   void initState() {
     super.initState();
     EventBusHelper.asyncStreamController.add(EventCache()..isDarkTheme = true);
-    tabTitles = [
-      "自选",
-      "期货",
-      "期权",
-    ];
-    tabController = TabController(length: 3, vsync: this)
-      ..addListener(() {
-        setState(() {
-          currentIndex = tabController.index;
-        });
-      });
   }
 
   @override
@@ -52,7 +45,8 @@ class _DockingMainState extends State<DockingMainPage>
               children: [
                 GestureDetector(
                   onTap: () {
-                    EventBusHelper.asyncStreamController.add(EventCache()..isDarkTheme = false);
+                    EventBusHelper.asyncStreamController
+                        .add(EventCache()..isDarkTheme = false);
                     NavigatorUtils.pop(context);
                   },
                   child: Container(
@@ -66,45 +60,88 @@ class _DockingMainState extends State<DockingMainPage>
                     ),
                   ),
                 ),
-                TabBar(
-                  isScrollable: true,
-                  controller: tabController,
-                  labelStyle:
-                      TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  labelColor: Colors.black,
-                  unselectedLabelColor: Colors.black45,
-                  tabs: tabTitles.map((item) {
-                    return Container(
-                      padding: EdgeInsets.only(
-                          top: screenUtil.adaptive(10),
-                          bottom: screenUtil.adaptive(5)),
-                      child: Text(
-                        '$item',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
-                  }).toList(),
-                ),
               ],
             ),
           ),
           Expanded(
-            child: TabBarView(
-              physics: NeverScrollableScrollPhysics(),
-              controller: tabController,
+            child: Column(
               children: [
-                Column(
-                  children: [
-                    DockingQuoPage(),
-                    HeadWidgetPage(),
-                    Expanded(
-                      child: DockingExamplePage(),
+                Container(
+                  child: Scrollbar(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.topLeft,
+                            child: Text('报价表'),
+                          ),
+                          Quotation(),
+                        ],
+                      ),
                     ),
-                    BottomWidgetPage(),
-                  ],
+                  ),
                 ),
-                Container(),
-                Container(),
+                HeadWidgetPage(),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 250,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                child: DiskPortDetailPage(),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Container(
+                                child: OrderSubmitPage(
+                                  showTitle: true,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 5,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    alignment: Alignment.topLeft,
+                                    child: Text('委托'),
+                                  ),
+                                  EntrustPage(),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 5,
+                              child: PositionPage(),
+                            ),
+                            SizedBox(
+                              width: 1,
+                              child: Container(
+                                color: Colors.black12,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 5,
+                              child: PositionPage(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                BottomWidgetPage(),
               ],
             ),
           ),

@@ -39,6 +39,7 @@ class _DllTextPageState extends State<DllTextPage> {
 
   void _setVoid() {
     ffi.DynamicLibrary dll = getDyLibModule('assets/dll/MyDLL.dll');
+    ffi.DynamicLibrary hsDll = getDyLibModule('assets/dll/HsFutuSystemInfo.dll');
     Log.info(dll);
     var add = dll.lookupFunction<FuncVersion, FuncDartV>('Add');
     FuncString hello = dll.lookupFunction<FuncString, FuncS>('Hello');

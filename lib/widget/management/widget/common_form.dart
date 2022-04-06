@@ -12,15 +12,16 @@ FormColumn<T> buildTextFormColumn<T>(
 FormColumn<T> buildButtonFormColumn<T>(
     {@required Widget title, @required String text(T value), InFunc<T> onTap}) {
   return FormColumn<T>(
-      title: title,
-      builder: (_, T value) => ElevatedButton(
-            child: Text(text(value)),
-            onPressed: onTap == null
-                ? null
-                : () {
-                    onTap(value);
-                  },
-          ));
+    title: title,
+    builder: (_, T value) => ElevatedButton(
+      child: Text(text(value)),
+      onPressed: onTap == null
+          ? null
+          : () {
+              onTap(value);
+            },
+    ),
+  );
 }
 
 FormColumn<T> buildIconButtonFormColumn<T>(
@@ -45,12 +46,38 @@ class FormColumn<T> {
   FormColumn({@required this.title, @required this.builder, this.width});
 }
 
+/// 点击的回调方法[onTapFunc]
+///
+///
+/// 拖拽的回调方法[onDragFunc]，按需选择是否实现
+/// [value]当前的值，[index]拖拽到当前位置的索引
+///
+/// 鼠标右键的回调方法[onMouseEvent]
+/// [event]获取鼠标位置 [index]获取当前点击的索引
+/// Future<void> onMouseEvent(PointerDownEvent event, int index) async {
+///        Log.info(event);
+///        Log.info(index);
+///  }
+///
+
 class CommonForm<T> extends StatefulWidget {
   final List<FormColumn<T>> columns;
   final List<T> values;
   final bool canDrag;
+  final void Function(T value) onTapFunc; //点击回调
+  final void Function(T value, int index) onDragFunc; //拖拽后的回调
+  final void Function(PointerDownEvent evnet, int index) onMouseEvent;
+  final double height;
 
-  const CommonForm({Key key, @required this.columns, @required this.values, this.canDrag})
+  const CommonForm(
+      {Key key,
+      @required this.columns,
+      @required this.values,
+      this.canDrag,
+      this.onDragFunc,
+      this.onTapFunc,
+      this.onMouseEvent,
+      @required this.height})
       : super(key: key);
 
   @override
@@ -58,71 +85,62 @@ class CommonForm<T> extends StatefulWidget {
 }
 
 class _CommonFormState<T> extends State<CommonForm<T>> {
+  ScrollController hController = ScrollController();
+  ScrollController vController = ScrollController();
+
   Widget buildTitleRow() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: widget.columns
-          .map(
-              (e) => warpWidget(child: e.title, width: e.width))
+          .map((e) => warpWidget(child: e.title, width: e.width))
           .toList(growable: false),
     );
   }
 
+  ///可拖拽
   Widget buildDragTitleRow(int index) {
     return LongPressDraggable(
       data: index,
       child: DragTarget<int>(
         onAccept: (data) {
+          final temp = widget.values[data];
           setState(() {
-            final temp = widget.values[data];
             widget.values.remove(temp);
             widget.values.insert(index, temp);
           });
+          widget.onDragFunc?.call(temp, index);
         },
         //绘制widget
         builder: (context, data, rejects) {
-          return Row(
-            children: widget.columns
-                .map((e) => warpWidget(child: e.builder(context, ArrayHelper.get(widget.values, index))))
-                .toList(growable: false),
-          );
-        },
-        onLeave: (data) {
-          print('$data is Leaving item $index');
-        },
-        onWillAccept: (data) {
-          print('$index will accept item $data');
-          return true;
+          return buildRow(ArrayHelper.get(widget.values, index));
         },
       ),
-      onDragStarted: () {
-        print('item $index ---------------------------onDragStarted');
-      },
-      onDraggableCanceled: (Velocity velocity, Offset offset) {
-        print(
-            'item $index ---------------------------onDraggableCanceled,velocity = $velocity,offset = $offset');
-      },
-      onDragCompleted: () {
-        print("item $index ---------------------------onDragCompleted");
-      },
       feedback: Container(
         decoration: BoxDecoration(
           border: Border.all(width: 0.4, color: Colors.red),
         ),
-        child: Row(
-          children: widget.columns
-              .map((e) => warpWidget(child: e.builder(context, ArrayHelper.get(widget.values, index))))
-              .toList(growable: false),
-        ),
+        child: buildRow(ArrayHelper.get(widget.values, index)),
       ),
     );
   }
 
+  ///实现table的每一行
   Widget buildRow(T value) {
-    return Row(
-      children: widget.columns
-          .map((e) => warpWidget(child: e.builder(context, value)))
-          .toList(growable: false),
+    return Listener(
+      onPointerDown: (PointerDownEvent event) {
+        widget.onMouseEvent?.call(event, widget.values.indexOf(value));
+      },
+      child: GestureDetector(
+        onTap: () {
+          widget.onTapFunc?.call(value);
+        },
+        child: Row(
+          children: widget.columns
+              .map((e) =>
+                  warpWidget(child: e.builder(context, value), width: e.width))
+              .toList(growable: false),
+        ),
+      ),
     );
   }
 
@@ -144,7 +162,6 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> children = <Widget>[];
-    children.add(buildTitleRow());
     if (widget.canDrag == true) {
       for (int x = 0; x < widget.values.length; x++) {
         children.add(buildDragTitleRow(x));
@@ -153,11 +170,29 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
       children.addAll(widget.values.map((e) => buildRow(e)));
     }
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Container(
-        child: Column(
-          children: children,
+    return Scrollbar(
+      controller: hController,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        controller: hController,
+        child: Container(
+          height: widget.height,
+          child: Column(
+            children: [
+              buildTitleRow(),
+              Expanded(
+                child: Scrollbar(
+                  controller: vController,
+                  child: SingleChildScrollView(
+                    controller: vController,
+                    child: Column(
+                      children: children,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

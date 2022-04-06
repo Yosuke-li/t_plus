@@ -42,6 +42,138 @@ class _EntrustState extends State<EntrustPage> {
         ..buy = '456'
         ..cell = '456'
         ..open = '456',
+      Entrust()
+        ..id = 1
+        ..detail = '456'
+        ..settled = '456'
+        ..unsettled = '456'
+        ..head = '456'
+        ..price = '456'
+        ..status = '456'
+        ..buy = '456'
+        ..cell = '456'
+        ..open = '456',
+      Entrust()
+        ..id = 1
+        ..detail = '456'
+        ..settled = '456'
+        ..unsettled = '456'
+        ..head = '456'
+        ..price = '456'
+        ..status = '456'
+        ..buy = '456'
+        ..cell = '456'
+        ..open = '456',
+      Entrust()
+        ..id = 1
+        ..detail = '456'
+        ..settled = '456'
+        ..unsettled = '456'
+        ..head = '456'
+        ..price = '456'
+        ..status = '456'
+        ..buy = '456'
+        ..cell = '456'
+        ..open = '456',
+      Entrust()
+        ..id = 1
+        ..detail = '456'
+        ..settled = '456'
+        ..unsettled = '456'
+        ..head = '456'
+        ..price = '456'
+        ..status = '456'
+        ..buy = '456'
+        ..cell = '456'
+        ..open = '456',
+      Entrust()
+        ..id = 1
+        ..detail = '456'
+        ..settled = '456'
+        ..unsettled = '456'
+        ..head = '456'
+        ..price = '456'
+        ..status = '456'
+        ..buy = '456'
+        ..cell = '456'
+        ..open = '456',
+      Entrust()
+        ..id = 1
+        ..detail = '456'
+        ..settled = '456'
+        ..unsettled = '456'
+        ..head = '456'
+        ..price = '456'
+        ..status = '456'
+        ..buy = '456'
+        ..cell = '456'
+        ..open = '456',
+      Entrust()
+        ..id = 1
+        ..detail = '456'
+        ..settled = '456'
+        ..unsettled = '456'
+        ..head = '456'
+        ..price = '456'
+        ..status = '456'
+        ..buy = '456'
+        ..cell = '456'
+        ..open = '456',
+      Entrust()
+        ..id = 1
+        ..detail = '456'
+        ..settled = '456'
+        ..unsettled = '456'
+        ..head = '456'
+        ..price = '456'
+        ..status = '456'
+        ..buy = '456'
+        ..cell = '456'
+        ..open = '456',
+      Entrust()
+        ..id = 1
+        ..detail = '456'
+        ..settled = '456'
+        ..unsettled = '456'
+        ..head = '456'
+        ..price = '456'
+        ..status = '456'
+        ..buy = '456'
+        ..cell = '456'
+        ..open = '456',
+      Entrust()
+        ..id = 1
+        ..detail = '456'
+        ..settled = '456'
+        ..unsettled = '456'
+        ..head = '456'
+        ..price = '456'
+        ..status = '456'
+        ..buy = '456'
+        ..cell = '456'
+        ..open = '456',
+      Entrust()
+        ..id = 1
+        ..detail = '456'
+        ..settled = '456'
+        ..unsettled = '456'
+        ..head = '456'
+        ..price = '456'
+        ..status = '456'
+        ..buy = '456'
+        ..cell = '456'
+        ..open = '456',
+      Entrust()
+        ..id = 1
+        ..detail = '456'
+        ..settled = '456'
+        ..unsettled = '456'
+        ..head = '456'
+        ..price = '456'
+        ..status = '456'
+        ..buy = '456'
+        ..cell = '456'
+        ..open = '456',
     ];
   }
 
@@ -50,90 +182,75 @@ class _EntrustState extends State<EntrustPage> {
     return RepaintBoundary(
       child: Container(
         color: Color(0xff000000),
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: CommonForm<Entrust>(
-                canDrag: true,
-                columns: [
-                  FormColumn<Entrust>(
-                    title: Text('报价编号', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.id ?? ''}'),
-                    ),
-                  ),
-                  FormColumn<Entrust>(
-                    title: Text('合约', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.cell ?? ''}', style: TextStyle(color: Colors.amberAccent),),
-                    ),
-                  ),
-                  FormColumn<Entrust>(
-                    title: Text('买卖', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.buy ?? ''}'),
-                    ),
-                  ),
-                  FormColumn<Entrust>(
-                    title: Text('开平', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.open ?? ''}'),
-                    ),
-                  ),
-                  FormColumn<Entrust>(
-                    title: Text('挂单状态', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.status ?? ''}'),
-                    ),
-                  ),
-                  FormColumn<Entrust>(
-                    title: Text('报单价格', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.price ?? ''}'),
-                    ),
-                  ),
-                  FormColumn<Entrust>(
-                    title: Text('报单手数', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.head ?? ''}'),
-                    ),
-                  ),
-                  FormColumn<Entrust>(
-                    title: Text('未成交数', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.unsettled ?? ''}'),
-                    ),
-                  ),
-                  FormColumn<Entrust>(
-                    title: Text('成交手数', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.settled ?? ''}'),
-                    ),
-                  ),
-                  FormColumn<Entrust>(
-                    title: Text('详细状态', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.detail ?? ''}'),
-                    ),
-                  ),
-                ],
-                values: entrusts,
+        child: Scrollbar(child: SingleChildScrollView(
+          child: CommonForm<Entrust>(
+            canDrag: true,
+            height: 200,
+            columns: [
+              FormColumn<Entrust>(
+                title: Text('报价编号', style: TextStyle(color: Color(0xBFffffff)),),
+                builder: (_, v) => Container(
+                  child: Text('${v.id ?? ''}'),
+                ),
               ),
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Row(
-                children: [
-                  CommonButton(title: '撤单', onTap: () {
-                    getRandom();
-                  }),
-                  CommonButton(title: '全撤', onTap: () {}),
-                ],
+              FormColumn<Entrust>(
+                title: Text('合约', style: TextStyle(color: Color(0xBFffffff)),),
+                builder: (_, v) => Container(
+                  child: Text('${v.cell ?? ''}', style: TextStyle(color: Colors.amberAccent),),
+                ),
               ),
-            ),
-          ],
-        ),
+              FormColumn<Entrust>(
+                title: Text('买卖', style: TextStyle(color: Color(0xBFffffff)),),
+                builder: (_, v) => Container(
+                  child: Text('${v.buy ?? ''}'),
+                ),
+              ),
+              FormColumn<Entrust>(
+                title: Text('开平', style: TextStyle(color: Color(0xBFffffff)),),
+                builder: (_, v) => Container(
+                  child: Text('${v.open ?? ''}'),
+                ),
+              ),
+              FormColumn<Entrust>(
+                title: Text('挂单状态', style: TextStyle(color: Color(0xBFffffff)),),
+                builder: (_, v) => Container(
+                  child: Text('${v.status ?? ''}'),
+                ),
+              ),
+              FormColumn<Entrust>(
+                title: Text('报单价格', style: TextStyle(color: Color(0xBFffffff)),),
+                builder: (_, v) => Container(
+                  child: Text('${v.price ?? ''}'),
+                ),
+              ),
+              FormColumn<Entrust>(
+                title: Text('报单手数', style: TextStyle(color: Color(0xBFffffff)),),
+                builder: (_, v) => Container(
+                  child: Text('${v.head ?? ''}'),
+                ),
+              ),
+              FormColumn<Entrust>(
+                title: Text('未成交数', style: TextStyle(color: Color(0xBFffffff)),),
+                builder: (_, v) => Container(
+                  child: Text('${v.unsettled ?? ''}'),
+                ),
+              ),
+              FormColumn<Entrust>(
+                title: Text('成交手数', style: TextStyle(color: Color(0xBFffffff)),),
+                builder: (_, v) => Container(
+                  child: Text('${v.settled ?? ''}'),
+                ),
+              ),
+              FormColumn<Entrust>(
+                title: Text('详细状态', style: TextStyle(color: Color(0xBFffffff)),),
+                builder: (_, v) => Container(
+                  child: Text('${v.detail ?? ''}'),
+                ),
+              ),
+            ],
+            values: entrusts,
+          )
+        ),),
       ),
     );
   }

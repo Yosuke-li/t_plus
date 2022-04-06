@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:transaction_plus/global/dll_text.dart';
 import 'package:transaction_plus/global/event.dart';
 import 'package:transaction_plus/global/global.dart';
+import 'package:transaction_plus/global/mouse_text.dart';
 import 'package:transaction_plus/helper/security_keyboard.dart';
 import 'package:transaction_plus/utils/event_bus_helper.dart';
 import 'package:transaction_plus/utils/navigator.dart';
@@ -44,8 +45,8 @@ class _LoginPageState extends State<LoginPage> {
         actions: [
           GestureDetector(
             onTap: () {
-              // NavigatorUtils.pushWidget(context, DockingMainPage());
-              NavigatorUtils.pushWidget(context, DllTextPage());
+              NavigatorUtils.pushWidget(context, DockingMainPage());
+              // NavigatorUtils.pushWidget(context, MouseTextPage());
             },
             child: Center(
               child: Container(

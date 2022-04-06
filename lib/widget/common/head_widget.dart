@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:transaction_plus/model/user.dart';
 import 'package:transaction_plus/utils/screen.dart';
-import 'package:transaction_plus/widget/down_menu.dart';
-import 'package:transaction_plus/widget/management/widget/common_form.dart';
 
 class HeadWidgetPage extends StatefulWidget {
 

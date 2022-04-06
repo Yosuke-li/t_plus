@@ -23,105 +23,85 @@ class _PositionState extends State<PositionPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: CommonForm<User>(
-                columns: [
-                  FormColumn<User>(
-                    title: Text('合约', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.username.hashCode ?? ''}'),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: CommonForm<User>(
+                  columns: [
+                    FormColumn<User>(
+                      title: Text('合约', style: TextStyle(color: Color(0xBFffffff)),),
+                      builder: (_, v) => Container(
+                        child: Text('${v.username.hashCode ?? ''}'),
+                      ),
                     ),
-                  ),
-                  FormColumn<User>(
-                    title: Text('合约名', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.username ?? ''}'),
+                    FormColumn<User>(
+                      title: Text('合约名', style: TextStyle(color: Color(0xBFffffff)),),
+                      builder: (_, v) => Container(
+                        child: Text('${v.username ?? ''}'),
+                      ),
                     ),
-                  ),
-                  FormColumn<User>(
-                    title: Text('最新价', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.password ?? ''}'),
+                    FormColumn<User>(
+                      title: Text('最新价', style: TextStyle(color: Color(0xBFffffff)),),
+                      builder: (_, v) => Container(
+                        child: Text('${v.password ?? ''}'),
+                      ),
                     ),
-                  ),
-                  FormColumn<User>(
-                    title: Text('涨跌', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.password ?? ''}'),
+                    FormColumn<User>(
+                      title: Text('涨跌', style: TextStyle(color: Color(0xBFffffff)),),
+                      builder: (_, v) => Container(
+                        child: Text('${v.password ?? ''}'),
+                      ),
                     ),
-                  ),
-                  FormColumn<User>(
-                    title: Text('买价', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.password ?? ''}'),
+                    FormColumn<User>(
+                      title: Text('买价', style: TextStyle(color: Color(0xBFffffff)),),
+                      builder: (_, v) => Container(
+                        child: Text('${v.password ?? ''}'),
+                      ),
                     ),
-                  ),
-                  FormColumn<User>(
-                    title: Text('买量', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.password ?? ''}'),
+                    FormColumn<User>(
+                      title: Text('买量', style: TextStyle(color: Color(0xBFffffff)),),
+                      builder: (_, v) => Container(
+                        child: Text('${v.password ?? ''}'),
+                      ),
                     ),
-                  ),
-                  FormColumn<User>(
-                    title: Text('成交量', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.password ?? ''}'),
+                    FormColumn<User>(
+                      title: Text('成交量', style: TextStyle(color: Color(0xBFffffff)),),
+                      builder: (_, v) => Container(
+                        child: Text('${v.password ?? ''}'),
+                      ),
                     ),
-                  ),
-                  FormColumn<User>(
-                    title: Text('持仓量', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.password ?? ''}'),
+                    FormColumn<User>(
+                      title: Text('持仓量', style: TextStyle(color: Color(0xBFffffff)),),
+                      builder: (_, v) => Container(
+                        child: Text('${v.password ?? ''}'),
+                      ),
                     ),
-                  ),
-                  FormColumn<User>(
-                    title: Text('涨停价', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.password ?? ''}'),
+                    FormColumn<User>(
+                      title: Text('涨停价', style: TextStyle(color: Color(0xBFffffff)),),
+                      builder: (_, v) => Container(
+                        child: Text('${v.password ?? ''}'),
+                      ),
                     ),
-                  ),
-                  FormColumn<User>(
-                    title: Text('跌停价', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.password ?? ''}'),
+                    FormColumn<User>(
+                      title: Text('跌停价', style: TextStyle(color: Color(0xBFffffff)),),
+                      builder: (_, v) => Container(
+                        child: Text('${v.password ?? ''}'),
+                      ),
                     ),
-                  ),
-                  FormColumn<User>(
-                    title: Text('今开盘', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.password ?? ''}'),
+                    FormColumn<User>(
+                      title: Text('今开盘', style: TextStyle(color: Color(0xBFffffff)),),
+                      builder: (_, v) => Container(
+                        child: Text('${v.password ?? ''}'),
+                      ),
                     ),
-                  ),
-                  FormColumn<User>(
-                    title: Text('昨结算', style: TextStyle(color: Color(0xBFffffff)),),
-                    builder: (_, v) => Container(
-                      child: Text('${v.password ?? ''}'),
+                    FormColumn<User>(
+                      title: Text('昨结算', style: TextStyle(color: Color(0xBFffffff)),),
+                      builder: (_, v) => Container(
+                        child: Text('${v.password ?? ''}'),
+                      ),
                     ),
-                  ),
-                ],
-                values: users,
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      CommonButton(title: '持仓', onTap: () {}),
-                      CommonButton(title: '明细', onTap: () {}),
-                      CommonButton(title: '组合', onTap: () {}),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      CommonButton(title: '对价平仓', onTap: () {}),
-                      CommonButton(title: '市价平仓', onTap: () {}),
-                      CommonButton(title: '市价反手', onTap: () {}),
-                      CommonButton(title: '大商所组合', onTap: () {}),
-                    ],
-                  ),
-                ],
+                  ],
+                  values: users,
+                ),
               ),
             ),
           ],

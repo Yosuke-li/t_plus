@@ -35,7 +35,6 @@ class _DockingExamplePageState extends State<DockingExamplePage>
         DockingItem(name: '标准下单表', widget: OrderSubmitPage(showTitle: false,), unDragged: true, weight: 0.28),
         DockingTabs([
           DockingItem(name: '所有委托单', widget: EntrustPage(), unDragged: true),
-          DockingItem(name: '未成交单', widget: UnsettledPage()),
         ]),
       ], canDrag: false),
       DockingRow([
