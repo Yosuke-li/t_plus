@@ -1,19 +1,27 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:transaction_plus/page/index.dart';
 import 'package:transaction_plus/utils/api_exception.dart';
-import 'package:transaction_plus/utils/desktop_window.dart';
-import 'package:transaction_plus/utils/mqtt_helper.dart';
 import 'package:transaction_plus/utils/navigator_helper.dart';
 import 'package:transaction_plus/utils/toast_utils.dart';
-import 'package:transaction_plus/widget/keyboard/keyboard_root.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'helper/security_keyboard.dart';
 
-void main() {
+void main() async {
+  //window方法
+  WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
+
+  windowManager.waitUntilReadyToShow().then((value) async {
+    // await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
+    await windowManager.setSize(Size(1280, 960));
+    await windowManager.center();
+    await windowManager.show();
+  });
+
   SecurityKeyboardCenter.register();
   runZonedGuarded<Future<void>>(() async {
     FlutterError.onError = _errorHandler;
