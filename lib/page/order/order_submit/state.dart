@@ -3,22 +3,24 @@ import 'package:get/get.dart';
 import 'package:transaction_plus/model/order_submit.dart';
 
 class OrderSubmitState {
-  GlobalKey<FormState> formKey;
-  OrderSubmit create;
+  late GlobalKey<FormState> formKey;
+  late OrderSubmit create;
 
-  RxBool isShowBar;
+  late RxBool isShowBar;
 
-  RxInt side;
-  RxInt tif;
-  RxInt ordType;
-  RxInt openFlag;
-  RxInt hedgeFlag;
+  late RxInt side;
+  late RxInt tif;
+  late RxInt ordType;
+  late RxInt openFlag;
+  late RxInt hedgeFlag;
 
-  List<int> sides;
-  List<int> tifs;
-  List<int> ordTypes;
-  List<int> openFlags;
-  List<int> hedgeFlags;
+  late RxBool readOnly;
+
+  late List<int> sides;
+  late List<int> tifs;
+  late List<int> ordTypes;
+  late List<int> openFlags;
+  late List<int> hedgeFlags;
 
   OrderSubmitState() {
     formKey = GlobalKey<FormState>();
@@ -29,6 +31,7 @@ class OrderSubmitState {
     openFlags = <int>[];
     hedgeFlags = <int>[];
     isShowBar = true.obs;
+    readOnly = false.obs;
     side = 0.obs;
     tif = 0.obs;
     ordType = 0.obs;

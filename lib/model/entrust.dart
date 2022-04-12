@@ -1,14 +1,14 @@
 class Entrust {
-  int id;
-  String price;
-  String unsettled;
-  String settled;
-  String cell;
-  String buy;
-  String status;
-  String head;
-  String open;
-  String detail;
+  int? id;
+  String? price;
+  String? unsettled;
+  String? settled;
+  String? cell;
+  String? buy;
+  String? status;
+  String? head;
+  String? open;
+  String? detail;
 
   Entrust({
     this.id,

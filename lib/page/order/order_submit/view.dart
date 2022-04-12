@@ -10,7 +10,7 @@ import 'logic.dart';
 import 'state.dart';
 
 class OrderSubmitPage extends StatefulWidget {
-  bool showTitle;
+  bool? showTitle;
 
   OrderSubmitPage({this.showTitle});
 
@@ -65,11 +65,12 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
   ];
 
   final _searchController = TextEditingController();
+  final ScrollController _controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    state.isShowBar.value = widget.showTitle;
+    state.isShowBar.value = widget.showTitle ?? false;
     setState(() {});
   }
 
@@ -83,6 +84,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
               )
             : null,
         body: SingleChildScrollView(
+          controller: _controller,
           child: Container(
             alignment: Alignment.center,
             child: ConstrainedBox(
@@ -99,8 +101,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            width: screenUtil.adaptive(200),
+                          Expanded(
                             child: Column(
                               children: [
                                 Container(
@@ -108,42 +109,78 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   margin: EdgeInsets.only(
                                       top: screenUtil.adaptive(15),
                                       bottom: screenUtil.adaptive(10)),
-                                  child: Text(
-                                    '合约',
-                                    style: TextStyle(
-                                        color: Color(0xBFffffff),
-                                        fontSize: screenUtil.adaptive(18)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            '合约',
+                                            style: TextStyle(
+                                              color: Color(0xBFffffff),
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {},
+                                            child: Icon(
+                                              Icons.search,
+                                              size: 18,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          state.readOnly.value =
+                                          !state.readOnly.value;
+                                        },
+                                        child: Icon(
+                                          state.readOnly.value
+                                              ? Icons.lock
+                                              : Icons.lock_open,
+                                          size: 18,
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
                                 Container(
                                   child: SearchField(
                                     suggestions: _suggestions,
                                     controller: _searchController,
-                                    width: screenUtil.adaptive(200),
-                                    hint: 'SearchField Sample 1',
+                                    readOnly: state.readOnly.value,
+                                    hint: '选择合约',
+                                    searchAlignVertical:
+                                    TextAlignVertical.bottom,
                                     initialValue: _suggestions[2],
                                     searchInputDecoration: InputDecoration(
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: Colors.black.withOpacity(0.8),
+                                          color:
+                                          Colors.black.withOpacity(0.8),
                                         ),
                                       ),
                                       border: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.red),
+                                        borderSide:
+                                        BorderSide(color: Colors.red),
                                       ),
                                     ),
                                     maxSuggestionsInViewPort: 4,
-                                    itemHeight: screenUtil.adaptive(50),
+                                    itemHeight: screenUtil.adaptive(30),
                                     onTap: (x) {
-                                      print('selected =$x ${_searchController.text}');
+                                      print(
+                                          'selected =$x ${_searchController.text}');
                                     },
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Container(
-                            width: screenUtil.adaptive(200),
+                          SizedBox(
+                            width: screenUtil.adaptive(20),
+                          ),
+                          Expanded(
                             child: Column(
                               children: [
                                 Container(
@@ -154,8 +191,8 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   child: Text(
                                     '手数',
                                     style: TextStyle(
-                                        color: Color(0xBFffffff),
-                                        fontSize: screenUtil.adaptive(18)),
+                                      color: Color(0xBFffffff),
+                                    ),
                                   ),
                                 ),
                                 Container(
@@ -168,8 +205,9 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                     ),
                                   ),
                                   child: TextInputNumberUpDown(
-                                    onSave: (String value) {
-                                      state.create.ordQty = int.tryParse(value);
+                                    onSave: (String? value) {
+                                      state.create.ordQty =
+                                          int.tryParse(value!);
                                     },
                                   ),
                                 ),
@@ -187,8 +225,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            width: screenUtil.adaptive(122),
+                          Expanded(
                             child: Column(
                               children: [
                                 Container(
@@ -199,8 +236,8 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   child: Text(
                                     '价格',
                                     style: TextStyle(
-                                        color: Color(0xBFffffff),
-                                        fontSize: screenUtil.adaptive(18)),
+                                      color: Color(0xBFffffff),
+                                    ),
                                   ),
                                 ),
                                 Container(
@@ -213,16 +250,19 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                     ),
                                   ),
                                   child: TextInputNumberUpDown(
-                                    onSave: (String value) {
-                                      state.create.ordQty = int.tryParse(value);
+                                    onSave: (String? value) {
+                                      state.create.ordQty =
+                                          int.tryParse(value!);
                                     },
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Container(
-                            width: screenUtil.adaptive(122),
+                          SizedBox(
+                            width: screenUtil.adaptive(10),
+                          ),
+                          Expanded(
                             child: Column(
                               children: [
                                 Container(
@@ -233,8 +273,8 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   child: Text(
                                     '方向',
                                     style: TextStyle(
-                                        color: Color(0xBFffffff),
-                                        fontSize: screenUtil.adaptive(18)),
+                                      color: Color(0xBFffffff),
+                                    ),
                                   ),
                                 ),
                                 Container(
@@ -247,7 +287,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                     ),
                                   ),
                                   child: Obx(
-                                    () => DownMenuWidget(
+                                        () => DownMenuWidget<int>(
                                       select: state.side.value,
                                       menus: state.sides,
                                       selectFunc: (value) {
@@ -259,8 +299,10 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                               ],
                             ),
                           ),
-                          Container(
-                            width: screenUtil.adaptive(122),
+                          SizedBox(
+                            width: screenUtil.adaptive(10),
+                          ),
+                          Expanded(
                             child: Column(
                               children: [
                                 Container(
@@ -271,8 +313,8 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   child: Text(
                                     '开平',
                                     style: TextStyle(
-                                        color: Color(0xBFffffff),
-                                        fontSize: screenUtil.adaptive(18)),
+                                      color: Color(0xBFffffff),
+                                    ),
                                   ),
                                 ),
                                 Container(
@@ -285,7 +327,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                     ),
                                   ),
                                   child: Obx(
-                                    () => DownMenuWidget(
+                                        () => DownMenuWidget<int>(
                                       select: state.openFlag.value,
                                       menus: state.openFlags,
                                       selectFunc: (value) {
@@ -308,8 +350,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            width: screenUtil.adaptive(122),
+                          Expanded(
                             child: Column(
                               children: [
                                 Container(
@@ -320,8 +361,8 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   child: Text(
                                     '投保',
                                     style: TextStyle(
-                                        color: Color(0xBFffffff),
-                                        fontSize: screenUtil.adaptive(18)),
+                                      color: Color(0xBFffffff),
+                                    ),
                                   ),
                                 ),
                                 Container(
@@ -334,7 +375,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                     ),
                                   ),
                                   child: Obx(
-                                    () => DownMenuWidget(
+                                        () => DownMenuWidget<int>(
                                       select: state.hedgeFlag.value,
                                       menus: state.hedgeFlags,
                                       selectFunc: (value) {
@@ -346,8 +387,10 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                               ],
                             ),
                           ),
-                          Container(
-                            width: screenUtil.adaptive(122),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
                             child: Column(
                               children: [
                                 Container(
@@ -358,8 +401,8 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   child: Text(
                                     '类型',
                                     style: TextStyle(
-                                        color: Color(0xBFffffff),
-                                        fontSize: screenUtil.adaptive(18)),
+                                      color: Color(0xBFffffff),
+                                    ),
                                   ),
                                 ),
                                 Container(
@@ -372,7 +415,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                     ),
                                   ),
                                   child: Obx(
-                                    () => DownMenuWidget(
+                                        () => DownMenuWidget<int>(
                                       select: state.ordType.value,
                                       menus: state.ordTypes,
                                       selectFunc: (value) {
@@ -384,8 +427,10 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                               ],
                             ),
                           ),
-                          Container(
-                            width: screenUtil.adaptive(122),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
                             child: Column(
                               children: [
                                 Container(
@@ -396,8 +441,8 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   child: Text(
                                     'TIF',
                                     style: TextStyle(
-                                        color: Color(0xBFffffff),
-                                        fontSize: screenUtil.adaptive(18)),
+                                      color: Color(0xBFffffff),
+                                    ),
                                   ),
                                 ),
                                 Container(
@@ -410,7 +455,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                     ),
                                   ),
                                   child: Obx(
-                                    () => DownMenuWidget(
+                                        () => DownMenuWidget<int>(
                                       select: state.tif.value,
                                       menus: state.tifs,
                                       selectFunc: (value) {

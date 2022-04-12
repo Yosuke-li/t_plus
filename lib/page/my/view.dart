@@ -56,7 +56,7 @@ class _MyPageState extends State<MyPage> {
                           left: screenUtil.adaptive(20),
                         ),
                         child: Text(
-                          '${Global.user.username ?? ''}',
+                          '${Global.user?.username ?? ''}',
                           style: TextStyle(
                             fontSize: screenUtil.getAutoSp(50),
                           ),

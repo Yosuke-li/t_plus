@@ -6,7 +6,7 @@ class DownMenuWidget<T> extends StatefulWidget {
   List<T> menus;
   void Function(T value) selectFunc;
 
-  DownMenuWidget({this.menus, this.selectFunc, this.select});
+  DownMenuWidget({required this.menus, required this.selectFunc, required this.select});
 
   @override
   _DownMenuWidget createState() => _DownMenuWidget();
@@ -20,12 +20,11 @@ class _DownMenuWidget<T> extends State<DownMenuWidget> {
           value: widget.select ?? widget.menus[0],
           isExpanded: true,
           icon: Icon(Icons.keyboard_arrow_down, size: screenUtil.adaptive(24),),
-          items: widget.menus?.map((e) {
+          items: widget.menus.map((e) {
                 return DropdownMenuItem<T>(child: Text('$e'), value: e);
-              })?.toList() ??
-              [],
-          onChanged: (T value) {
-            widget.selectFunc?.call(value);
+              }).toList(),
+          onChanged: (T? value) {
+            widget.selectFunc.call(value);
           },
       ),
     );

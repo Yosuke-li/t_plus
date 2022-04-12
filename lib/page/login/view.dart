@@ -73,10 +73,10 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Text('服务器：'),
                         Expanded(
-                          child: DownMenuWidget(
+                          child: DownMenuWidget<String>(
                             select: state.server.value,
                             menus: state.servers,
-                            selectFunc: (value) {
+                            selectFunc: (String value) {
                               state.server.value = value;
                             },
                           ),
@@ -104,8 +104,8 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: new InputDecoration(
                           labelText: '账户',
                         ),
-                        onSaved: (val) {
-                          state.name.value = val;
+                        onSaved: (String? val) {
+                          state.name.value = val!;
                         },
                       ),
                     ),
@@ -130,8 +130,8 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           labelText: '密码',
                         ),
-                        onSaved: (val) {
-                          state.password.value = val;
+                        onSaved: (String? val) {
+                          state.password.value = val!;
                         },
                       ),
                     ),
@@ -158,9 +158,9 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Checkbox(
-                        value: state.isRead.value ?? false,
-                        onChanged: (bool value) {
-                          state.isRead.value = value;
+                        value: state.isRead.value,
+                        onChanged: (bool? value) {
+                          state.isRead.value = value!;
                         },
                       ),
                       Text(
@@ -189,9 +189,9 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Checkbox(
-                  value: Global.isMqttLog ?? false,
-                  onChanged: (bool value) {
-                    Global.isMqttLog = value;
+                  value: Global.isMqttLog,
+                  onChanged: (bool? value) {
+                    Global.isMqttLog = value!;
                     setState(() {});
                   },
                 ),
@@ -205,9 +205,9 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Checkbox(
-                  value: Global.isDarkTheme ?? false,
-                  onChanged: (bool value) {
-                    EventBusHelper.asyncStreamController.add(EventCache()..isDarkTheme = value);
+                  value: Global.isDarkTheme,
+                  onChanged: (bool? value) {
+                    EventBusHelper.asyncStreamController!.add(EventCache()..isDarkTheme = value!);
                     setState(() {});
                   },
                 ),
@@ -221,9 +221,9 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Checkbox(
-                  value: Global.isDoraemonkit ?? false,
-                  onChanged: (bool value) {
-                    Global.isDoraemonkit = value;
+                  value: Global.isDoraemonkit,
+                  onChanged: (bool? value) {
+                    Global.isDoraemonkit = value!;
                     FlutterDoraemonkit.toggle();
                     setState(() {});
                   },
@@ -238,9 +238,9 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Checkbox(
-                  value: Global.isFiddle ?? false,
-                  onChanged: (bool value) {
-                    Global.isFiddle = value;
+                  value: Global.isFiddle,
+                  onChanged: (bool? value) {
+                    Global.isFiddle = value!;
                     setState(() {});
                   },
                 ),
@@ -252,7 +252,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextFormField(
                     readOnly: Global.isFiddle == false,
                     keyboardType: TextInputType.number,
-                    initialValue: Global.fiddleIp ?? '',
+                    initialValue: Global.fiddleIp,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
                     ],

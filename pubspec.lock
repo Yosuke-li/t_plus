@@ -200,6 +200,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  mirai_dropdown_menu:
+    dependency: "direct main"
+    description:
+      name: mirai_dropdown_menu
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   mqtt_client:
     dependency: "direct main"
     description:
@@ -402,5 +409,5 @@ packages:
     source: hosted
     version: "0.2.0+1"
 sdks:
-  dart: ">=2.15.0 <3.0.0"
+  dart: ">=2.16.2 <3.0.0"
   flutter: ">=2.8.0"

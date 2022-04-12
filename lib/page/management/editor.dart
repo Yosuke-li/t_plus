@@ -6,20 +6,20 @@ import 'package:transaction_plus/widget/management/widget/stack_view.dart';
 
 abstract class EditorListener {
   void onOpen(
-      {@required ViewKey key,
-      @required String tab,
-      @required WidgetBuilder contentIfAbsent,
-      VoidCallback onTapTab});
+      {required ViewKey key,
+      required String tab,
+      required WidgetBuilder contentIfAbsent,
+      VoidCallback? onTapTab});
 
   void onClose(ViewKey key);
 }
 
 class EditorController with GenericListenable<EditorListener> {
   void open(
-      {@required ViewKey key,
-      @required String tab,
-      @required WidgetBuilder contentIfAbsent,
-      VoidCallback onTapTab}) {
+      {required ViewKey key,
+      required String tab,
+      required WidgetBuilder contentIfAbsent,
+      VoidCallback? onTapTab}) {
     foreach((entry) {
       entry.onOpen(
           key: key,
@@ -37,9 +37,9 @@ class EditorController with GenericListenable<EditorListener> {
 }
 
 class Editor extends StatefulWidget {
-  final EditorController controller;
+  final EditorController? controller;
 
-  const Editor({Key key, this.controller}) : super(key: key);
+  const Editor({Key? key, this.controller}) : super(key: key);
 
   @override
   _EditorState createState() => _EditorState();
@@ -49,19 +49,19 @@ class _TabPage {
   final String tab;
   final WidgetBuilder builder;
   final ViewKey key;
-  final VoidCallback onTapTab;
+  final VoidCallback? onTapTab;
 
   _TabPage(
-      {@required this.tab,
-      @required this.builder,
-      @required this.key,
+      {required this.tab,
+      required this.builder,
+      required this.key,
       this.onTapTab});
 }
 
 class _EditorState extends State<Editor> implements EditorListener {
   final StackController controller = StackController();
   List<_TabPage> _tabs = <_TabPage>[];
-  _TabPage current;
+  _TabPage? current;
 
   @override
   void initState() {
@@ -91,10 +91,10 @@ class _EditorState extends State<Editor> implements EditorListener {
 
   @override
   void onOpen(
-      {@required ViewKey key,
-      @required String tab,
-      @required WidgetBuilder contentIfAbsent,
-      VoidCallback onTapTab}) {
+      {required ViewKey key,
+      required String tab,
+      required WidgetBuilder contentIfAbsent,
+      VoidCallback? onTapTab}) {
     _open(
         key: key,
         tab: tab,
@@ -103,12 +103,12 @@ class _EditorState extends State<Editor> implements EditorListener {
   }
 
   void _open(
-      {@required ViewKey key,
-      @required String tab,
-      @required WidgetBuilder contentIfAbsent,
-      VoidCallback onTapTab}) {
+      {required ViewKey key,
+      required String tab,
+      required WidgetBuilder contentIfAbsent,
+      VoidCallback? onTapTab}) {
     if (_tabs.any((element) => element.key == key)) {
-      if (current.key != key) {
+      if (current?.key != key) {
         controller.open(key, contentIfAbsent);
       }
     } else {
@@ -129,12 +129,12 @@ class _EditorState extends State<Editor> implements EditorListener {
     setState(() {});
   }
 
-  void _onCurrentIndexChanged(ViewKey key) {
+  void _onCurrentIndexChanged(ViewKey? key) {
     if (key == null) {
       current = null;
     } else {
       current =
-          _tabs.firstWhere((element) => element.key == key, orElse: () => null);
+          _tabs.firstWhere((element) => element.key == key);
       assert(current != null);
     }
 

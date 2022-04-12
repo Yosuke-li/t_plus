@@ -5,8 +5,8 @@ import 'package:transaction_plus/global/dll_text.dart';
 import 'package:transaction_plus/page/order/order_submit/view.dart';
 
 class PageModel {
-  String name;
-  Widget pageUrl;
+  late String name;
+  late Widget pageUrl;
 }
 
 class GridComponentPage extends StatefulWidget {
@@ -38,7 +38,7 @@ class GridComponentPageState extends State<GridComponentPage> {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
         ),
-        itemCount: _page.length ?? 0,
+        itemCount: _page.length,
         itemBuilder: ((context, index) {
           return GestureDetector(
             onTap: () {

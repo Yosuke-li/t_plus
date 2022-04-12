@@ -1,4 +1,4 @@
 class EventCache {
-  String realTimeData;
+  late String realTimeData;
   bool isDarkTheme = false;
 }

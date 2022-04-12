@@ -4,18 +4,18 @@
 /// accessToken : "xsaxasxasxasx"
 
 class User {
-  String username;
-  String password;
-  bool isRead;
-  String accessToken;
-  String refreshToken;
+  String? username;
+  String? password;
+  bool? isRead;
+  String? accessToken;
+  String? refreshToken;
 
   User({
-      String username, 
-      String password, 
-      String refreshToken,
-      bool isRead,
-      String accessToken}){
+      String? username,
+      String? password,
+      String? refreshToken,
+      bool? isRead,
+      String? accessToken}){
     username = username;
     password = password;
     isRead = isRead;

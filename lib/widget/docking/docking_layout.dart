@@ -11,7 +11,7 @@ class _LaytoutAction {
 }
 
 mixin DropArea {
-  _LaytoutAction _layoutAction;
+  late _LaytoutAction _layoutAction;
 }
 
 /// Represents any area of the layout.
@@ -32,10 +32,10 @@ abstract class DockingArea {
   /// It will be unique across the layout.
   int get index => _index;
 
-  DockingParentArea _parent;
+  late DockingParentArea? _parent;
 
   /// Gets the parent of this area or [NULL] if it is the root.
-  DockingParentArea get parent => _parent;
+  DockingParentArea? get parent => _parent;
 
   bool _disposed = false;
 
@@ -72,7 +72,7 @@ abstract class DockingArea {
   /// Gets the path in the layout hierarchy.
   String get path {
     String _path = typeAcronym;
-    DockingParentArea p = _parent;
+    DockingParentArea? p = _parent;
     while (p != null) {
       _path = p.typeAcronym + _path;
       p = p._parent;
@@ -85,7 +85,7 @@ abstract class DockingArea {
   /// Return [0] if root (null parent).
   int get level {
     int l = 0;
-    DockingParentArea p = _parent;
+    DockingParentArea? p = _parent;
     while (p != null) {
       l++;
       p = p._parent;
@@ -105,7 +105,7 @@ abstract class DockingArea {
 
   /// Updates recursively the information of parent, index and layoutId.
   int _updateHierarchy(
-      DockingParentArea parentArea, int nextIndex, int layoutId) {
+      DockingParentArea? parentArea, int nextIndex, int layoutId) {
     _parent = parentArea;
     _layoutId = layoutId;
     _index = nextIndex++;
@@ -162,7 +162,7 @@ abstract class DockingParentArea extends DockingArea {
 
   @override
   int _updateHierarchy(
-      DockingParentArea parentArea, int nextIndex, int layoutId) {
+      DockingParentArea? parentArea, int nextIndex, int layoutId) {
     _parent = parentArea;
     _layoutId = layoutId;
     _index = nextIndex++;
@@ -194,12 +194,12 @@ class DockingItem extends DockingArea with DropArea {
         weight: item.weight);
   }
 
-  final String name;
-  final Widget widget;
+  final String? name;
+  final Widget? widget;
 
-  final bool unDragged;
+  final bool? unDragged;
 
-  final double weight;
+  final double? weight;
 
   bool _dragged = false;
 
@@ -213,10 +213,10 @@ class DockingRow extends DockingParentArea {
   /// Builds a [DockingRow].
   DockingRow._(List<DockingArea> children, {this.canDrag}) : super(children);
 
-  final bool canDrag;
+  final bool? canDrag;
 
   /// Builds a [DockingRow].
-  factory DockingRow(List<DockingArea> children, {bool canDrag}) {
+  factory DockingRow(List<DockingArea> children, {bool? canDrag}) {
     List<DockingArea> newChildren = [];
     for (DockingArea child in children) {
       if (child is DockingRow) {
@@ -286,7 +286,7 @@ enum DropPosition { top, bottom, left, right, center }
 /// The [root] is single and can be any [DockingArea].
 class DockingLayout {
   /// Builds a [DockingLayout].
-  DockingLayout({DockingArea root, int id})
+  DockingLayout({DockingArea? root, int? id})
       : this._root = root,
         this.id = (id != null) ? id : DockingLayout._randomId() {
     _updateHierarchy();
@@ -296,10 +296,10 @@ class DockingLayout {
   final int id;
 
   /// The protected root of this layout.
-  DockingArea _root;
+  DockingArea? _root;
 
   /// The root of this layout.
-  DockingArea get root => _root;
+  DockingArea? get root => _root;
 
   /// Updates recursively the information of parent,
   /// index and layoutId in each [DockingArea].
@@ -324,9 +324,9 @@ class DockingLayout {
 
   /// Rearranges the layout given a new location for a [DockingItem].
   void move(
-      {@required DockingItem draggedItem,
-      @required DropArea targetArea,
-      @required DropPosition dropPosition}) {
+      {required DockingItem draggedItem,
+      required DropArea targetArea,
+      required DropPosition dropPosition}) {
     if (draggedItem == targetArea) {
       throw ArgumentError(
           'Argument draggedItem cannot be the same as argument targetArea. A DockingItem cannot be rearranged on itself.');
@@ -359,10 +359,10 @@ class DockingLayout {
       }
     } else {
       // is a child
-      DockingParentArea parent = item.parent;
-      parent._children.remove(item);
+      DockingParentArea? parent = item.parent;
+      parent?._children.remove(item);
       if (simplify) {
-        needUpdateLayout = !_simplify(parent);
+        needUpdateLayout = !_simplify(parent!);
       }
     }
     item._dispose();
@@ -396,12 +396,12 @@ class DockingLayout {
 
   void _rebuildLayout() {
     if (_root != null) {
-      _root = _rebuildLayoutRecursively(_root);
+      _root = _rebuildLayoutRecursively(_root!);
       _updateHierarchy();
     }
   }
 
-  DockingArea _rebuildLayoutRecursively(DockingArea area) {
+  DockingArea? _rebuildLayoutRecursively(DockingArea area) {
     if (area is DockingItem) {
       if (area._dragged && area._layoutAction != null) {
         throw StateError(
@@ -466,7 +466,7 @@ class DockingLayout {
     } else if (area is DockingParentArea) {
       List<DockingArea> children = [];
       area.forEach((child) {
-        DockingArea newChild = _rebuildLayoutRecursively(child);
+        DockingArea? newChild = _rebuildLayoutRecursively(child);
         if (newChild != null) {
           children.add(newChild);
         }
@@ -508,8 +508,8 @@ class DockingLayout {
         }
       } else {
         // is a child
-        DockingParentArea parent = node.parent;
-        _replaceChild(parent, node, singleChild);
+        DockingParentArea? parent = node.parent;
+        _replaceChild(parent!, node, singleChild);
       }
       return true;
     }

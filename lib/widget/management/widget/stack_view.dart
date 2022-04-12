@@ -26,11 +26,11 @@ class StackController with GenericListenable<StackViewListener> {
 }
 
 class StackView extends StatefulWidget {
-  final StackController controller;
-  final Widget child;
-  final ValueChanged<ViewKey> onCurrentIndexChanged;
+  final StackController? controller;
+  final Widget? child;
+  final ValueChanged<ViewKey?>? onCurrentIndexChanged;
 
-  const StackView({Key key, this.controller, this.onCurrentIndexChanged, this.child}) : super(key: key);
+  const StackView({Key? key, this.controller, this.onCurrentIndexChanged, this.child}) : super(key: key);
 
   @override
   _StackViewState createState() => _StackViewState();
@@ -83,7 +83,7 @@ class _StackViewState extends State<StackView> implements StackViewListener {
     } else {
       _currentIndex = index;
     }
-    widget.onCurrentIndexChanged?.call(_list[_currentIndex].key);
+    widget.onCurrentIndexChanged?.call(_list[_currentIndex].key as ViewKey);
     _markNeedUpdate();
   }
 
@@ -99,7 +99,7 @@ class _StackViewState extends State<StackView> implements StackViewListener {
       if(_list.isEmpty){
         widget.onCurrentIndexChanged?.call(null);
       }else{
-        widget.onCurrentIndexChanged?.call(_list[_currentIndex].key);
+        widget.onCurrentIndexChanged?.call(_list[_currentIndex].key as ViewKey);
       }
     }
     _markNeedUpdate();

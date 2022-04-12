@@ -24,15 +24,15 @@ typedef Cancel = void Function();
 
 class ToastUtils {
   static Cancel showToast(
-      {@required String msg,
+      {required String msg,
       Duration duration = const Duration(seconds: 2),
       bool clickClose = false,
       Color backgroundColor = Colors.transparent,
       Color contentBackgroundColor = Colors.black54,
       Alignment align = const Alignment(0, 0.75),
-      Widget preIcon,
-      Widget suffixIcon,
-      TextStyle textStyle,
+      Widget? preIcon,
+      Widget? suffixIcon,
+      TextStyle? textStyle,
       BorderRadiusGeometry borderRadius =
           const BorderRadius.all(Radius.circular(8)),
       EdgeInsetsGeometry contentPadding =
@@ -59,7 +59,7 @@ class ToastUtils {
   static Cancel showLoading(
       {bool clickClose = false,
       bool allowClick = false,
-      Widget customLoading}) {
+      Widget? customLoading}) {
     if (customLoading != null) {
       return BotToast.showCustomLoading(
           toastBuilder: (_) => Center(

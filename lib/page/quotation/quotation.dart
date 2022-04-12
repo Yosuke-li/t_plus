@@ -1,10 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:transaction_plus/model/user.dart';
+import 'package:transaction_plus/page/quotation/setting.dart';
 import 'package:transaction_plus/utils/array_helper.dart';
 import 'package:transaction_plus/utils/log_utils.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/management/widget/common_form.dart';
+
+import '../../widget/popup_sub_menu_item.dart';
 
 class Quotation extends StatefulWidget {
   @override
@@ -73,26 +76,43 @@ class _QuotationState extends State<Quotation> {
     super.initState();
   }
 
+  //右键菜单栏
   Future<void> _onPointerDown(PointerDownEvent event, int index) async {
-    List<PopupMenuItem<int>> menuItems = <PopupMenuItem<int>>[
-      PopupMenuItem(child: Text('apply +1'), value: 1),
-      PopupMenuItem(child: Text('apply -1'), value: 2),
-      PopupMenuItem(child: Text('set to 0'), value: 3),
+    List<PopupMenuEntry<int>> menuItems = <PopupMenuEntry<int>>[
+      PopupMenuItem(child: Text('下单'), value: 1),
+      PopupSubMenuItem<int>(
+        title: '移动到',
+        items: [
+          100,
+          200,
+          300,
+          400,
+          500,
+        ],
+        onSelected: (value) {
+          Log.info(value);
+        },
+      ),
+      PopupMenuItem(child: Text('设置合约'), value: 2),
+      PopupMenuItem(child: Text('删除'), value: 3),
     ];
 
     if (event.kind == PointerDeviceKind.mouse &&
         event.buttons == kSecondaryMouseButton) {
-      Log.info(event);
-      Log.info('当前索引index：$index');
       final RenderBox overlay =
-      Overlay.of(context).context.findRenderObject() as RenderBox;
-      final int menuItem = await showMenu<int>(
+          Overlay.of(context)?.context.findRenderObject() as RenderBox;
+      final int? menuItem = await showMenu<int>(
           context: context,
           items: menuItems,
           position: RelativeRect.fromSize(
               event.position & Size(48.0, 48.0), overlay.size));
 
-      Log.info('选择item: $menuItem');
+      switch (menuItem) {
+        case 2:
+          await Setting.Model(context);
+          return;
+          break;
+      }
     }
   }
 
@@ -121,9 +141,7 @@ class _QuotationState extends State<Quotation> {
                           },
                           builder: (context, _, __) {
                             return InkWell(
-                              onTap: () {
-
-                              },
+                              onTap: () {},
                               child: Container(
                                 width: 35,
                                 height: 20,
@@ -164,8 +182,8 @@ class _QuotationState extends State<Quotation> {
               height: MediaQuery.of(context).size.height * 0.25,
               canDrag: true,
               onMouseEvent: _onPointerDown,
-              onTapFunc: (value) {
-                Log.info(value.username);
+              onTapFunc: (User value) {
+                Log.info(value.username!);
               },
               columns: [
                 FormColumn<User>(

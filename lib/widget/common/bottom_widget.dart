@@ -12,7 +12,7 @@ class BottomWidgetPage extends StatefulWidget {
 
 class _BottomWidgetState extends State<BottomWidgetPage> {
   DateTime now = DateTime.now();
-  void Function() _timer;
+  late void Function() _timer;
 
   void startClock() {
     _timer = Timer.periodic(const Duration(microseconds: 1000), (Timer t) {

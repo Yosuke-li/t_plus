@@ -31,16 +31,16 @@ class LoginLogic extends GetxController {
   }
 
   void _checkStore() {
-    final String value = LocateStorage.getStringWithExpire('User');
+    final String? value = LocateStorage.getStringWithExpire('User');
     if (value == null) {
       return;
     }
     User user = User.fromJson(jsonDecode(value));
-    state.isRead.value = user.isRead;
-    state.name.value = user.username;
-    state.nameController.text = user.username;
-    state.password.value = user.password;
-    state.passController.text = user.password;
+    state.isRead.value = user.isRead!;
+    state.name.value = user.username!;
+    state.nameController.text = user.username!;
+    state.password.value = user.password!;
+    state.passController.text = user.password!;
   }
 
   Future<void> onGetServer() async {
@@ -49,13 +49,13 @@ class LoginLogic extends GetxController {
       list.forEach((element) {
         state.servers.add(element['server']);
       });
-      state.server.value = ArrayHelper.get(state.servers, 0);
+      state.server.value = ArrayHelper.get(state.servers, 0)!;
     });
   }
 
   void login() async {
-    final FormState from = state.formKey.currentState;
-    from.save();
+    final FormState? from = state.formKey.currentState;
+    from!.save();
     if (from.validate()) {
       bool c = _check();
       if (c == true) {
@@ -91,9 +91,9 @@ class LoginLogic extends GetxController {
             //check mqtt client
             MqttHelper.init();
             if (Platform.isAndroid || Platform.isIOS) {
-              NavigatorUtils.pushWidget(Get.context, HomeMainPage());
+              NavigatorUtils.pushWidget(Get.context!, HomeMainPage());
             } else if (Platform.isWindows || Platform.isMacOS) {
-              NavigatorUtils.pushWidget(Get.context, ManagePage());
+              NavigatorUtils.pushWidget(Get.context!, ManagePage());
             }
           } else if (loginModel != null && loginModel.code == 10002) {
             ToastUtils.showToast(msg: '用户名或密码不正确');
@@ -111,7 +111,7 @@ class LoginLogic extends GetxController {
   }
 
   bool _check() {
-    String errText;
+    String? errText;
     if (state.password.value == null || state.password.value.isEmpty == true) {
       errText = '密码不能为空';
     }

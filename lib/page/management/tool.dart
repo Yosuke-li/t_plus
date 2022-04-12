@@ -10,9 +10,9 @@ import 'dart:math' as math;
 import 'editor.dart';
 
 class Tool extends StatefulWidget {
-  EditorController controller;
+  EditorController? controller;
 
-  Tool({Key key, this.controller}) : super(key: key);
+  Tool({Key? key, this.controller}) : super(key: key);
 
   @override
   _ToolState createState() => _ToolState();
@@ -30,14 +30,14 @@ class _ToolState extends State<Tool> {
   bool hideMenu = false;
 
   void _handlePromotionalInfoTap() {
-    widget.controller.open(
+    widget.controller?.open(
         key: ConstViewKey.order,
         tab: '下单',
         contentIfAbsent: (_) => OrderSubmitPage());
   }
 
   void _realPage() {
-    widget.controller.open(
+    widget.controller?.open(
         key: ConstViewKey.RealTimeList,
         tab: '实时列表',
         contentIfAbsent: (_) => RealTimeListPage());
@@ -60,7 +60,7 @@ class _ToolState extends State<Tool> {
                         groupName: '首页',
                         callback: () {
                           ConstViewKey.getAllKey
-                              .map((e) => widget.controller.close(e))
+                              .map((e) => widget.controller?.close(e))
                               .toList();
                         },
                         icon: Container(
@@ -108,10 +108,10 @@ class _ToolState extends State<Tool> {
   }
 
   Widget buildToolGroup(
-      {String groupName,
-      List<_GroupItem> groupItems,
-      VoidCallback callback,
-      Widget icon}) {
+      {required String groupName,
+      List<_GroupItem>? groupItems,
+      VoidCallback? callback,
+      Widget? icon}) {
     assert(groupItems?.isNotEmpty == true || callback != null);
     return CustomExpansionTile(
       value: expanded[groupName] == true,
@@ -144,12 +144,12 @@ class _ToolState extends State<Tool> {
         ),
         onTap: () {
           if (callback != null) {
-            callback?.call();
+            callback.call();
           } else {
             if (expanded[groupName] == null) {
               expanded[groupName] = true;
             } else {
-              expanded[groupName] = !expanded[groupName];
+              expanded[groupName] = !expanded[groupName]!;
             }
           }
           setState(() {});

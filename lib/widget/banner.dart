@@ -8,7 +8,7 @@ import 'package:transaction_plus/utils/array_helper.dart';
 class WidgetBanner extends StatefulWidget {
   final List<ImageModel> images;
   final double height;
-  final ValueChanged<int> onTap;
+  final ValueChanged<int>? onTap;
   final Curve curve;
   final bool isShowIndicator;
 
@@ -25,9 +25,9 @@ class WidgetBanner extends StatefulWidget {
 }
 
 class _WidgetBannerState extends State<WidgetBanner> {
-  PageController _pageController;
-  int _currentIndex;
-  Timer _timer;
+  late PageController _pageController;
+  late int _currentIndex;
+  late Timer? _timer;
 
   //初始化
   @override
@@ -64,7 +64,7 @@ class _WidgetBannerState extends State<WidgetBanner> {
     return Positioned(
       bottom: 10,
       child: Row(
-        children: widget.images?.map((ImageModel s) {
+        children: widget.images.map((ImageModel s) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3.0),
             child: ClipOval(
@@ -77,7 +77,7 @@ class _WidgetBannerState extends State<WidgetBanner> {
               ),
             ),
           );
-        })?.toList() ?? [],
+        }).toList(),
       ),
     );
   }
@@ -104,7 +104,7 @@ class _WidgetBannerState extends State<WidgetBanner> {
 
               },
               child: Image.network(
-                ArrayHelper.get(widget.images, index % length).image,
+                (ArrayHelper.get(widget.images, index % length)?.image)!,
                 fit: BoxFit.cover,
               ),
             );

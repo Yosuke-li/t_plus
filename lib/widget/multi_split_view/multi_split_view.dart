@@ -20,7 +20,7 @@ class MultiSplitView extends StatefulWidget {
   /// The [dividerThickness] argument must also be positive.
   MultiSplitView(
       {this.axis = MultiSplitView.defaultAxis,
-      @required this.children,
+      required this.children,
       this.controller,
       this.dividerThickness = MultiSplitView.defaultDividerThickness,
       this.dividerColor,
@@ -33,8 +33,8 @@ class MultiSplitView extends StatefulWidget {
       throw Exception('The thickness of the divider must be positive.');
     }
     if (minimalWeight != null &&
-        (minimalWeight < MultiSplitView.minimalWidgetWeightLowerLimit ||
-            minimalWeight > MultiSplitView.minimalWidgetWeightUpperLimit)) {
+        (minimalWeight! < MultiSplitView.minimalWidgetWeightLowerLimit ||
+            minimalWeight! > MultiSplitView.minimalWidgetWeightUpperLimit)) {
       throw Exception('The minimum weight must be between ' +
           MultiSplitView.minimalWidgetWeightLowerLimit.toString() +
           ' and ' +
@@ -45,29 +45,29 @@ class MultiSplitView extends StatefulWidget {
 
   final Axis axis;
   final List<Widget> children;
-  final MultiSplitViewController controller;
+  final MultiSplitViewController? controller;
   final double dividerThickness;
 
   /// Defines the divider color. The default value is [NULL].
-  final Color dividerColor;
+  final Color? dividerColor;
 
   /// Defines a divider painter. The default value is [NULL].
-  final DividerPainter dividerPainter;
+  final DividerPainter? dividerPainter;
 
   /// Indicates whether it is resizable. The default value is [TRUE].
-  final bool resizable;
+  final bool? resizable;
 
   /// Defines the minimal weight for each child. The default value is defined by [MultiSplitView.defaultMinimalWeight] constant.
-  final double minimalWeight;
+  final double? minimalWeight;
 
   /// Defines the minimal size in pixels for each child.
   /// It will be used if [minimalWeight] has not been set.
   /// The size will be converted into weight and will respect the limit
   /// defined by the [MultiSplitView.defaultMinimalWeight] constant,
   /// allowing all children to be visible.
-  final double minimalSize;
+  final double? minimalSize;
   // Function to listen any children size change.
-  final OnSizeChange onSizeChange;
+  final OnSizeChange? onSizeChange;
 
   @override
   State createState() => _MultiSplitViewState();
@@ -75,22 +75,22 @@ class MultiSplitView extends StatefulWidget {
 
 /// State for [MultiSplitView]
 class _MultiSplitViewState extends State<MultiSplitView> {
-  double _totalDividerSize;
-  MultiSplitViewController _controller;
+  late double _totalDividerSize;
+  late MultiSplitViewController _controller;
   double _initialDragPos = 0;
   double _initialChild1Weight = 0;
   double _initialChild2Weight = 0;
   double _initialChild1Size = 0;
 
-  int _highlightedDividerIndex;
+  late int? _highlightedDividerIndex;
 
   @override
   void initState() {
     super.initState();
     _totalDividerSize = (widget.children.length - 1) * widget.dividerThickness;
-    _controller = widget.controller != null
+    _controller = (widget.controller != null
         ? widget.controller
-        : MultiSplitViewController();
+        : MultiSplitViewController())!;
   }
 
   @override
@@ -98,9 +98,9 @@ class _MultiSplitViewState extends State<MultiSplitView> {
     super.didUpdateWidget(oldWidget);
     _totalDividerSize = (widget.children.length - 1) * widget.dividerThickness;
     if (widget.controller != null) {
-      _controller = widget.controller;
+      _controller = widget.controller!;
     } else if (oldWidget.controller != null) {
-      _controller = oldWidget.controller;
+      _controller = oldWidget.controller!;
     }
   }
 
@@ -108,15 +108,15 @@ class _MultiSplitViewState extends State<MultiSplitView> {
   Widget build(BuildContext context) {
     if (widget.children.length > 0) {
       return LayoutBuilder(builder: (context, constraints) {
-        double minimalWeight = _minimalWeight(constraints);
+        double? minimalWeight = _minimalWeight(constraints);
         _controller.validateAndAdjust(widget.children.length);
         List<Widget> children = [];
         if (widget.axis == Axis.horizontal) {
           _populateHorizontalChildren(
-              context, constraints, children, minimalWeight);
+              context, constraints, children, minimalWeight!);
         } else {
           _populateVerticalChildren(
-              context, constraints, children, minimalWeight);
+              context, constraints, children, minimalWeight!);
         }
 
         return Stack(children: children);
@@ -126,14 +126,14 @@ class _MultiSplitViewState extends State<MultiSplitView> {
   }
 
   /// Calculates the minimum weight. Used when the pixel size has been set.
-  double _minimalWeight(BoxConstraints constraints) {
+  double? _minimalWeight(BoxConstraints constraints) {
     if (widget.minimalWeight != null) {
       return widget.minimalWeight;
     } else if (widget.minimalSize != null) {
       double dividersSize =
           (widget.children.length - 1) * widget.dividerThickness;
       double remainingWidth = constraints.maxWidth - dividersSize;
-      double minimalWeight = widget.minimalSize / remainingWidth;
+      double minimalWeight = widget.minimalSize! / remainingWidth;
       minimalWeight =
           math.max(minimalWeight, MultiSplitView.defaultMinimalWeight);
       minimalWeight = math.min(minimalWeight, 1 / widget.children.length);
@@ -143,7 +143,7 @@ class _MultiSplitViewState extends State<MultiSplitView> {
   }
 
   /// Updates the highlighted divider index.
-  _updatesHighlightedDividerIndex(int index) {
+  _updatesHighlightedDividerIndex(int? index) {
     if (_highlightedDividerIndex != index && widget.dividerPainter != null) {
       setState(() {
         _highlightedDividerIndex = index;
@@ -176,7 +176,7 @@ class _MultiSplitViewState extends State<MultiSplitView> {
         dividerDistance.right = childDistance.right - widget.dividerThickness;
 
         Widget dividerWidget = _buildDividerWidget(Axis.vertical, childIndex);
-        if (widget.resizable) {
+        if (widget.resizable!) {
           dividerWidget = MouseRegion(
             cursor: SystemMouseCursors.resizeColumn,
             onEnter: (event) => _updatesHighlightedDividerIndex(childIndex),
@@ -229,7 +229,7 @@ class _MultiSplitViewState extends State<MultiSplitView> {
         dividerDistance.bottom = childDistance.bottom - widget.dividerThickness;
 
         Widget dividerWidget = _buildDividerWidget(Axis.horizontal, childIndex);
-        if (widget.resizable) {
+        if (widget.resizable!) {
           dividerWidget = MouseRegion(
             cursor: SystemMouseCursors.resizeRow,
             onEnter: (event) => _updatesHighlightedDividerIndex(childIndex),
@@ -264,9 +264,9 @@ class _MultiSplitViewState extends State<MultiSplitView> {
               child: Container(color: widget.dividerColor),
               painter: _DividerPainterWrapper(
                   axis,
-                  widget.resizable,
+                  widget.resizable!,
                   _highlightedDividerIndex == childIndex,
-                  widget.dividerPainter)));
+                  widget.dividerPainter!)));
     }
     return Container(color: widget.dividerColor);
   }
@@ -307,7 +307,7 @@ class _MultiSplitViewState extends State<MultiSplitView> {
         _controller.setWeight(childIndex + 1, newChild2Weight);
       });
       if (widget.onSizeChange != null) {
-        widget.onSizeChange(childIndex, childIndex + 1);
+        widget.onSizeChange!(childIndex, childIndex + 1);
       }
     }
   }
@@ -327,7 +327,7 @@ class _MultiSplitViewState extends State<MultiSplitView> {
 
   /// Builds a [Positioned] using the [_DistanceFrom] parameters.
   Positioned _buildPositioned(
-      {@required _DistanceFrom distance, @required Widget child}) {
+      {required _DistanceFrom distance, required Widget child}) {
     return Positioned(
         top: distance.top,
         left: distance.left,

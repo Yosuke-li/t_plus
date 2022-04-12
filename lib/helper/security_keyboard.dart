@@ -19,8 +19,6 @@ extension SecurityKeyboardTypeTxt on SecurityKeyboardType {
       case SecurityKeyboardType.text:
         return 'SecurityKeyboardTypeText';
         break;
-      default:
-        return null;
     }
   }
 }
@@ -75,7 +73,7 @@ class SecurityKeyboard extends StatelessWidget {
 
   final SecurityKeyboardType type;
 
-  const SecurityKeyboard({@required this.controller, this.type});
+  const SecurityKeyboard({required this.controller, required this.type});
 
   @override
   Widget build(BuildContext context) {

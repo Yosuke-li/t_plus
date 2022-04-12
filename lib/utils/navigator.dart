@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NavigatorUtils {
-  static Future<T> pushWidget<T>(
+  static Future<T?> pushWidget<T>(
     BuildContext context,
     Widget widget, {
     bool replaceRoot = false,
-    Duration duration,
+    Duration? duration,
     bool opaque = false,
     bool replaceCurrent = false,
     bool cleanFocus = false,
@@ -21,7 +21,7 @@ class NavigatorUtils {
     );
   }
 
-  static Future<T> pushRoute<T>(
+  static Future<T?> pushRoute<T>(
     BuildContext context,
     PageRoute<T> route, {
     bool replaceRoot = false,
@@ -60,7 +60,7 @@ class NavigatorUtils {
   //     settings: const RouteSettings(arguments: {'count': 10}),
   //     ),
   // );
-  static Future<T> getXOfPush<T>(
+  static Future<T?> getXOfPush<T>(
     BuildContext context,
     Widget widget, {
     dynamic arguments,

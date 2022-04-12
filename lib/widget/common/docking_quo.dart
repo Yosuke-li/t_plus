@@ -9,7 +9,7 @@ import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common/entrustment.dart';
 import 'package:transaction_plus/widget/common/option_quotation.dart';
 import 'package:transaction_plus/widget/common/position.dart';
-import 'package:transaction_plus/widget/common/quotation.dart';
+import 'package:transaction_plus/page/quotation/quotation.dart';
 import 'package:transaction_plus/widget/common/unsettled.dart';
 import 'package:transaction_plus/widget/docking/docking.dart';
 import 'package:transaction_plus/widget/docking/docking_layout.dart';
@@ -22,8 +22,8 @@ class DockingQuoPage extends StatefulWidget {
 }
 
 class _DockingQuoPageState extends State<DockingQuoPage> {
-  List<DockingItem> area;
-  int lastSelectedTabIndex;
+  late List<DockingItem> area;
+  late int lastSelectedTabIndex;
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _DockingQuoPageState extends State<DockingQuoPage> {
     area.forEach((child) {
       tabs.add(TabData(
           value: child,
-          text: child.name != null ? child.name : '',
+          text: child.name != null ? child.name! : '',
           closable: false,
           buttons: <TabButton>[],
           content: child.widget));
@@ -61,9 +61,9 @@ class _DockingQuoPageState extends State<DockingQuoPage> {
       child: TabbedView(
         controller: controller,
         contentBuilder: (BuildContext context, int index) =>
-            ArrayHelper.get(area, index).widget,
-        onTabSelection: (int index) {
-          lastSelectedTabIndex = index;
+            (ArrayHelper.get(area, index)?.widget)!,
+        onTabSelection: (int? index) {
+          lastSelectedTabIndex = index!;
         },
       ),
     );

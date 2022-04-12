@@ -20,6 +20,7 @@ class _OptionQuotationState extends State<OptionQuotation> {
         child: Column(
         children: [
           CommonForm<User>(
+            height: 100,
             columns: [
               FormColumn<User>(
                 title: Text('id', style: TextStyle(color: Color(0xBFffffff)),),

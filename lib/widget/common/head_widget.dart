@@ -13,10 +13,10 @@ class HeadWidgetPage extends StatefulWidget {
 class _HeadWidgetState extends State<HeadWidgetPage> {
   List<User> users = [];
   List<String> list = ['1', '2', '3'];
-  String value;
+  String? value;
   bool isHide = false;
 
-  Widget headCell({String title, String value}) {
+  Widget headCell({String? title, String? value}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -66,20 +66,19 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
                       right: screenUtil.adaptive(20)),
                   alignment: Alignment.center,
                   child: DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                        value: value ?? list[0],
+                    child: DropdownButton<String>(
+                        value: value,
                         isExpanded: true,
-                        items: list?.map((e) {
+                        items: list.map((e) {
                               return DropdownMenuItem(
                                   child: Text(
                                     '$e',
                                     style: TextStyle(color: Color(0xBFFFFFFF)),
                                   ),
                                   value: e);
-                            })?.toList() ??
-                            [],
-                        onChanged: (key) {
-                          value = key;
+                            }).toList(),
+                        onChanged: (String? key) {
+                          value = key!;
                           setState(() {});
                         }),
                   ),

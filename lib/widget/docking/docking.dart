@@ -11,11 +11,11 @@ import 'docking_layout.dart';
 
 /// The docking widget.
 class Docking extends StatefulWidget {
-  const Docking({Key key, @required this.layout, this.theme}) : super(key: key);
+  const Docking({Key? key, required this.layout, this.theme}) : super(key: key);
 
   final DockingLayout layout;
 
-  final TabbedViewTheme theme;
+  final TabbedViewTheme? theme;
 
   @override
   State<StatefulWidget> createState() => DockingState();
@@ -41,12 +41,12 @@ class DockingState extends State<Docking> {
     if (widget.layout.root != null) {
       return _DockingInheritedWidget(
           state: this,
-          child: _DockingAreaWidget(widget.layout.root, theme: widget.theme));
+          child: _DockingAreaWidget(widget.layout.root!, theme: widget.theme));
     }
     return Container();
   }
 
-  static DockingState of(BuildContext context) {
+  static DockingState? of(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<_DockingInheritedWidget>()
         ?.state;
@@ -56,7 +56,7 @@ class DockingState extends State<Docking> {
 /// The [InheritedWidget] for [Docking].
 class _DockingInheritedWidget extends InheritedWidget {
   /// Builds a [_DockingInheritedWidget].
-  _DockingInheritedWidget({@required this.state, @required Widget child})
+  _DockingInheritedWidget({required this.state, required Widget child})
       : super(child: child);
 
   final DockingState state;
@@ -72,7 +72,7 @@ class _DockingAreaWidget extends StatelessWidget {
 
   final DockingArea area;
 
-  final TabbedViewTheme theme;
+  final TabbedViewTheme? theme;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,7 @@ class _DockingAreaWidget extends StatelessWidget {
     } else if (area is DockingColumn) {
       return _column(area as DockingColumn);
     } else if (area is DockingTabs) {
-      return _DockingTabsWidget(area as DockingTabs, theme);
+      return _DockingTabsWidget(area as DockingTabs, theme!);
     }
     throw UnimplementedError(
         'Unrecognized runtimeType: ' + area.runtimeType.toString());
@@ -99,8 +99,8 @@ class _DockingAreaWidget extends StatelessWidget {
         theme: theme,
       ));
       if (child is DockingItem && child.weight != null) {
-        weights.add(child.weight);
-        sum += child.weight;
+        weights.add(child.weight!);
+        sum += child.weight!;
       }
     });
     for (int i = 0; i< children.length - weights.length; i++) {
@@ -139,17 +139,17 @@ class _DockingItemWidget extends StatefulWidget {
 abstract class _DraggableBuilderState<T extends StatefulWidget>
     extends State<T> {
   Draggable buildDraggable(DockingItem item, Widget child) {
-    String name = item.name != null ? item.name : '';
+    String name = item.name != null ? item.name! : '';
     return Draggable<DockingItem>(
         data: item,
         onDragStarted: () {
           print('onDragStarted');
-          DockingState state = DockingState.of(context);
+          DockingState state = DockingState.of(context)!;
           state.dragging = item.unDragged ?? false ? false : true;
         },
         onDragCompleted: () {
           print('onDragCompleted');
-          DockingState state = DockingState.of(context);
+          DockingState state = DockingState.of(context)!;
           state.dragging = false;
         },
         onDragEnd: (details) {
@@ -188,7 +188,7 @@ class _DockingItemWidgetState
     extends _DraggableBuilderState<_DockingItemWidget> {
   @override
   Widget build(BuildContext context) {
-    String name = widget.item.name != null ? widget.item.name : '';
+    String name = widget.item.name != null ? widget.item.name! : '';
     Widget titleBar = Container(
         child: Text(name),
         padding: EdgeInsets.all(4));
@@ -196,11 +196,11 @@ class _DockingItemWidgetState
     Widget content = Container(
         child: Column(children: [
           buildDraggable(widget.item, titleBar),
-          Expanded(child: widget.item.widget)
+          Expanded(child: widget.item.widget!)
         ], crossAxisAlignment: CrossAxisAlignment.stretch),
         decoration: BoxDecoration(border: Border.all()));
 
-    DockingState state = DockingState.of(context);
+    DockingState state = DockingState.of(context)!;
     if (state.dragging) {
       return _DropWidget.item(widget.item, content);
     }
@@ -223,8 +223,8 @@ class _DockingTabsWidget extends StatefulWidget {
 /// The [_DockingTabsWidget] state.
 class _DockingTabsWidgetState
     extends _DraggableBuilderState<_DockingTabsWidget> {
-  int lastSelectedTabIndex;
-  TabbedViewController controller;
+  late int lastSelectedTabIndex;
+  late TabbedViewController controller;
 
   @override
   void initState() {
@@ -240,7 +240,7 @@ class _DockingTabsWidgetState
     widget.dockingTabs.forEach((child) {
       tabs.add(TabData(
           value: child,
-          text: child.name != null ? child.name : '',
+          text: child.name != null ? child.name! : '',
           closable: false,
           buttons: <TabButton>[],
           content: child.widget));
@@ -259,11 +259,11 @@ class _DockingTabsWidgetState
         controller: controller,
         draggableTabBuilder: (int tabIndex, TabData tab, Widget tabWidget) =>
             buildDraggable(tab.value as DockingItem, tabWidget),
-        onTabSelection: (int index) {
-          lastSelectedTabIndex = index;
+        onTabSelection: (int? index) {
+          lastSelectedTabIndex = index!;
         },);
 
-    DockingState state = DockingState.of(context);
+    DockingState state = DockingState.of(context)!;
     if (state.dragging) {
       return _DropWidget.tabs(widget.dockingTabs, content);
     }
@@ -286,8 +286,8 @@ class _DropWidget extends StatelessWidget {
 
   static const double _minimalSize = 30;
 
-  final DockingItem item;
-  final DockingTabs tabs;
+  final DockingItem? item;
+  final DockingTabs? tabs;
   final Widget areaContent;
 
   @override
@@ -311,14 +311,14 @@ class _DropWidget extends StatelessWidget {
       if (availableCenterWidth >= _minimalSize) {
         children.add(Positioned(
             child: _DropAnchorWidget(
-                item: item, tabs: tabs, position: DropPosition.left),
+                item: item!, tabs: tabs!, position: DropPosition.left),
             width: horizontalEdgeWidth,
             bottom: 0,
             top: 0,
             left: 0));
         children.add(Positioned(
             child: _DropAnchorWidget(
-                item: item, tabs: tabs, position: DropPosition.right),
+                item: item!, tabs: tabs!, position: DropPosition.right),
             width: horizontalEdgeWidth,
             bottom: 0,
             top: 0,
@@ -327,14 +327,14 @@ class _DropWidget extends StatelessWidget {
       if (availableCenterHeight >= _minimalSize) {
         children.add(Positioned(
             child: _DropAnchorWidget(
-                item: item, tabs: tabs, position: DropPosition.top),
+                item: item!, tabs: tabs!, position: DropPosition.top),
             height: verticalEdgeHeight,
             top: 0,
             left: 0,
             right: 0));
         children.add(Positioned(
             child: _DropAnchorWidget(
-                item: item, tabs: tabs, position: DropPosition.bottom),
+                item: item!, tabs: tabs!, position: DropPosition.bottom),
             height: verticalEdgeHeight,
             bottom: 0,
             left: 0,
@@ -347,23 +347,23 @@ class _DropWidget extends StatelessWidget {
 }
 
 class _DropAnchorWidget extends StatelessWidget {
-  const _DropAnchorWidget({this.item, this.tabs, @required this.position});
+  const _DropAnchorWidget({this.item, this.tabs, required this.position});
 
-  final DockingItem item;
-  final DockingTabs tabs;
+  final DockingItem? item;
+  final DockingTabs? tabs;
   final DropPosition position;
 
   @override
   Widget build(BuildContext context) {
     return DragTarget<DockingItem>(
         builder: _buildDropWidget,
-        onWillAccept: (DockingItem data) {
+        onWillAccept: (DockingItem? data) {
           if (data != null) {
             if (item != null) {
               return item != data;
             }
             if (tabs != null) {
-              if (tabs.contains(data)) {
+              if (tabs!.contains(data)) {
                 return position != DropPosition.center;
               }
               return true;
@@ -372,20 +372,20 @@ class _DropAnchorWidget extends StatelessWidget {
           return false;
         },
         onAccept: (DockingItem data) {
-          DockingState state = DockingState.of(context);
+          DockingState state = DockingState.of(context)!;
           if (item != null) {
             state.layout.move(
-                draggedItem: data, targetArea: item, dropPosition: position);
+                draggedItem: data, targetArea: item!, dropPosition: position);
           } else if (tabs != null) {
             state.layout.move(
-                draggedItem: data, targetArea: tabs, dropPosition: position);
+                draggedItem: data, targetArea: tabs!, dropPosition: position);
           }
         });
   }
 
-  Widget _buildDropWidget(BuildContext context, List<DockingItem> candidateData,
+  Widget _buildDropWidget(BuildContext context, List<DockingItem?> candidateData,
       List<dynamic> rejectedData) {
-    Color color;
+    late Color color;
     if (candidateData.isNotEmpty) {
       color = Colors.black.withOpacity(.5);
     }

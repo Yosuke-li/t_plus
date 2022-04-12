@@ -1,9 +1,7 @@
 import 'dart:io';
 
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:transaction_plus/global/api.dart';
 import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/utils/dio/interceptor.dart';
@@ -33,7 +31,7 @@ class Request {
 
   // _request 是核心函数，所有的请求都会走这里
   static Future<Response> _request<T>(String path,
-      {String method, Map<String, dynamic> params, data}) async {
+      {String? method, Map<String, dynamic>? params, data}) async {
     //选择服务器
     _dio.options.baseUrl = baseUrl;
     //dio拦截器
@@ -43,7 +41,7 @@ class Request {
     final Map<String, dynamic> headers = <String, dynamic>{};
 
     //一般情况下，登陆后修改cookie。
-    final String cookieJson = LocateStorage.getStringWithExpire('cookie');
+    final String? cookieJson = LocateStorage.getStringWithExpire('cookie');
     if (cookieJson != null && cookieJson.isNotEmpty == true) {
       headers['Cookie'] = cookieJson;
       _options.headers = headers;
@@ -72,13 +70,13 @@ class Request {
       if (response.statusCode == 200) {
         return response;
       } else {
-        _handleHttpError(response.statusCode);
-        throw ApiException(response.statusCode, response.statusMessage);
+        _handleHttpError(response.statusCode!);
+        throw ApiException(response.statusCode!, response.statusMessage!);
       }
     } on DioError catch (e, s) {
       throw ApiException(e.response?.statusCode ?? 400, _dioError(e));
     } catch (e, s) {
-      throw ApiException(0, e);
+      throw ApiException(0, e.toString());
     }
   }
 
@@ -159,7 +157,7 @@ class Request {
     }
   }
 
-  static Future<Response> get<T>(String path, {Map<String, dynamic> params}) {
+  static Future<Response> get<T>(String path, {Map<String, dynamic>? params}) {
     _dio.options = _options;
     return _request(path, method: 'get', params: params);
   }
@@ -170,7 +168,7 @@ class Request {
     return _request(path, method: 'post', data: data);
   }
 
-  static Future<Response> login<T>({Map<String, dynamic> params}) {
+  static Future<Response> login<T>({Map<String, dynamic>? params}) {
     LocateStorage.clean(key: 'cookie');
     _dio.options = _loginOptions;
     return _request(ApiCenter.login, method: 'post', data: params);

@@ -1,40 +1,40 @@
- // usingCode : "123"
- // price : 23
- // ordQty : 12
- // side : 1
- // ordType : 2
- // tif : 3
- // refId : "1asdasd"
- // account : "coding1"
- // username : "coding"
- // openFlag : 4
- // hedgeFlag : 3
+// usingCode : "123"
+// price : 23
+// ordQty : 12
+// side : 1
+// ordType : 2
+// tif : 3
+// refId : "1asdasd"
+// account : "coding1"
+// username : "coding"
+// openFlag : 4
+// hedgeFlag : 3
 
 class OrderSubmit {
-  String usingCode;
-  double price;
-  int ordQty;
-  int rawSide;
-  int rawOrdType;
-  int rawTif;
-  String refId;
-  String account;
-  String username;
-  int rawOpenFlag;
-  int rawHedgeFlag;
+  String? usingCode;
+  double? price;
+  int? ordQty;
+  int? rawSide;
+  int? rawOrdType;
+  int? rawTif;
+  String? refId;
+  String? account;
+  String? username;
+  int? rawOpenFlag;
+  int? rawHedgeFlag;
 
   OrderSubmit(
-      {String usingCode,
-      double price,
-      int ordQty,
-      int rawside,
-      int rawordType,
-      int rawtif,
-      String refId,
-      String account,
-      String username,
-      int rawOpenFlag,
-      int rawHedgeFlag});
+      {this.usingCode,
+      this.price,
+      this.ordQty,
+      this.rawSide,
+      this.rawOrdType,
+      this.rawTif,
+      this.refId,
+      this.account,
+      this.username,
+      this.rawOpenFlag,
+      this.rawHedgeFlag});
 
   OrderSubmit.fromJson(dynamic json) {
     usingCode = json["usingCode"];

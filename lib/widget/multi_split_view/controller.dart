@@ -10,7 +10,7 @@ class MultiSplitViewController {
   /// Creates an [MultiSplitViewController].
   ///
   /// The sum of the [weights] cannot exceed 1.
-  factory MultiSplitViewController({List<double> weights}) {
+  factory MultiSplitViewController({List<double>? weights}) {
     if (weights == null) {
       weights = [];
     }

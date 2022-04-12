@@ -26,11 +26,12 @@ class _PositionState extends State<PositionPage> {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: CommonForm<User>(
+                  height: 100,
                   columns: [
                     FormColumn<User>(
                       title: Text('合约', style: TextStyle(color: Color(0xBFffffff)),),
                       builder: (_, v) => Container(
-                        child: Text('${v.username.hashCode ?? ''}'),
+                        child: Text('${v.username.hashCode}'),
                       ),
                     ),
                     FormColumn<User>(

@@ -6,12 +6,10 @@ import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common/bottom_widget.dart';
 import 'package:transaction_plus/widget/common/head_widget.dart';
-import 'package:transaction_plus/widget/common/docking.dart';
-import 'package:transaction_plus/widget/common/quotation.dart';
+import 'package:transaction_plus/page/quotation/quotation.dart';
 
 import '../../page/order/order_submit/view.dart';
 import 'disk_port.dart';
-import 'docking_quo.dart';
 import 'entrustment.dart';
 import 'position.dart';
 
@@ -27,7 +25,7 @@ class _DockingMainState extends State<DockingMainPage>
   @override
   void initState() {
     super.initState();
-    EventBusHelper.asyncStreamController.add(EventCache()..isDarkTheme = true);
+    EventBusHelper.asyncStreamController!.add(EventCache()..isDarkTheme = true);
   }
 
   @override
@@ -46,7 +44,7 @@ class _DockingMainState extends State<DockingMainPage>
                 GestureDetector(
                   onTap: () {
                     EventBusHelper.asyncStreamController
-                        .add(EventCache()..isDarkTheme = false);
+                        !.add(EventCache()..isDarkTheme = false);
                     NavigatorUtils.pop(context);
                   },
                   child: Container(
@@ -73,6 +71,12 @@ class _DockingMainState extends State<DockingMainPage>
                         children: [
                           Container(
                             alignment: Alignment.topLeft,
+                            margin: EdgeInsets.only(
+                              right: screenUtil.adaptive(10),
+                              left: screenUtil.adaptive(10),
+                              top: screenUtil.adaptive(3),
+                              bottom: screenUtil.adaptive(3),
+                            ),
                             child: Text('报价表'),
                           ),
                           Quotation(),
@@ -91,16 +95,56 @@ class _DockingMainState extends State<DockingMainPage>
                           children: [
                             Expanded(
                               flex: 1,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    alignment: Alignment.topLeft,
+                                    margin: EdgeInsets.only(
+                                      right: screenUtil.adaptive(10),
+                                      left: screenUtil.adaptive(10),
+                                      top: screenUtil.adaptive(3),
+                                      bottom: screenUtil.adaptive(3),
+                                    ),
+                                    child: Text('盘口信息'),
+                                  ),
+                                  Expanded(child: DiskPortDetailPage()),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 1,
                               child: Container(
-                                child: DiskPortDetailPage(),
+                                color: Color(0xff797979),
                               ),
                             ),
                             Expanded(
-                              flex: 3,
+                              flex: 2,
                               child: Container(
-                                child: OrderSubmitPage(
-                                  showTitle: true,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      margin: EdgeInsets.only(
+                                        right: screenUtil.adaptive(10),
+                                        left: screenUtil.adaptive(10),
+                                        top: screenUtil.adaptive(3),
+                                        bottom: screenUtil.adaptive(3),
+                                      ),
+                                      child: Text('标准下单板'),
+                                    ),
+                                    Expanded(
+                                      child: OrderSubmitPage(
+                                        showTitle: false,
+                                      ),
+                                    ),
+                                  ],
                                 ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 1,
+                              child: Container(
+                                color: Color(0xff797979),
                               ),
                             ),
                             Expanded(
@@ -109,6 +153,12 @@ class _DockingMainState extends State<DockingMainPage>
                                 children: [
                                   Container(
                                     alignment: Alignment.topLeft,
+                                    margin: EdgeInsets.only(
+                                      right: screenUtil.adaptive(10),
+                                      left: screenUtil.adaptive(10),
+                                      top: screenUtil.adaptive(3),
+                                      bottom: screenUtil.adaptive(3),
+                                    ),
                                     child: Text('委托'),
                                   ),
                                   EntrustPage(),

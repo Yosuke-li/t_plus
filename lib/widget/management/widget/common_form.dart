@@ -4,13 +4,13 @@ import 'package:transaction_plus/utils/array_helper.dart';
 import 'package:transaction_plus/widget/management/common/function_util.dart';
 
 FormColumn<T> buildTextFormColumn<T>(
-    {@required Widget title, @required String text(T value)}) {
+    {required Widget title, required String text(T value)}) {
   return FormColumn<T>(
-      title: title, builder: (_, T value) => Text(text(value) ?? ''));
+      title: title, builder: (_, T value) => Text(text(value)));
 }
 
 FormColumn<T> buildButtonFormColumn<T>(
-    {@required Widget title, @required String text(T value), InFunc<T> onTap}) {
+    {required Widget title, required String text(T value), InFunc<T>? onTap}) {
   return FormColumn<T>(
     title: title,
     builder: (_, T value) => ElevatedButton(
@@ -25,7 +25,7 @@ FormColumn<T> buildButtonFormColumn<T>(
 }
 
 FormColumn<T> buildIconButtonFormColumn<T>(
-    {Widget title, IconData icon, InFunc<T> onTap}) {
+    {required Widget title, IconData? icon, InFunc<T>? onTap}) {
   return FormColumn<T>(
       title: title,
       builder: (_, T value) => IconButton(
@@ -40,10 +40,10 @@ FormColumn<T> buildIconButtonFormColumn<T>(
 
 class FormColumn<T> {
   final Widget title;
-  final double width;
+  final double? width;
   final Widget Function(BuildContext context, T value) builder;
 
-  FormColumn({@required this.title, @required this.builder, this.width});
+  FormColumn({required this.title, required this.builder, this.width});
 }
 
 /// 点击的回调方法[onTapFunc]
@@ -63,21 +63,21 @@ class FormColumn<T> {
 class CommonForm<T> extends StatefulWidget {
   final List<FormColumn<T>> columns;
   final List<T> values;
-  final bool canDrag;
-  final void Function(T value) onTapFunc; //点击回调
-  final void Function(T value, int index) onDragFunc; //拖拽后的回调
-  final void Function(PointerDownEvent evnet, int index) onMouseEvent;
+  final bool? canDrag;
+  final void Function(T value)? onTapFunc; //点击回调
+  final void Function(T value, int index)? onDragFunc; //拖拽后的回调
+  final void Function(PointerDownEvent evnet, int index)? onMouseEvent;
   final double height;
 
   const CommonForm(
-      {Key key,
-      @required this.columns,
-      @required this.values,
+      {Key? key,
+      required this.columns,
+      required this.values,
       this.canDrag,
       this.onDragFunc,
       this.onTapFunc,
       this.onMouseEvent,
-      @required this.height})
+      required this.height})
       : super(key: key);
 
   @override
@@ -112,14 +112,14 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
         },
         //绘制widget
         builder: (context, data, rejects) {
-          return buildRow(ArrayHelper.get(widget.values, index));
+          return buildRow(ArrayHelper.get(widget.values, index)!);
         },
       ),
       feedback: Container(
         decoration: BoxDecoration(
           border: Border.all(width: 0.4, color: Colors.red),
         ),
-        child: buildRow(ArrayHelper.get(widget.values, index)),
+        child: buildRow(ArrayHelper.get(widget.values, index)!),
       ),
     );
   }
@@ -144,7 +144,7 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
     );
   }
 
-  Widget warpWidget({Widget child, Color color, double width}) {
+  Widget warpWidget({required Widget child, Color? color, double? width}) {
     return Container(
       decoration: BoxDecoration(
           border: Border.all(width: 0.4, color: Color(0xE6797979)),

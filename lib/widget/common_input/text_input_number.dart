@@ -5,7 +5,7 @@ import 'package:transaction_plus/utils/screen.dart';
 class TextInputNumberUpDown extends StatefulWidget {
   final FormFieldSetter<String> onSave;
 
-  TextInputNumberUpDown({this.onSave});
+  TextInputNumberUpDown({required this.onSave});
 
   @override
   _TextInputNumberUpDownState createState() => _TextInputNumberUpDownState();
@@ -24,10 +24,12 @@ class _TextInputNumberUpDownState extends State<TextInputNumberUpDown> {
   Widget build(BuildContext context) {
     return Container(
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: TextFormField(
               controller: controller,
+              textAlignVertical: TextAlignVertical.center,
               decoration: InputDecoration(
                 border: InputBorder.none,
               ),
@@ -49,7 +51,7 @@ class _TextInputNumberUpDownState extends State<TextInputNumberUpDown> {
                       controller.text = '1';
                     } else {
                       controller.text =
-                          (int.tryParse(controller.text) + 1).toString();
+                          (int.tryParse(controller.text)! + 1).toString();
                     }
                   },
                   child: Icon(
@@ -65,7 +67,7 @@ class _TextInputNumberUpDownState extends State<TextInputNumberUpDown> {
                       controller.text = '0';
                     } else {
                       controller.text =
-                          (int.tryParse(controller.text) - 1).toString();
+                          (int.tryParse(controller.text)! - 1).toString();
                     }
                   },
                   child: Icon(

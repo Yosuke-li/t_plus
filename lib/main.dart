@@ -17,7 +17,7 @@ void main() async {
 
   windowManager.waitUntilReadyToShow().then((value) async {
     // await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
-    await windowManager.setSize(Size(1280, 960));
+    await windowManager.setSize(Size(1280, 800));
     await windowManager.center();
     await windowManager.show();
   });
@@ -38,20 +38,20 @@ void _errorHandler(FlutterErrorDetails details) async {
     if (details.exception is ApiException) {
       final ApiException e = details.exception as ApiException;
       final int code = e.code;
-      final String message = e.message;
+      final String? message = e.message;
       switch (code) {
         case 401:
           final navigatorHelper = await NavigatorHelper.navigatorState;
-          ToastUtils.showToast(msg: message);
+          ToastUtils.showToast(msg: message ?? '');
           navigatorHelper.popUntil((Route route) => route.isFirst);
           break;
         case 403:
           final navigatorHelper = await NavigatorHelper.navigatorState;
-          ToastUtils.showToast(msg: message);
+          ToastUtils.showToast(msg: message ?? '');
           navigatorHelper.popUntil((Route route) => route.isFirst);
           break;
         default:
-          ToastUtils.showToast(msg: message);
+          ToastUtils.showToast(msg: message ?? '');
           break;
       }
     } else if (details.exception is SocketException) {

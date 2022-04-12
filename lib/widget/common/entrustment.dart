@@ -261,8 +261,7 @@ class _EntrustState extends State<EntrustPage> {
     final int second = ran.nextInt(10);
     final int third = ran.nextInt(1000);
 
-    Entrust entrust = entrusts.firstWhere((element) => element.id == first,
-        orElse: () => null);
+    Entrust entrust = entrusts.firstWhere((element) => element.id == first,);
     if (entrust != null) {
       final entrustMap = entrust.toJson();
       final key = entrustMap.keys.elementAt(second);
@@ -272,7 +271,7 @@ class _EntrustState extends State<EntrustPage> {
       }
     }
     entrusts.removeWhere((element) => element.id == first);
-    entrusts.insert(entrust.id, entrust);
+    entrusts.insert(entrust.id!, entrust);
     setState(() {});
   }
 }

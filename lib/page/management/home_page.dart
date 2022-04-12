@@ -59,7 +59,7 @@ class _ManagePageState extends State<ManagePage> {
                             break;
                         }
                       },
-                      child: Text('${Global.user.username ?? ''}'),
+                      child: Text('${Global.user?.username ?? ''}'),
                     ),
                   ],
                 ),

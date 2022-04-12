@@ -9,6 +9,7 @@ import 'package:transaction_plus/utils/log_utils.dart';
 import 'package:transaction_plus/utils/navigator_helper.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/keyboard/keyboard_root.dart';
+import 'package:transaction_plus/widget/modal_utils.dart';
 
 import 'home_main/view.dart';
 
@@ -25,7 +26,7 @@ class IndexPage extends StatefulWidget {
 }
 
 class _IndexPageState extends State<IndexPage> {
-  VoidCallback voidCallback;
+  VoidCallback? voidCallback;
   bool isDarkTheme = false;
 
   @override
@@ -53,23 +54,27 @@ class _IndexPageState extends State<IndexPage> {
 
   @override
   Widget build(BuildContext context) {
-    return NavigatorInitializer(
-      child: ScreenWidget(
-        child: GetMaterialApp(
-          theme: isDarkTheme
-              ? ThemeData(
-                  primarySwatch: Colors.blue, brightness: Brightness.dark)
-              : ThemeData(
-                  primarySwatch: Colors.blue, brightness: Brightness.light),
-          builder: BotToastInit(),
-          navigatorObservers: <NavigatorObserver>[BotToastNavigatorObserver()],
-          home: KeyboardRootWidget(
-            child: Navigator(
-              onGenerateRoute: (RouteSettings setting) {
-                return MaterialPageRoute(
-                  builder: (BuildContext context) => LoginPage(),
-                );
-              },
+    return ModalStyleWidget(
+      child: NavigatorInitializer(
+        child: ScreenWidget(
+          child: GetMaterialApp(
+            theme: isDarkTheme
+                ? ThemeData(
+                    primarySwatch: Colors.blue, brightness: Brightness.dark)
+                : ThemeData(
+                    primarySwatch: Colors.blue, brightness: Brightness.light),
+            builder: BotToastInit(),
+            navigatorObservers: <NavigatorObserver>[
+              BotToastNavigatorObserver()
+            ],
+            home: KeyboardRootWidget(
+              child: Navigator(
+                onGenerateRoute: (RouteSettings setting) {
+                  return MaterialPageRoute(
+                    builder: (BuildContext context) => LoginPage(),
+                  );
+                },
+              ),
             ),
           ),
         ),

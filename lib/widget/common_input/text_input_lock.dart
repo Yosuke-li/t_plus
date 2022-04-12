@@ -4,7 +4,7 @@ import 'package:transaction_plus/utils/screen.dart';
 class TextInputLock extends StatefulWidget {
   final FormFieldSetter<String> onSave;
 
-  TextInputLock({this.onSave});
+  TextInputLock({required this.onSave});
 
   @override
   _TextInputLockState createState() => _TextInputLockState();

@@ -1,8 +1,8 @@
 class LoginModel {
-  String msg;
-  int code;
-  String accessToken;
-  String refreshToken;
+  String? msg;
+  int? code;
+  String? accessToken;
+  String? refreshToken;
 
   LoginModel({
     this.accessToken,

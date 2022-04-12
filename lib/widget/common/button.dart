@@ -7,7 +7,7 @@ class CommonButton extends StatefulWidget {
 
   final void Function() onTap;
 
-  CommonButton({@required this.title, @required this.onTap});
+  CommonButton({required this.title, required this.onTap});
 
   @override
   _CommonButtonState createState() => _CommonButtonState();
@@ -20,7 +20,7 @@ class _CommonButtonState extends State<CommonButton> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        widget.onTap?.call();
+        widget.onTap.call();
       },
       onHover: (bool isHover) {
         hasHover = isHover;

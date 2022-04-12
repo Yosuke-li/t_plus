@@ -2,7 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'log_utils.dart';
 
 class LocateStorage {
-  static SharedPreferences lStorage;
+  static late SharedPreferences lStorage;
 
   //初始化
   static Future<SharedPreferences> init() async {
@@ -16,7 +16,7 @@ class LocateStorage {
   }
 
   //请理缓存
-  static void clean({String key}) {
+  static void clean({String? key}) {
     if (key != null && key.isNotEmpty == true) {
       lStorage.remove(key);
     } else {
@@ -30,15 +30,14 @@ class LocateStorage {
   }
 
   //查看keys 仅用于缓存一段时间
-  static String getOneKey(String key) {
+  static String? getOneKey(String key) {
     final keys = lStorage.getKeys();
     if (keys != null && keys.isNotEmpty == true) {
-      String hasKey = keys.firstWhere((element) => element.contains('$key '),
-          orElse: () => null);
+      String hasKey = keys.firstWhere((element) => element.contains('$key '),);
       if (hasKey != null) {
         List<String> keyWithTime = hasKey.split(' ');
         if (DateTime.now().millisecondsSinceEpoch >
-            int.tryParse(keyWithTime[1])) {
+            int.tryParse(keyWithTime[1])!) {
           clean(key: hasKey);
           return null;
         } else {
@@ -56,7 +55,7 @@ class LocateStorage {
   }
 
   //获取String缓存
-  static String getString(String key) {
+  static String? getString(String key) {
     final value = lStorage.getString('$key');
     return value;
   }
@@ -68,7 +67,7 @@ class LocateStorage {
   }
 
   //获取bool缓存
-  static bool getBool(String key) {
+  static bool? getBool(String key) {
     final value = lStorage.getBool('$key');
     return value;
   }
@@ -80,7 +79,7 @@ class LocateStorage {
   }
 
   //获取int缓存
-  static int getInt(String key) {
+  static int? getInt(String key) {
     final value = lStorage.getInt('$key');
     return value;
   }
@@ -92,8 +91,8 @@ class LocateStorage {
   }
 
   //获取字符串数组
-  static List<String> getStringList(String key) {
-    final List<String> lists = lStorage.getStringList(key);
+  static List<String>? getStringList(String key) {
+    final List<String>? lists = lStorage.getStringList(key);
     return lists;
   }
 
@@ -114,7 +113,7 @@ class LocateStorage {
   }
 
   //获取String缓存
-  static String getStringWithExpire(String key) {
+  static String? getStringWithExpire(String key) {
     final hasKey = getOneKey(key);
     if (hasKey != null) {
       final value = lStorage.getString('$hasKey');
@@ -136,7 +135,7 @@ class LocateStorage {
   }
 
   //获取bool缓存
-  static bool getBoolWithExpire(String key) {
+  static bool? getBoolWithExpire(String key) {
     final hasKey = getOneKey(key);
     if (hasKey != null) {
       final value = lStorage.getBool('$hasKey');
@@ -158,7 +157,7 @@ class LocateStorage {
   }
 
   //获取int缓存
-  static int getIntWithExpire(String key) {
+  static int? getIntWithExpire(String key) {
     final hasKey = getOneKey(key);
     if (hasKey != null) {
       final value = lStorage.getInt('$hasKey');
@@ -181,10 +180,10 @@ class LocateStorage {
   }
 
   //获取字符串数组
-  static List<String> getStringListWithExpire(String key) {
+  static List<String>? getStringListWithExpire(String key) {
     final hasKey = getOneKey(key);
     if (hasKey != null) {
-      final List<String> lists = lStorage.getStringList(hasKey);
+      final List<String>? lists = lStorage.getStringList(hasKey);
       return lists;
     } else {
       return null;

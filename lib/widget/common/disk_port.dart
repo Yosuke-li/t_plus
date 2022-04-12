@@ -8,15 +8,16 @@ class DiskPortDetailPage extends StatefulWidget {
 }
 
 class DiskPortDetail {
-  String name;
-  String code;
-  String value;
+  String? name;
+  String? code;
+  String? value;
 
   DiskPortDetail({this.name, this.value, this.code});
 }
 
 class _DiskPortDetailState extends State<DiskPortDetailPage> {
   List<DiskPortDetail> disk = [];
+  final ScrollController _controller = ScrollController();
 
   @override
   void initState() {
@@ -51,6 +52,7 @@ class _DiskPortDetailState extends State<DiskPortDetailPage> {
     return Scaffold(
       body: RepaintBoundary(
         child: SingleChildScrollView(
+          controller: _controller,
           child: Container(
             alignment: Alignment.center,
             child: ConstrainedBox(

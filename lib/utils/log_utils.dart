@@ -11,7 +11,7 @@ class Log {
     _maxLen = maxLen;
   }
 
-  static void debug(Object message, {StackTrace stackTrace}) {
+  static void debug(Object message, {StackTrace? stackTrace}) {
     if (_debugMode) {
       log('${LogLevel.DEBUG.toString()} -- ${DateTime.now().toString()} -- ${message.toString()}',
           stackTrace: stackTrace, level: 0);
@@ -25,12 +25,12 @@ class Log {
     }
   }
 
-  static void warning(Object message, {StackTrace stackTrace}) {
+  static void warning(Object message, {StackTrace? stackTrace}) {
     log('${LogLevel.WARNING.toString()} -- ${DateTime.now().toString()} -- $message',
         stackTrace: stackTrace, level: 1000);
   }
 
-  static void error(Object message, {StackTrace stackTrace}) {
+  static void error(Object message, {StackTrace? stackTrace}) {
     log('${LogLevel.ERROR.toString()} -- ${DateTime.now().toString()} -- $message',
         stackTrace: stackTrace, level: 2000);
   }

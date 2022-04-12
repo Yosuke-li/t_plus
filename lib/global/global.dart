@@ -5,7 +5,7 @@ import 'package:transaction_plus/model/user.dart';
 class Global {
   static bool isRelease = kReleaseMode;
 
-  static User user;
+  static User? user;
   static bool isMqttLog = false; //开启mqttlog
   static bool isDoraemonkit = false; //开启哆啦A梦
 
@@ -15,9 +15,9 @@ class Global {
 
   static bool isDarkTheme = true;
 
-  static Color formTitleColor = isDarkTheme ? null : Color(0xfff5fafe);
+  static Color? formTitleColor = isDarkTheme ? null : Color(0xfff5fafe);
   static Color formBorderColor = isDarkTheme ? Color(0xE6797979) :Colors.black26;
   static Color formBackColor = isDarkTheme ? Color(0xff000000) :Colors.white;
   static Color appBarBackColor = isDarkTheme ? Color(0xCC77787b) :Colors.white;
-  static Color dockingTitleColor = isDarkTheme ? null : Colors.grey[200];
+  static Color? dockingTitleColor = isDarkTheme ? null : Colors.grey[200];
 }

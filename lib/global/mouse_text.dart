@@ -24,7 +24,7 @@ class _MouseTextState extends State<MouseTextPage> {
         event.buttons == kSecondaryMouseButton) {
       Log.info(event);
       final overlay =
-      Overlay.of(context).context.findRenderObject() as RenderBox;
+      Overlay.of(context)?.context.findRenderObject() as RenderBox;
       final menuItem = await showMenu<int>(
           context: context,
           items: menuItems,

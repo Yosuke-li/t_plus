@@ -14,7 +14,7 @@ import 'log_utils.dart';
 ///MqttServerClient('ws://', '')
 ///client.useWebSocket
 class MqttHelper {
-  static MqttServerClient client;
+  static MqttServerClient? client;
 
   static Lock _lock = Lock();
 
@@ -30,15 +30,15 @@ class MqttHelper {
     // client = MqttServerClient('ws://172.31.41.83/mqtt', '');
     // client.port = 8888;
     // client.useWebSocket = true;
-    client.logging(on: Global.isMqttLog);
-    client.keepAlivePeriod = 60;
-    client.onConnected = onConnected;
-    client.onDisconnected = onDisconnected;
-    client.onUnsubscribed = onUnsubscribed;
-    client.onSubscribed = onSubscribed;
-    client.onAutoReconnected = onAutoConnected;
-    client.onSubscribeFail = onSubscribeFail;
-    client.pongCallback = pong;
+    client!.logging(on: Global.isMqttLog);
+    client!.keepAlivePeriod = 60;
+    client!.onConnected = onConnected;
+    client!.onDisconnected = onDisconnected;
+    client!.onUnsubscribed = onUnsubscribed;
+    client!.onSubscribed = onSubscribed;
+    client!.onAutoReconnected = onAutoConnected;
+    client!.onSubscribeFail = onSubscribeFail;
+    client!.pongCallback = pong;
 
     final connMessage = MqttConnectMessage()
         .withClientIdentifier('${Random(1000)}')
@@ -46,24 +46,24 @@ class MqttHelper {
         .withWillMessage('Will message')
         .startClean()
         .withWillQos(MqttQos.atLeastOnce);
-    client.connectionMessage = connMessage;
+    client!.connectionMessage = connMessage;
 
     try {
-      await client.connect();
+      await client!.connect();
     } on SocketException catch (e) {
-      client.disconnect();
+      client!.disconnect();
     } catch (e) {
-      client.disconnect();
+      client!.disconnect();
     }
 
-    client.subscribe("topic/test2", MqttQos.atLeastOnce);
+    client!.subscribe("topic/test2", MqttQos.atLeastOnce);
 
-    client.updates.listen((List<MqttReceivedMessage<MqttMessage>> c) {
-      final MqttPublishMessage message = c[0].payload;
+    client!.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) {
+      final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
       final payload =
           MqttPublishPayload.bytesToStringAsString(message.payload.message);
       EventBusHelper.asyncStreamController
-          .add(EventCache()..realTimeData = payload);
+          !.add(EventCache()..realTimeData = payload);
       Log.info('${c[0].topic} Received message: $payload');
     });
   }
@@ -95,7 +95,7 @@ class MqttHelper {
   }
 
   // 成功取消订阅
-  static void onUnsubscribed(String topic) {
+  static void onUnsubscribed(String? topic) {
     Log.info('${client.hashCode} Unsubscribed topic: $topic');
   }
 

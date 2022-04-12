@@ -37,8 +37,8 @@ class OrderSubmitLogic extends GetxController {
 
   //提交
   void onSubmit() async {
-    final FormState from = state.formKey.currentState;
-    from.save();
+    final FormState? from = state.formKey.currentState;
+    from!.save();
     if (from.validate()) {
 
       try {

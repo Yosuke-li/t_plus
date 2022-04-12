@@ -23,9 +23,9 @@ class DllTextPage extends StatefulWidget {
 }
 
 class _DllTextPageState extends State<DllTextPage> {
-  ffi.Pointer<ffi.Int8> helloFunc;
-  Function(double x, double y) addFunc;
-  Function(ffi.Pointer<ffi.Int8>) strLengthFunc;
+  late ffi.Pointer<ffi.Int8> helloFunc;
+  late Function(double x, double y) addFunc;
+  late Function(ffi.Pointer<ffi.Int8>) strLengthFunc;
 
   static const String value = 'Hello world';
 
