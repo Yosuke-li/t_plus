@@ -30,7 +30,7 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
           child: Text(
             '  ${isHide ? '*****' : value}',
             style: TextStyle(
-                color: Color(0xBFFFFFFF), fontSize: screenUtil.adaptive(20)),
+                color: Color(0xBFFFFFFF), fontSize: 14),
           ),
         ),
       ],
@@ -114,16 +114,24 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
                       isHide
                           ? Icons.remove_red_eye_outlined
                           : Icons.remove_red_eye,
-                      size: screenUtil.adaptive(24),
+                      size: 14,
                     ),
                   ),
                 )
               ],
             ),
             Container(
-              margin: EdgeInsets.only(right: screenUtil.adaptive(50)),
+              margin: EdgeInsets.only(right: 10),
               child: Row(
                 children: [
+                  InkWell(
+                    child: Container(
+                      child: Icon(Icons.account_balance_wallet, size: 14,),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
                   InkWell(
                     onTap: () {
 
@@ -131,29 +139,7 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
                     child: Container(
                       child: Icon(
                         Icons.settings,
-                        size: 18,
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-
-                    },
-                    child: Container(
-                      child: Icon(
-                        Icons.minimize,
-                        size: 18,
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-
-                    },
-                    child: Container(
-                      child: Icon(
-                        Icons.window,
-                        size: 18,
+                        size: 14,
                       ),
                     ),
                   ),

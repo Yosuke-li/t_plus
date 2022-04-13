@@ -68,6 +68,8 @@ class CommonForm<T> extends StatefulWidget {
   final void Function(T value, int index)? onDragFunc; //拖拽后的回调
   final void Function(PointerDownEvent evnet, int index)? onMouseEvent;
   final double height;
+  final Color? titleColor;
+  final Color? formColor;
 
   const CommonForm(
       {Key? key,
@@ -76,6 +78,8 @@ class CommonForm<T> extends StatefulWidget {
       this.canDrag,
       this.onDragFunc,
       this.onTapFunc,
+      this.titleColor,
+      this.formColor,
       this.onMouseEvent,
       required this.height})
       : super(key: key);
@@ -89,11 +93,16 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
   ScrollController vController = ScrollController();
 
   Widget buildTitleRow() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: widget.columns
-          .map((e) => warpWidget(child: e.title, width: e.width))
-          .toList(growable: false),
+    return Container(
+      decoration: BoxDecoration(
+        color: widget.titleColor
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: widget.columns
+            .map((e) => warpWidget(child: e.title, width: e.width))
+            .toList(growable: false),
+      ),
     );
   }
 
@@ -130,15 +139,20 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
       onPointerDown: (PointerDownEvent event) {
         widget.onMouseEvent?.call(event, widget.values.indexOf(value));
       },
-      child: GestureDetector(
-        onTap: () {
-          widget.onTapFunc?.call(value);
-        },
-        child: Row(
-          children: widget.columns
-              .map((e) =>
-                  warpWidget(child: e.builder(context, value), width: e.width))
-              .toList(growable: false),
+      child: Container(
+        decoration: BoxDecoration(
+          color: widget.formColor
+        ),
+        child: GestureDetector(
+          onTap: () {
+            widget.onTapFunc?.call(value);
+          },
+          child: Row(
+            children: widget.columns
+                .map((e) =>
+                warpWidget(child: e.builder(context, value), width: e.width))
+                .toList(growable: false),
+          ),
         ),
       ),
     );

@@ -10,17 +10,20 @@ import 'package:window_manager/window_manager.dart';
 
 import 'helper/security_keyboard.dart';
 
+/// 添加[windowManager]桌面端方法
 void main() async {
-  //window方法
-  WidgetsFlutterBinding.ensureInitialized();
-  await windowManager.ensureInitialized();
+  if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
+    WidgetsFlutterBinding.ensureInitialized();
+    await windowManager.ensureInitialized();
 
-  windowManager.waitUntilReadyToShow().then((value) async {
-    // await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
-    await windowManager.setSize(Size(1280, 800));
-    await windowManager.center();
-    await windowManager.show();
-  });
+    windowManager.waitUntilReadyToShow().then((value) async {
+      // await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
+      await windowManager.setSize(Size(1280, 800));
+      await windowManager.setMinimumSize(Size(1280, 800));
+      await windowManager.center();
+      await windowManager.show();
+    });
+  }
 
   SecurityKeyboardCenter.register();
   runZonedGuarded<Future<void>>(() async {

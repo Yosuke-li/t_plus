@@ -39,24 +39,22 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
       showSeparator: showSeparator,
       child: Container(
         key: GlobalKey(),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 14,
-        ),
+        padding: const EdgeInsets.only(right: 0, left: 14),
         decoration: BoxDecoration(
           borderRadius: underline ? null : BorderRadius.circular(5.0),
           border: underline
               ? const Border(
             bottom: BorderSide(
               width: 1.0,
-              color: Colors.blueGrey,
+              color: Color(0xff797979),
             ),
           )
               : Border.all(
-            color: Colors.blueGrey,
-            width: 1.0,
+            color: Color(0xff797979),
+            width: 1.5,
           ),
         ),
-        height: 40,
+        height: 35,
         child: dropdownChild ??
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,12 +78,38 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 16),
+                Icon(Icons.keyboard_arrow_down),
               ],
             ),
       ),
       children: children,
       itemWidget: itemWidget,
       onChanged: onChanged,
+    );
+  }
+}
+
+class MiraiDropDownItemWidget extends StatelessWidget {
+  const MiraiDropDownItemWidget({
+    Key? key,
+    required this.item,
+  }) : super(key: key);
+
+  final String item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 10.0,
+        horizontal: 16.0,
+      ),
+      child: Text(
+        item,
+        style: const TextStyle(
+          color: Colors.black,
+        ),
+      ),
     );
   }
 }

@@ -120,7 +120,7 @@ class _QuotationState extends State<Quotation> {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: Container(
-        color: Color(0xff000000),
+        color: Color(0xff323337),
         alignment: Alignment.centerLeft,
         child: Column(
           children: [
@@ -181,6 +181,8 @@ class _QuotationState extends State<Quotation> {
             CommonForm<User>(
               height: MediaQuery.of(context).size.height * 0.25,
               canDrag: true,
+              titleColor: Color(0x401C1D21),
+              formColor: Color(0xff1C1D21),
               onMouseEvent: _onPointerDown,
               onTapFunc: (User value) {
                 Log.info(value.username!);
@@ -197,7 +199,7 @@ class _QuotationState extends State<Quotation> {
                   ),
                   width: 50,
                   builder: (_, v) => Container(
-                    child: Text(''),
+                    child: Text('${users.indexOf(v)}'),
                   ),
                 ),
                 FormColumn<User>(
