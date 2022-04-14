@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:transaction_plus/page/order/order_modal.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common_input/text_input_lock.dart';
 import 'package:transaction_plus/widget/common_input/text_input_number.dart';
@@ -122,7 +123,9 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                             ),
                                           ),
                                           InkWell(
-                                            onTap: () {},
+                                            onTap: () {
+                                              Order.Modal(context);
+                                            },
                                             child: Icon(
                                               Icons.search,
                                               size: 18,

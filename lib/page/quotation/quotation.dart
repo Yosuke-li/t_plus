@@ -1,14 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'package:native_context_menu/native_context_menu.dart';
 import 'package:transaction_plus/model/user.dart';
 import 'package:transaction_plus/page/quotation/setting.dart';
-import 'package:transaction_plus/utils/array_helper.dart';
 import 'package:transaction_plus/utils/log_utils.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/management/widget/common_form.dart';
-
-import '../../widget/popup_sub_menu_item.dart';
 
 class Quotation extends StatefulWidget {
   @override
