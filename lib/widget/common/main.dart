@@ -5,7 +5,7 @@ import 'package:transaction_plus/utils/event_bus_helper.dart';
 import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common/bottom_widget.dart';
-import 'package:transaction_plus/widget/common/head_widget.dart';
+import 'package:transaction_plus/page/account/head_widget.dart';
 import 'package:transaction_plus/page/quotation/quotation.dart';
 
 import '../../page/order/order_submit/view.dart';

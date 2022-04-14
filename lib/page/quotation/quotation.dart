@@ -93,7 +93,7 @@ class _QuotationState extends State<Quotation> {
         MenuItem(
             title: '设置合约',
             onSelected: () {
-              Setting.Model(context);
+              Setting.Modal(context);
             }),
         MenuItem(title: '删除'),
       ];

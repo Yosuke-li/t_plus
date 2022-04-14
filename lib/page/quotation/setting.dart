@@ -6,7 +6,7 @@ import 'package:transaction_plus/utils/navigator.dart';
 import '../../widget/modal_utils.dart';
 
 class Setting {
-  static Future<void> Model(BuildContext context,
+  static Future<void> Modal(BuildContext context,
       {void Function()? onFunc}) async {
     await ModalUtils.showModal(
       context,

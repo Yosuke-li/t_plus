@@ -4,6 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'package:transaction_plus/model/user.dart';
 import 'package:transaction_plus/utils/screen.dart';
 
+import 'account_modal.dart';
+
 class HeadWidgetPage extends StatefulWidget {
 
   @override
@@ -125,6 +127,9 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
               child: Row(
                 children: [
                   InkWell(
+                    onTap: () {
+                      Account.Modal(context);
+                    },
                     child: Container(
                       child: Icon(Icons.account_balance_wallet, size: 14,),
                     ),
