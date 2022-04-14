@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:native_context_menu/native_context_menu.dart';
 import 'package:transaction_plus/model/user.dart';
 import 'package:transaction_plus/page/quotation/setting.dart';
 import 'package:transaction_plus/utils/array_helper.dart';
@@ -70,50 +71,48 @@ class _QuotationState extends State<Quotation> {
   ];
 
   List<String> groups = ['123', '456'];
+  late RightMenuFunc _rightMenuFunc;
 
   @override
   void initState() {
+    _init(); // late要在初始化之前
     super.initState();
   }
 
   //右键菜单栏
-  Future<void> _onPointerDown(PointerDownEvent event, int index) async {
-    List<PopupMenuEntry<int>> menuItems = <PopupMenuEntry<int>>[
-      PopupMenuItem(child: Text('下单'), value: 1),
-      PopupSubMenuItem<int>(
-        title: '移动到',
-        items: [
-          100,
-          200,
-          300,
-          400,
-          500,
-        ],
-        onSelected: (value) {
-          Log.info(value);
-        },
-      ),
-      PopupMenuItem(child: Text('设置合约'), value: 2),
-      PopupMenuItem(child: Text('删除'), value: 3),
-    ];
-
-    if (event.kind == PointerDeviceKind.mouse &&
-        event.buttons == kSecondaryMouseButton) {
-      final RenderBox overlay =
-          Overlay.of(context)?.context.findRenderObject() as RenderBox;
-      final int? menuItem = await showMenu<int>(
-          context: context,
-          items: menuItems,
-          position: RelativeRect.fromSize(
-              event.position & Size(48.0, 48.0), overlay.size));
-
-      switch (menuItem) {
-        case 2:
-          await Setting.Model(context);
-          return;
-          break;
+  void _init() {
+    _rightMenuFunc = RightMenuFunc()
+      ..onItemSelected = (MenuItem item, int index) {
+        Log.info('index: $index');
+        item.onSelected?.call();
       }
-    }
+      ..menuItems = [
+        MenuItem(title: '下单'),
+        MenuItem(
+            title: '移动到', items: [MenuItem(title: '1'), MenuItem(title: '2')]),
+        MenuItem(
+            title: '设置合约',
+            onSelected: () {
+              Setting.Model(context);
+            }),
+        MenuItem(title: '删除'),
+      ];
+    setState(() {});
+  }
+
+  void _onSetTapUp(TapUpDetails e) async {
+    final position = Offset(
+      e.globalPosition.dx + Offset.zero.dx,
+      e.globalPosition.dy + Offset.zero.dy,
+    );
+
+    final selectedItem = await showContextMenu(
+      ShowMenuArgs(
+        MediaQuery.of(context).devicePixelRatio,
+        position,
+        [MenuItem(title: '添加合约'), MenuItem(title: '标记排序')],
+      ),
+    );
   }
 
   @override
@@ -170,7 +169,7 @@ class _QuotationState extends State<Quotation> {
                           child: Text(
                             e,
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.white, fontSize: 10),
                           ),
                         ),
                       ),
@@ -183,18 +182,21 @@ class _QuotationState extends State<Quotation> {
               canDrag: true,
               titleColor: Color(0x401C1D21),
               formColor: Color(0xff1C1D21),
-              onMouseEvent: _onPointerDown,
               onTapFunc: (User value) {
                 Log.info(value.username!);
               },
+              rightMenuFunc: _rightMenuFunc,
               columns: [
                 FormColumn<User>(
-                  title: InkWell(
-                    onTap: () {},
-                    child: Icon(
-                      Icons.settings,
-                      size: screenUtil.adaptive(20),
-                      color: Color(0xBFffffff),
+                  title: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTapUp: _onSetTapUp,
+                      child: Icon(
+                        Icons.settings,
+                        size: screenUtil.adaptive(20),
+                        color: Color(0xBFffffff),
+                      ),
                     ),
                   ),
                   width: 50,

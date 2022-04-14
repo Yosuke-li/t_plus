@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:native_context_menu/native_context_menu.dart';
 import 'package:transaction_plus/utils/array_helper.dart';
 import 'package:transaction_plus/widget/management/common/function_util.dart';
 
@@ -66,10 +68,11 @@ class CommonForm<T> extends StatefulWidget {
   final bool? canDrag;
   final void Function(T value)? onTapFunc; //点击回调
   final void Function(T value, int index)? onDragFunc; //拖拽后的回调
-  final void Function(PointerDownEvent evnet, int index)? onMouseEvent;
   final double height;
   final Color? titleColor;
   final Color? formColor;
+
+  final RightMenuFunc? rightMenuFunc; // 鼠标右键方法
 
   const CommonForm(
       {Key? key,
@@ -79,8 +82,8 @@ class CommonForm<T> extends StatefulWidget {
       this.onDragFunc,
       this.onTapFunc,
       this.titleColor,
+      this.rightMenuFunc,
       this.formColor,
-      this.onMouseEvent,
       required this.height})
       : super(key: key);
 
@@ -92,11 +95,11 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
   ScrollController hController = ScrollController();
   ScrollController vController = ScrollController();
 
+  bool shouldReact = false;
+
   Widget buildTitleRow() {
     return Container(
-      decoration: BoxDecoration(
-        color: widget.titleColor
-      ),
+      decoration: BoxDecoration(color: widget.titleColor),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: widget.columns
@@ -136,21 +139,42 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
   ///实现table的每一行
   Widget buildRow(T value) {
     return Listener(
-      onPointerDown: (PointerDownEvent event) {
-        widget.onMouseEvent?.call(event, widget.values.indexOf(value));
+      onPointerDown: (e) {
+        shouldReact = e.kind == PointerDeviceKind.mouse &&
+            e.buttons == kSecondaryMouseButton;
+      },
+      onPointerUp: (e) async {
+        if (!shouldReact) return;
+        shouldReact = false;
+
+        final position = Offset(
+          e.position.dx + Offset.zero.dx,
+          e.position.dy + Offset.zero.dy,
+        );
+
+        final selectedItem = await showContextMenu(
+          ShowMenuArgs(
+            MediaQuery.of(context).devicePixelRatio,
+            position,
+            widget.rightMenuFunc?.menuItems ?? [],
+          ),
+        );
+
+        if (selectedItem != null) {
+          widget.rightMenuFunc?.onItemSelected
+              ?.call(selectedItem, widget.values.indexOf(value));
+        }
       },
       child: Container(
-        decoration: BoxDecoration(
-          color: widget.formColor
-        ),
+        decoration: BoxDecoration(color: widget.formColor),
         child: GestureDetector(
           onTap: () {
             widget.onTapFunc?.call(value);
           },
           child: Row(
             children: widget.columns
-                .map((e) =>
-                warpWidget(child: e.builder(context, value), width: e.width))
+                .map((e) => warpWidget(
+                    child: e.builder(context, value), width: e.width))
                 .toList(growable: false),
           ),
         ),
@@ -211,4 +235,11 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
       ),
     );
   }
+}
+
+class RightMenuFunc {
+  List<MenuItem>? menuItems;
+  void Function(MenuItem item, int index)? onItemSelected;
+
+  RightMenuFunc({this.menuItems, this.onItemSelected});
 }

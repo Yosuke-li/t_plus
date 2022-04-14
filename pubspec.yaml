@@ -26,6 +26,7 @@ dependencies:
   focusable_control_builder: 0.1.0+1
   window_manager: ^0.2.1
   mirai_dropdown_menu: ^0.0.3
+  native_context_menu: ^0.2.1+4
   flutter_doraemonkit:
     git:
       url: https://github.com/NayoLx/flutter_doraemonkit_plugin.git

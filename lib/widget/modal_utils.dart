@@ -9,9 +9,12 @@ class ModalUtils {
         Widget? icon,
         String? message,
         Widget? body,
+        Border? border,
         Text? button1,
+        ModelSize? modelSize,
         bool outsideDismiss = true,
         bool cleanFocus = true,
+        bool autoClose = false,
         double? marginBottom, //距离底部的高，使model偏上
         void Function(BuildContext context)? onFun1,
         Text? button2,
@@ -173,7 +176,10 @@ class ModalUtils {
                 header: header,
                 body: body,
                 messageBody: messageBody,
+                border: border,
+                modelSize: modelSize,
                 bottom: bottom,
+                autoClose: autoClose,
                 modalColor: modalBackgroundColor,
                 marginBottom: marginBottom,
               );
@@ -181,6 +187,13 @@ class ModalUtils {
             opaque: false),
         cleanFocus: cleanFocus);
   }
+}
+
+class ModelSize {
+  double? width;
+  double? height;
+
+  ModelSize({this.width, this.height});
 }
 
 class _ModalWidget extends StatefulWidget {
@@ -191,8 +204,12 @@ class _ModalWidget extends StatefulWidget {
   Widget? body;
   Widget Function(ModalStyle style)? bottom;
   bool? outsideDismiss;
+  bool? autoClose;
   Color? modalColor;
   double? marginBottom; //距离底部的高，使model偏上
+
+  Border? border;
+  ModelSize? modelSize;
 
   _ModalWidget({
     Key? key,
@@ -201,7 +218,10 @@ class _ModalWidget extends StatefulWidget {
     this.messageBody,
     this.body,
     this.bottom,
+    this.border,
     this.outsideDismiss,
+    this.modelSize,
+    this.autoClose,
     this.modalColor,
     this.marginBottom,
   })  : assert(context != null),
@@ -215,7 +235,7 @@ class _Modal extends State<_ModalWidget> {
   @override
   void initState() {
     super.initState();
-    if (widget.bottom == null) {
+    if (widget.autoClose == true) {
       Future.delayed(Duration(seconds: 2)).then((_) {
         Navigator.pop(widget.context!);
       });
@@ -254,6 +274,7 @@ class _Modal extends State<_ModalWidget> {
                           ),
                           decoration: BoxDecoration(
                             color: widget.modalColor,
+                            border: widget.border,
                             borderRadius: BorderRadius.vertical(
                               top: Radius.elliptical(
                                 screenUtil.adaptive(20),
@@ -265,7 +286,8 @@ class _Modal extends State<_ModalWidget> {
                               ),
                             ),
                           ),
-                          width: screenUtil.adaptive(858),
+                          width: widget.modelSize?.width ?? screenUtil.adaptive(858),
+                          height: widget.modelSize?.height,
                           child: ListView(
                             padding: const EdgeInsets.all(0),
                             shrinkWrap: true,
