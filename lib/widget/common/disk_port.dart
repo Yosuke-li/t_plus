@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:transaction_plus/model/user.dart';
+
 import 'package:transaction_plus/utils/screen.dart';
 
+enum DiskPortType {
+  TypeOne,
+  TypeTwo
+}
+
 class DiskPortDetailPage extends StatefulWidget {
+  final DiskPortType type;
+
+  DiskPortDetailPage({this.type = DiskPortType.TypeOne});
+
   @override
   _DiskPortDetailState createState() => _DiskPortDetailState();
 }
@@ -48,6 +57,15 @@ class _DiskPortDetailState extends State<DiskPortDetailPage> {
   }
 
   @override
+  void didUpdateWidget(covariant DiskPortDetailPage oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.type != widget.type) {
+
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: RepaintBoundary(
@@ -55,7 +73,7 @@ class _DiskPortDetailState extends State<DiskPortDetailPage> {
           controller: _controller,
           child: Container(
             alignment: Alignment.center,
-            child: ConstrainedBox(
+            child: widget.type == DiskPortType.TypeOne ? ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 200, minWidth: 150),
               child: Column(
                 children: [
@@ -175,7 +193,7 @@ class _DiskPortDetailState extends State<DiskPortDetailPage> {
                   ),
                 ],
               ),
-            ),
+            ) : Container(),
           ),
         ),
       ),

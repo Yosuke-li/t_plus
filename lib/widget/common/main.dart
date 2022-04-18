@@ -10,7 +10,7 @@ import 'package:transaction_plus/page/quotation/quotation.dart';
 
 import '../../page/order/order_submit/view.dart';
 import 'disk_port.dart';
-import 'entrustment.dart';
+import '../../page/entrustment/entrustment.dart';
 import 'position.dart';
 
 class DockingMainPage extends StatefulWidget {
@@ -21,6 +21,8 @@ class DockingMainPage extends StatefulWidget {
 class _DockingMainState extends State<DockingMainPage>
     with SingleTickerProviderStateMixin {
   int currentIndex = 0;
+  EntrustType type = EntrustType.All;
+  DiskPortType diskType = DiskPortType.TypeOne;
 
   @override
   void initState() {
@@ -106,23 +108,50 @@ class _DockingMainState extends State<DockingMainPage>
                               child: Column(
                                 children: [
                                   Container(
-                                      alignment: Alignment.topLeft,
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.only(
-                                              right: screenUtil.adaptive(10),
-                                              left: screenUtil.adaptive(10),
-                                              top: screenUtil.adaptive(3),
-                                              bottom: screenUtil.adaptive(3),
+                                    alignment: Alignment.topLeft,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                            right: screenUtil.adaptive(10),
+                                            left: screenUtil.adaptive(8),
+                                            top: screenUtil.adaptive(3),
+                                            bottom: screenUtil.adaptive(3),
+                                          ),
+                                          child: Text(
+                                            '盘口信息[合约]',
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            diskType =
+                                                diskType == DiskPortType.TypeOne
+                                                    ? DiskPortType.TypeTwo
+                                                    : DiskPortType.TypeOne;
+                                            setState(() {});
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                right: screenUtil.adaptive(8)),
+                                            child: Icon(
+                                              Icons.switch_left,
+                                              size: 16,
                                             ),
-                                            child: Text(
-                                              '盘口信息',
-                                            ),
-                                          )
-                                        ],
-                                      )),
-                                  Expanded(child: DiskPortDetailPage()),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: RepaintBoundary(
+                                      child: DiskPortDetailPage(
+                                        type: diskType,
+                                      ),
+                                    )
+                                  ),
                                 ],
                               ),
                             ),
@@ -202,9 +231,16 @@ class _DockingMainState extends State<DockingMainPage>
                                                     Transform.scale(
                                                       scale: 0.8,
                                                       child: Checkbox(
-                                                        value: false,
+                                                        activeColor:
+                                                            Color(0xcc4285F4),
+                                                        value: type ==
+                                                            EntrustType.All,
                                                         onChanged:
-                                                            (bool? value) {},
+                                                            (bool? value) {
+                                                          type =
+                                                              EntrustType.All;
+                                                          setState(() {});
+                                                        },
                                                       ),
                                                     ),
                                                     Text('全部'),
@@ -220,9 +256,19 @@ class _DockingMainState extends State<DockingMainPage>
                                                     Transform.scale(
                                                       scale: 0.8,
                                                       child: Checkbox(
-                                                        value: false,
+                                                        activeColor:
+                                                            Color(0xcc4285F4),
+                                                        value: type ==
+                                                                EntrustType
+                                                                    .Order ||
+                                                            type ==
+                                                                EntrustType.All,
                                                         onChanged:
-                                                            (bool? value) {},
+                                                            (bool? value) {
+                                                          type =
+                                                              EntrustType.Order;
+                                                          setState(() {});
+                                                        },
                                                       ),
                                                     ),
                                                     Text('挂单'),
@@ -238,9 +284,19 @@ class _DockingMainState extends State<DockingMainPage>
                                                     Transform.scale(
                                                       scale: 0.8,
                                                       child: Checkbox(
-                                                        value: false,
+                                                        activeColor:
+                                                            Color(0xcc4285F4),
+                                                        value: type ==
+                                                                EntrustType
+                                                                    .Finish ||
+                                                            type ==
+                                                                EntrustType.All,
                                                         onChanged:
-                                                            (bool? value) {},
+                                                            (bool? value) {
+                                                          type = EntrustType
+                                                              .Finish;
+                                                          setState(() {});
+                                                        },
                                                       ),
                                                     ),
                                                     Text('成交'),
@@ -256,9 +312,19 @@ class _DockingMainState extends State<DockingMainPage>
                                                     Transform.scale(
                                                       scale: 0.8,
                                                       child: Checkbox(
-                                                        value: false,
+                                                        activeColor:
+                                                            Color(0xcc4285F4),
+                                                        value: type ==
+                                                                EntrustType
+                                                                    .Delete ||
+                                                            type ==
+                                                                EntrustType.All,
                                                         onChanged:
-                                                            (bool? value) {},
+                                                            (bool? value) {
+                                                          type = EntrustType
+                                                              .Delete;
+                                                          setState(() {});
+                                                        },
                                                       ),
                                                     ),
                                                     Text('已撤/废单'),
@@ -272,7 +338,9 @@ class _DockingMainState extends State<DockingMainPage>
                                     ),
                                   ),
                                   Expanded(
-                                    child: EntrustPage(),
+                                    child: EntrustPage(
+                                      type: type,
+                                    ),
                                   ),
                                 ],
                               ),

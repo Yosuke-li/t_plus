@@ -2,22 +2,39 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:native_context_menu/native_context_menu.dart';
 import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/model/entrust.dart';
+import 'package:transaction_plus/utils/log_utils.dart';
 import 'package:transaction_plus/widget/common/button.dart';
 import 'package:transaction_plus/widget/management/widget/common_form.dart';
 
+import 'entrust_modal.dart';
+
+enum EntrustType {
+  All,
+  Delete,
+  Order,
+  Finish,
+}
+
 //委托单
 class EntrustPage extends StatefulWidget {
+  final EntrustType type;
+
+  EntrustPage({required this.type});
+
   @override
   _EntrustState createState() => _EntrustState();
 }
 
 class _EntrustState extends State<EntrustPage> {
   List<Entrust> entrusts = [];
+  late RightMenuFunc _rightMenuFunc;
 
   @override
   void initState() {
+    init();
     super.initState();
     entrusts = [
       Entrust()
@@ -177,80 +194,153 @@ class _EntrustState extends State<EntrustPage> {
     ];
   }
 
+  void init() {
+    Log.info('init: ${widget.type}');
+    _rightMenuFunc = RightMenuFunc()
+      ..onItemSelected = (MenuItem item, int index) {
+        Log.info('index: $index');
+        item.onSelected?.call();
+      }
+      ..menuItems = [
+        MenuItem(
+          title: '改单',
+          onSelected: () async {
+            final reBack = await EntrustModal.Modal(context,
+                child: Container(), title: '编辑改单');
+          },
+        ),
+        MenuItem(
+          title: '撤单',
+          onSelected: () async {
+            final reBack = await EntrustModal.Modal(context,
+                child: Container(), title: '操作确认');
+          },
+        ),
+        MenuItem(
+          title: '全撤',
+          onSelected: () async {
+            final reBack = await EntrustModal.Modal(context,
+                child: Container(), title: '操作确认');
+          },
+        ),
+      ];
+    setState(() {});
+  }
+
+  @override
+  void didUpdateWidget(covariant EntrustPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.type != widget.type) {
+      Log.info('didUpdateWidget: ${widget.type}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: Container(
         color: Color(0xff000000),
-        child: Scrollbar(child: SingleChildScrollView(
-          child: CommonForm<Entrust>(
-            canDrag: true,
-            height: 200,
-            columns: [
-              FormColumn<Entrust>(
-                title: Text('报价编号', style: TextStyle(color: Color(0xBFffffff)),),
-                builder: (_, v) => Container(
-                  child: Text('${v.id ?? ''}'),
+        child: CommonForm<Entrust>(
+          canDrag: true,
+          height: 200,
+          rightMenuFunc: _rightMenuFunc,
+          columns: [
+            FormColumn<Entrust>(
+              title: Text(
+                '报价编号',
+                style: TextStyle(color: Color(0xBFffffff)),
+              ),
+              builder: (_, v) => Container(
+                child: Text('${v.id ?? ''}'),
+              ),
+            ),
+            FormColumn<Entrust>(
+              title: Text(
+                '合约',
+                style: TextStyle(color: Color(0xBFffffff)),
+              ),
+              builder: (_, v) => Container(
+                child: Text(
+                  '${v.cell ?? ''}',
+                  style: TextStyle(color: Colors.amberAccent),
                 ),
               ),
-              FormColumn<Entrust>(
-                title: Text('合约', style: TextStyle(color: Color(0xBFffffff)),),
-                builder: (_, v) => Container(
-                  child: Text('${v.cell ?? ''}', style: TextStyle(color: Colors.amberAccent),),
-                ),
+            ),
+            FormColumn<Entrust>(
+              title: Text(
+                '买卖',
+                style: TextStyle(color: Color(0xBFffffff)),
               ),
-              FormColumn<Entrust>(
-                title: Text('买卖', style: TextStyle(color: Color(0xBFffffff)),),
-                builder: (_, v) => Container(
-                  child: Text('${v.buy ?? ''}'),
-                ),
+              builder: (_, v) => Container(
+                child: Text('${v.buy ?? ''}'),
               ),
-              FormColumn<Entrust>(
-                title: Text('开平', style: TextStyle(color: Color(0xBFffffff)),),
-                builder: (_, v) => Container(
-                  child: Text('${v.open ?? ''}'),
-                ),
+            ),
+            FormColumn<Entrust>(
+              title: Text(
+                '开平',
+                style: TextStyle(color: Color(0xBFffffff)),
               ),
-              FormColumn<Entrust>(
-                title: Text('挂单状态', style: TextStyle(color: Color(0xBFffffff)),),
-                builder: (_, v) => Container(
-                  child: Text('${v.status ?? ''}'),
-                ),
+              builder: (_, v) => Container(
+                child: Text('${v.open ?? ''}'),
               ),
-              FormColumn<Entrust>(
-                title: Text('报单价格', style: TextStyle(color: Color(0xBFffffff)),),
-                builder: (_, v) => Container(
-                  child: Text('${v.price ?? ''}'),
-                ),
+            ),
+            FormColumn<Entrust>(
+              title: Text(
+                '挂单状态',
+                style: TextStyle(color: Color(0xBFffffff)),
               ),
-              FormColumn<Entrust>(
-                title: Text('报单手数', style: TextStyle(color: Color(0xBFffffff)),),
-                builder: (_, v) => Container(
-                  child: Text('${v.head ?? ''}'),
-                ),
+              builder: (_, v) => Container(
+                child: Text('${v.status ?? ''}'),
               ),
-              FormColumn<Entrust>(
-                title: Text('未成交数', style: TextStyle(color: Color(0xBFffffff)),),
-                builder: (_, v) => Container(
-                  child: Text('${v.unsettled ?? ''}'),
-                ),
+            ),
+            FormColumn<Entrust>(
+              title: Text(
+                '报单价格',
+                style: TextStyle(color: Color(0xBFffffff)),
               ),
-              FormColumn<Entrust>(
-                title: Text('成交手数', style: TextStyle(color: Color(0xBFffffff)),),
-                builder: (_, v) => Container(
-                  child: Text('${v.settled ?? ''}'),
-                ),
+              builder: (_, v) => Container(
+                child: Text('${v.price ?? ''}'),
               ),
-              FormColumn<Entrust>(
-                title: Text('详细状态', style: TextStyle(color: Color(0xBFffffff)),),
-                builder: (_, v) => Container(
-                  child: Text('${v.detail ?? ''}'),
-                ),
+            ),
+            FormColumn<Entrust>(
+              title: Text(
+                '报单手数',
+                style: TextStyle(color: Color(0xBFffffff)),
               ),
-            ],
-            values: entrusts,
-          )
-        ),),
+              builder: (_, v) => Container(
+                child: Text('${v.head ?? ''}'),
+              ),
+            ),
+            FormColumn<Entrust>(
+              title: Text(
+                '未成交数',
+                style: TextStyle(color: Color(0xBFffffff)),
+              ),
+              builder: (_, v) => Container(
+                child: Text('${v.unsettled ?? ''}'),
+              ),
+            ),
+            FormColumn<Entrust>(
+              title: Text(
+                '成交手数',
+                style: TextStyle(color: Color(0xBFffffff)),
+              ),
+              builder: (_, v) => Container(
+                child: Text('${v.settled ?? ''}'),
+              ),
+            ),
+            FormColumn<Entrust>(
+              title: Text(
+                '详细状态',
+                style: TextStyle(color: Color(0xBFffffff)),
+              ),
+              builder: (_, v) => Container(
+                child: Text('${v.detail ?? ''}'),
+              ),
+            ),
+          ],
+          values: entrusts,
+        ),
       ),
     );
   }
@@ -261,7 +351,9 @@ class _EntrustState extends State<EntrustPage> {
     final int second = ran.nextInt(10);
     final int third = ran.nextInt(1000);
 
-    Entrust entrust = entrusts.firstWhere((element) => element.id == first,);
+    Entrust entrust = entrusts.firstWhere(
+      (element) => element.id == first,
+    );
     if (entrust != null) {
       final entrustMap = entrust.toJson();
       final key = entrustMap.keys.elementAt(second);

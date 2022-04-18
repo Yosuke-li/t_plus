@@ -4,7 +4,7 @@ import 'package:transaction_plus/helper/cache_about/docking_cache.dart';
 import 'package:transaction_plus/page/order/order_submit/view.dart';
 import 'package:transaction_plus/page/real_time_list/view.dart';
 import 'package:transaction_plus/utils/mqtt_helper.dart';
-import 'package:transaction_plus/widget/common/entrustment.dart';
+import 'package:transaction_plus/page/entrustment/entrustment.dart';
 import 'package:transaction_plus/widget/common/option_quotation.dart';
 import 'package:transaction_plus/widget/common/position.dart';
 import 'package:transaction_plus/page/quotation/quotation.dart';
@@ -34,7 +34,7 @@ class _DockingExamplePageState extends State<DockingExamplePage>
         DockingItem(name: '盘口信息[合约名称]', widget: DiskPortDetailPage(), unDragged: true, weight: 0.15),
         DockingItem(name: '标准下单表', widget: OrderSubmitPage(showTitle: false,), unDragged: true, weight: 0.28),
         DockingTabs([
-          DockingItem(name: '所有委托单', widget: EntrustPage(), unDragged: true),
+          DockingItem(name: '所有委托单', widget: EntrustPage(type: EntrustType.All,), unDragged: true),
         ]),
       ], canDrag: false),
       DockingRow([
