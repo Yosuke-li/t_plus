@@ -28,9 +28,58 @@ class _PositionState extends State<PositionPage> {
 
   void init() async {
     users = [
-      User()..username = '1'..password='1',
-      User()..username = '2'..password='2',
-      User()..username = '3'..password='3',
+      User()
+        ..username = '1'
+        ..accessToken = '1'
+        ..password = '1',
+      User()
+        ..username = '2'
+        ..accessToken = '-1'
+        ..password = '2',
+      User()
+        ..username = '3'
+        ..accessToken = '1'
+        ..password = '3',
+      User()
+        ..username = '3'
+        ..accessToken = '1'
+        ..password = '3',
+      User()
+        ..username = '3'
+        ..accessToken = '1'
+        ..password = '3',
+      User()
+        ..username = '3'
+        ..accessToken = '100'
+        ..password = '3',
+      User()
+        ..username = '3'
+        ..accessToken = '-10'
+        ..password = '3',
+      User()
+        ..username = '3'
+        ..accessToken = '89'
+        ..password = '3',
+      User()
+        ..username = '3'
+        ..accessToken = '70'
+        ..password = '3',
+      User()
+        ..username = '3'
+        ..accessToken = '-10'
+        ..password = '3',
+      User()
+        ..username = '3'
+        ..accessToken = '89'
+        ..password = '3',
+      User()
+        ..username = '3'
+        ..accessToken = '70'
+        ..password = '3',
+      User()
+        ..username = '3'
+        ..accessToken = '-10'
+        ..password = '3',
     ];
     setState(() {});
   }
@@ -75,6 +124,8 @@ class _PositionState extends State<PositionPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Container(
+                              width: 50,
+                              alignment: Alignment.center,
                               child: Text('${v.username ?? ''}'),
                             ),
                             SizedBox(
@@ -83,66 +134,93 @@ class _PositionState extends State<PositionPage> {
                                 color: const Color(0xff797979),
                               ),
                             ),
-                            Container(
-                              child: Text('${v.username ?? ''}'),
+                            Expanded(
+                              child: Text(
+                                '${v.accessToken ?? ''}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: int.tryParse(v.accessToken!)! > 0
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ),
                     ),
                     if (widget.type == PositionType.Detail)
-                    FormColumn<User>(
-                      title: Text(
-                        '买持仓',
-                        style: TextStyle(color: Color(0xBFffffff)),
-                      ),
-                      builder: (_, v) => Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              child: Text('${v.username ?? ''}'),
-                            ),
-                            SizedBox(
-                              width: 1.0,
-                              child: Container(
-                                color: const Color(0xff797979),
+                      FormColumn<User>(
+                        title: Text(
+                          '买持仓',
+                          style: TextStyle(color: Color(0xBFffffff)),
+                        ),
+                        builder: (_, v) => Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                width: 50,
+                                alignment: Alignment.center,
+                                child: Text('${v.username ?? ''}'),
                               ),
-                            ),
-                            Container(
-                              child: Text('${v.username ?? ''}'),
-                            ),
-                          ],
+                              SizedBox(
+                                width: 1.0,
+                                child: Container(
+                                  color: const Color(0xff797979),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '${v.accessToken ?? ''}',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: int.tryParse(v.accessToken!)! > 0
+                                        ? Colors.red
+                                        : Colors.green,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     if (widget.type == PositionType.Detail)
-                    FormColumn<User>(
-                      title: Text(
-                        '卖持仓',
-                        style: TextStyle(color: Color(0xBFffffff)),
-                      ),
-                      builder: (_, v) => Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              child: Text('${v.username ?? ''}'),
-                            ),
-                            SizedBox(
-                              width: 1.0,
-                              child: Container(
-                                color: const Color(0xff797979),
+                      FormColumn<User>(
+                        title: Text(
+                          '卖持仓',
+                          style: TextStyle(color: Color(0xBFffffff)),
+                        ),
+                        builder: (_, v) => Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                width: 50,
+                                alignment: Alignment.center,
+                                child: Text('${v.username ?? ''}'),
                               ),
-                            ),
-                            Container(
-                              child: Text('${v.username ?? ''}'),
-                            ),
-                          ],
+                              SizedBox(
+                                width: 1.0,
+                                child: Container(
+                                  color: const Color(0xff797979),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '${v.accessToken ?? ''}',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: int.tryParse(v.accessToken!)! > 0
+                                        ? Colors.red
+                                        : Colors.green,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-
                     FormColumn<User>(
                       title: Text(
                         '今买',
@@ -153,6 +231,8 @@ class _PositionState extends State<PositionPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Container(
+                              width: 50,
+                              alignment: Alignment.center,
                               child: Text('${v.username ?? ''}'),
                             ),
                             SizedBox(
@@ -161,8 +241,16 @@ class _PositionState extends State<PositionPage> {
                                 color: const Color(0xff797979),
                               ),
                             ),
-                            Container(
-                              child: Text('${v.username ?? ''}'),
+                            Expanded(
+                              child: Text(
+                                '${v.accessToken ?? ''}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: int.tryParse(v.accessToken!)! > 0
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -178,6 +266,8 @@ class _PositionState extends State<PositionPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Container(
+                              width: 50,
+                              alignment: Alignment.center,
                               child: Text('${v.username ?? ''}'),
                             ),
                             SizedBox(
@@ -186,8 +276,16 @@ class _PositionState extends State<PositionPage> {
                                 color: const Color(0xff797979),
                               ),
                             ),
-                            Container(
-                              child: Text('${v.username ?? ''}'),
+                            Expanded(
+                              child: Text(
+                                '${v.accessToken ?? ''}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: int.tryParse(v.accessToken!)! > 0
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -203,15 +301,15 @@ class _PositionState extends State<PositionPage> {
                       ),
                     ),
                     if (widget.type == PositionType.Detail)
-                    FormColumn<User>(
-                      title: Text(
-                        '盯市浮盈',
-                        style: TextStyle(color: Color(0xBFffffff)),
+                      FormColumn<User>(
+                        title: Text(
+                          '盯市浮盈',
+                          style: TextStyle(color: Color(0xBFffffff)),
+                        ),
+                        builder: (_, v) => Container(
+                          child: Text('${v.password ?? ''}'),
+                        ),
                       ),
-                      builder: (_, v) => Container(
-                        child: Text('${v.password ?? ''}'),
-                      ),
-                    ),
                     FormColumn<User>(
                       title: Text(
                         '逐笔浮盈',
@@ -222,15 +320,15 @@ class _PositionState extends State<PositionPage> {
                       ),
                     ),
                     if (widget.type == PositionType.Detail)
-                    FormColumn<User>(
-                      title: Text(
-                        '平仓盈亏（盯市）',
-                        style: TextStyle(color: Color(0xBFffffff)),
+                      FormColumn<User>(
+                        title: Text(
+                          '平仓盈亏（盯市）',
+                          style: TextStyle(color: Color(0xBFffffff)),
+                        ),
+                        builder: (_, v) => Container(
+                          child: Text('${v.password ?? ''}'),
+                        ),
                       ),
-                      builder: (_, v) => Container(
-                        child: Text('${v.password ?? ''}'),
-                      ),
-                    ),
                     FormColumn<User>(
                       title: Text(
                         '平仓盈亏（逐笔）',
@@ -241,22 +339,29 @@ class _PositionState extends State<PositionPage> {
                       ),
                     ),
                     if (widget.type == PositionType.Detail)
-                    FormColumn<User>(
-                      title: Text(
-                        '当日盈亏',
-                        style: TextStyle(color: Color(0xBFffffff)),
+                      FormColumn<User>(
+                        title: Text(
+                          '当日盈亏',
+                          style: TextStyle(color: Color(0xBFffffff)),
+                        ),
+                        builder: (_, v) => Container(
+                          child: Text('${v.password ?? ''}'),
+                        ),
                       ),
-                      builder: (_, v) => Container(
-                        child: Text('${v.password ?? ''}'),
-                      ),
-                    ),
                     FormColumn<User>(
                       title: Text(
                         '累计盈亏',
                         style: TextStyle(color: Color(0xBFffffff)),
                       ),
                       builder: (_, v) => Container(
-                        child: Text('${v.password ?? ''}'),
+                        child: Text(
+                          '${v.accessToken ?? ''}',
+                          style: TextStyle(
+                            color: int.tryParse(v.accessToken!)! > 0
+                                ? Colors.red
+                                : Colors.green,
+                          ),
+                        ),
                       ),
                     ),
                   ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:transaction_plus/global/event.dart';
+import 'package:transaction_plus/page/order_history/order_history.dart';
 import 'package:transaction_plus/utils/event_bus_helper.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common/bottom_widget.dart';
@@ -429,7 +430,7 @@ class _DockingMainState extends State<DockingMainPage>
                                 ),
                               ),
                               SizedBox(
-                                width: 1,
+                                width: 1.5,
                                 child: Container(
                                   color: Colors.black12,
                                 ),
@@ -469,9 +470,7 @@ class _DockingMainState extends State<DockingMainPage>
                                         ),
                                       ),
                                       Expanded(
-                                        child: PositionPage(
-                                          type: positionType,
-                                        ),
+                                        child: OrderHistory(),
                                       ),
                                     ],
                                   ),
