@@ -6,7 +6,7 @@ import 'package:transaction_plus/page/real_time_list/view.dart';
 import 'package:transaction_plus/utils/mqtt_helper.dart';
 import 'package:transaction_plus/page/entrustment/entrustment.dart';
 import 'package:transaction_plus/widget/common/option_quotation.dart';
-import 'package:transaction_plus/widget/common/position.dart';
+import 'package:transaction_plus/page/position/position.dart';
 import 'package:transaction_plus/page/quotation/quotation.dart';
 import 'package:transaction_plus/widget/common/unsettled.dart';
 import 'package:transaction_plus/widget/docking/docking.dart';
@@ -38,8 +38,8 @@ class _DockingExamplePageState extends State<DockingExamplePage>
         ]),
       ], canDrag: false),
       DockingRow([
-        DockingItem(name: '持仓', widget: PositionPage(), weight: 0.4),
-        DockingItem(name: '成交记录', widget: PositionPage()),
+        DockingItem(name: '持仓', widget: PositionPage(type: PositionType.Simple,), weight: 0.4),
+        DockingItem(name: '成交记录', widget: PositionPage(type: PositionType.Simple,)),
       ]),
     ]);
 

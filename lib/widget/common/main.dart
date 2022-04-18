@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:transaction_plus/global/event.dart';
 import 'package:transaction_plus/utils/event_bus_helper.dart';
-import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common/bottom_widget.dart';
 import 'package:transaction_plus/page/account/head_widget.dart';
@@ -11,7 +10,7 @@ import 'package:transaction_plus/page/quotation/quotation.dart';
 import '../../page/order/order_submit/view.dart';
 import 'disk_port.dart';
 import '../../page/entrustment/entrustment.dart';
-import 'position.dart';
+import '../../page/position/position.dart';
 
 class DockingMainPage extends StatefulWidget {
   @override
@@ -23,6 +22,7 @@ class _DockingMainState extends State<DockingMainPage>
   int currentIndex = 0;
   EntrustType type = EntrustType.All;
   DiskPortType diskType = DiskPortType.TypeOne;
+  PositionType positionType = PositionType.Simple;
 
   @override
   void initState() {
@@ -146,12 +146,11 @@ class _DockingMainState extends State<DockingMainPage>
                                     ),
                                   ),
                                   Expanded(
-                                    child: RepaintBoundary(
-                                      child: DiskPortDetailPage(
-                                        type: diskType,
-                                      ),
-                                    )
-                                  ),
+                                      child: RepaintBoundary(
+                                    child: DiskPortDetailPage(
+                                      type: diskType,
+                                    ),
+                                  )),
                                 ],
                               ),
                             ),
@@ -351,11 +350,13 @@ class _DockingMainState extends State<DockingMainPage>
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
-                              border: Border(
-                                  top: BorderSide(
-                                      color: Color(0xff000000),
-                                      width: 2.0,
-                                      style: BorderStyle.solid))),
+                            border: Border(
+                              top: BorderSide(
+                                  color: Color(0xff000000),
+                                  width: 2.0,
+                                  style: BorderStyle.solid),
+                            ),
+                          ),
                           child: Row(
                             children: [
                               Expanded(
@@ -363,37 +364,66 @@ class _DockingMainState extends State<DockingMainPage>
                                 child: Column(
                                   children: [
                                     Container(
-                                        alignment: Alignment.topLeft,
+                                      alignment: Alignment.topLeft,
+                                      child: RepaintBoundary(
                                         child: Row(
                                           children: [
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                right: screenUtil.adaptive(10),
-                                                left: screenUtil.adaptive(10),
-                                                top: screenUtil.adaptive(3),
-                                                bottom: screenUtil.adaptive(3),
-                                              ),
-                                              color: Color(0xff7C7F80),
-                                              child: Text(
-                                                '持仓',
+                                            InkWell(
+                                              onTap: () {
+                                                positionType =
+                                                    PositionType.Simple;
+                                                setState(() {});
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.only(
+                                                  right:
+                                                      screenUtil.adaptive(10),
+                                                  left: screenUtil.adaptive(10),
+                                                  top: screenUtil.adaptive(3),
+                                                  bottom:
+                                                      screenUtil.adaptive(3),
+                                                ),
+                                                color: positionType ==
+                                                        PositionType.Simple
+                                                    ? Color(0xff7C7F80)
+                                                    : null,
+                                                child: const Text(
+                                                  '持仓',
+                                                ),
                                               ),
                                             ),
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                right: screenUtil.adaptive(10),
-                                                left: screenUtil.adaptive(10),
-                                                top: screenUtil.adaptive(3),
-                                                bottom: screenUtil.adaptive(3),
-                                              ),
-                                              // color: Color(0xff7C7F80),
-                                              child: Text(
-                                                '详细持仓',
+                                            InkWell(
+                                              onTap: () {
+                                                positionType =
+                                                    PositionType.Detail;
+                                                setState(() {});
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.only(
+                                                  right:
+                                                      screenUtil.adaptive(10),
+                                                  left: screenUtil.adaptive(10),
+                                                  top: screenUtil.adaptive(3),
+                                                  bottom:
+                                                      screenUtil.adaptive(3),
+                                                ),
+                                                color: positionType ==
+                                                        PositionType.Detail
+                                                    ? Color(0xff7C7F80)
+                                                    : null,
+                                                child: const Text(
+                                                  '详细持仓',
+                                                ),
                                               ),
                                             ),
                                           ],
-                                        )),
+                                        ),
+                                      ),
+                                    ),
                                     Expanded(
-                                      child: PositionPage(),
+                                      child: PositionPage(
+                                        type: positionType,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -439,7 +469,9 @@ class _DockingMainState extends State<DockingMainPage>
                                         ),
                                       ),
                                       Expanded(
-                                        child: PositionPage(),
+                                        child: PositionPage(
+                                          type: positionType,
+                                        ),
                                       ),
                                     ],
                                   ),
