@@ -1,50 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:transaction_plus/utils/array_helper.dart';
 
-class GroupListModel {
+class GroupListModel<T> {
   String? title;
-  List<String>? children;
+  List<T>? children;
 }
 
-class GroupListWidget extends StatefulWidget {
-  final List<GroupListModel> list;
+typedef GroupItemBuilder<T> = Widget Function(T value);
 
-  const GroupListWidget({Key? key, required this.list});
+class GroupListWidget<T> extends StatefulWidget {
+  final List<GroupListModel<T>> list;
+  final GroupItemBuilder<T> groupItemBuilder;
+  final EdgeInsetsGeometry? padding;
+
+  const GroupListWidget({
+    Key? key,
+    required this.list,
+    required this.groupItemBuilder,
+    this.padding,
+  });
 
   @override
   State<StatefulWidget> createState() {
-    return _GroupListState();
+    return _GroupListState<T>();
   }
 }
 
-class _GroupListState extends State<GroupListWidget> {
+class _GroupListState<T> extends State<GroupListWidget<T>> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        shrinkWrap: true,
-        itemCount: widget.list.length,
-        itemBuilder: (BuildContext context, int index) {
-          final GroupListModel groupListModel =
-          ArrayHelper.get(widget.list, index)!;
-          return _LevelOneListWidget(
-            item: groupListModel,
-          );
-        });
+      shrinkWrap: true,
+      itemCount: widget.list.length,
+      itemBuilder: (BuildContext context, int index) {
+        final GroupListModel<T> groupListModel =
+            ArrayHelper.get(widget.list, index)!;
+        return _LevelOneListWidget<T>(
+          item: groupListModel,
+          padding: widget.padding,
+          groupItemBuilder: widget.groupItemBuilder,
+        );
+      },
+    );
   }
 }
 
-class _LevelOneListWidget extends StatefulWidget {
-  final GroupListModel item;
+class _LevelOneListWidget<T> extends StatefulWidget {
+  final GroupListModel<T> item;
+  final GroupItemBuilder<T> groupItemBuilder;
+  final EdgeInsetsGeometry? padding;
 
-  const _LevelOneListWidget({required this.item});
+  const _LevelOneListWidget({required this.item, required this.groupItemBuilder, this.padding});
 
   @override
   State<StatefulWidget> createState() {
-    return _LevelOneListState();
+    return _LevelOneListState<T>();
   }
 }
 
-class _LevelOneListState extends State<_LevelOneListWidget>
+class _LevelOneListState<T> extends State<_LevelOneListWidget<T>>
     with SingleTickerProviderStateMixin {
   bool _isExpand = false;
 
@@ -63,7 +77,8 @@ class _LevelOneListState extends State<_LevelOneListWidget>
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 14, right: 14, top: 28, bottom: 10),
+      padding: widget.padding ??
+          const EdgeInsets.only(left: 14, right: 14, top: 28, bottom: 10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -81,17 +96,19 @@ class _LevelOneListState extends State<_LevelOneListWidget>
             },
             child: Row(
               children: [
-                Container(
-                  child: Text('${widget.item.title ?? ''}'),
-                ),
                 RotationTransition(
                   turns: _animationController,
                   child: Icon(Icons.arrow_right),
-                )
+                ),
+                Container(
+                  child: Text('${widget.item.title ?? ''}'),
+                ),
               ],
             ),
           ),
-          _levelTwoListWidget(),
+          RepaintBoundary(
+            child: _levelTwoListWidget(),
+          ),
         ],
       ),
     );
@@ -101,14 +118,17 @@ class _LevelOneListState extends State<_LevelOneListWidget>
     if (_isExpand == false) {
       return Container();
     }
+
     return ListView.builder(
-        shrinkWrap: true,
-        itemCount: widget.item.children?.length ?? 0,
-        itemBuilder: (BuildContext context, int index) {
-          final String? text = ArrayHelper.get(widget.item.children, index);
-          return Container(
-            child: Text('${text ?? ''}'),
-          );
-        });
+      shrinkWrap: true,
+      itemCount: widget.item.children?.length ?? 0,
+      itemBuilder: (BuildContext context, int index) {
+        final T text = ArrayHelper.get(widget.item.children, index)!;
+        return Container(
+          margin: const EdgeInsets.only(left: 25),
+          child: widget.groupItemBuilder(text),
+        );
+      },
+    );
   }
 }

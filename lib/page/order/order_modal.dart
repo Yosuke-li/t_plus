@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transaction_plus/page/order/order_select.dart';
 import 'package:transaction_plus/utils/navigator.dart';
 
 import '../../widget/modal_utils.dart';
@@ -40,7 +41,7 @@ class Order {
                 )
             ),
             Expanded(
-              child: Container(),
+              child: OrderSelect(),
             ),
           ],
         ),

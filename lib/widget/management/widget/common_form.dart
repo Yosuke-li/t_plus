@@ -40,12 +40,23 @@ FormColumn<T> buildIconButtonFormColumn<T>(
           ));
 }
 
+/// self methods
+/// [ColorFunc] 用于选中状态下的column，
+/// [WidgetBuilderFunc] builder新子类
+/// [TapCallBack] 点击的回调
+/// [DragCallBack] 拖拽的回调
+typedef ColorFunc<T> = MaterialAccentColor? Function(T value);
+typedef WidgetBuilderFunc<T> = Widget Function(BuildContext context, T value);
+typedef TapCallBack<T> = void Function(T value);
+typedef DragCallBack<T> = void Function(T value, int index);
+
 class FormColumn<T> {
   final Widget title;
   final double? width;
-  final Widget Function(BuildContext context, T value) builder;
+  final ColorFunc<T>? color;
+  final WidgetBuilderFunc<T> builder;
 
-  FormColumn({required this.title, required this.builder, this.width});
+  FormColumn({required this.title, required this.builder, this.width, this.color});
 }
 
 /// 点击的回调方法[onTapFunc]
@@ -66,8 +77,8 @@ class CommonForm<T> extends StatefulWidget {
   final List<FormColumn<T>> columns;
   final List<T> values;
   final bool? canDrag;
-  final void Function(T value)? onTapFunc; //点击回调
-  final void Function(T value, int index)? onDragFunc; //拖拽后的回调
+  final TapCallBack<T>? onTapFunc; //点击回调
+  final DragCallBack<T>? onDragFunc; //拖拽后的回调
   final double height;
   final Color? titleColor;
   final Color? formColor;
@@ -174,7 +185,7 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
           child: Row(
             children: widget.columns
                 .map((e) => warpWidget(
-                    child: e.builder(context, value), width: e.width))
+                    child: e.builder(context, value), color: e.color?.call(value), width: e.width))
                 .toList(growable: false),
           ),
         ),
