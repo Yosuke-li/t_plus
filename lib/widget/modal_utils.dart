@@ -11,7 +11,7 @@ class ModalUtils {
         Widget? body,
         Border? border,
         Text? button1,
-        ModelSize? modelSize,
+        ModalSize? ModalSize,
         bool outsideDismiss = true,
         bool cleanFocus = true,
         bool autoClose = false,
@@ -177,7 +177,7 @@ class ModalUtils {
                 body: body,
                 messageBody: messageBody,
                 border: border,
-                modelSize: modelSize,
+                modalSize: ModalSize,
                 bottom: bottom,
                 autoClose: autoClose,
                 modalColor: modalBackgroundColor,
@@ -189,11 +189,11 @@ class ModalUtils {
   }
 }
 
-class ModelSize {
+class ModalSize {
   double? width;
   double? height;
 
-  ModelSize({this.width, this.height});
+  ModalSize({this.width, this.height});
 }
 
 class _ModalWidget extends StatefulWidget {
@@ -209,7 +209,7 @@ class _ModalWidget extends StatefulWidget {
   double? marginBottom; //距离底部的高，使model偏上
 
   Border? border;
-  ModelSize? modelSize;
+  ModalSize? modalSize;
 
   _ModalWidget({
     Key? key,
@@ -220,7 +220,7 @@ class _ModalWidget extends StatefulWidget {
     this.bottom,
     this.border,
     this.outsideDismiss,
-    this.modelSize,
+    this.modalSize,
     this.autoClose,
     this.modalColor,
     this.marginBottom,
@@ -286,8 +286,8 @@ class _Modal extends State<_ModalWidget> {
                               ),
                             ),
                           ),
-                          width: widget.modelSize?.width ?? screenUtil.adaptive(858),
-                          height: widget.modelSize?.height,
+                          width: widget.modalSize?.width ?? screenUtil.adaptive(858),
+                          height: widget.modalSize?.height,
                           child: ListView(
                             padding: const EdgeInsets.all(0),
                             shrinkWrap: true,

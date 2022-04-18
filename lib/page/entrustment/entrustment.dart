@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:native_context_menu/native_context_menu.dart';
 import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/model/entrust.dart';
+import 'package:transaction_plus/page/entrustment/page/change_order.dart';
+import 'package:transaction_plus/page/entrustment/page/delete_order.dart';
 import 'package:transaction_plus/utils/log_utils.dart';
 import 'package:transaction_plus/widget/common/button.dart';
 import 'package:transaction_plus/widget/management/widget/common_form.dart';
+import 'package:transaction_plus/widget/modal_utils.dart';
 
 import 'entrust_modal.dart';
 
@@ -205,21 +208,21 @@ class _EntrustState extends State<EntrustPage> {
         MenuItem(
           title: '改单',
           onSelected: () async {
-            final reBack = await EntrustModal.Modal(context,
-                child: Container(), title: '编辑改单');
+            final bool? reBack = await EntrustModal.Modal(context,
+                child: ChangeOrder(), title: '编辑改单', size: ModalSize(width: 445, height: 310));
           },
         ),
         MenuItem(
           title: '撤单',
           onSelected: () async {
-            final reBack = await EntrustModal.Modal(context,
-                child: Container(), title: '操作确认');
+            final bool? reBack = await EntrustModal.Modal(context,
+                child: DeleteOrder(), title: '操作确认', size: ModalSize(width: 400, height: 210),);
           },
         ),
         MenuItem(
           title: '全撤',
           onSelected: () async {
-            final reBack = await EntrustModal.Modal(context,
+            final bool? reBack = await EntrustModal.Modal(context,
                 child: Container(), title: '操作确认');
           },
         ),

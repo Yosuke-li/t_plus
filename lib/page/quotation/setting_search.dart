@@ -467,7 +467,7 @@ class _SettingSearchState extends State<SettingSearch> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(right: 30),
+                  margin: const EdgeInsets.only(right: 30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -477,7 +477,7 @@ class _SettingSearchState extends State<SettingSearch> {
                         },
                         child: Text('应用'),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       OutlinedButton(

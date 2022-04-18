@@ -3,9 +3,13 @@ import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/widget/modal_utils.dart';
 
 class EntrustModal {
-  static Future<void> Modal(BuildContext context,
-      {required Widget child, required String title, ModelSize? size,}) async {
-    await ModalUtils.showModal(
+  static Future<bool?> Modal(BuildContext context,
+      {required Widget child, required String title, ModalSize? size,}) async {
+    double height = 470;
+    if (size != null && size.height != null) {
+      height = size.height! - 40;
+    }
+    return await ModalUtils.showModal(
       context,
       modalBackgroundColor: const Color(0xff323337),
       border: Border.all(
@@ -13,10 +17,10 @@ class EntrustModal {
         width: 2.0,
         style: BorderStyle.solid,
       ),
-      modelSize: size ?? ModelSize(width: null, height: 510),
+      ModalSize: size ?? ModalSize(width: null, height: 510),
       body: Container(
         alignment: Alignment.center,
-        height: size != null ? (size.height ?? 0 - 30) : 470,
+        height: height,
         child: Column(
           children: [
             Container(

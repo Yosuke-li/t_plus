@@ -16,7 +16,7 @@ class Account {
         width: 2.0,
         style: BorderStyle.solid,
       ),
-      modelSize: ModelSize(width: 900, height: 600),
+      ModalSize: ModalSize(width: 900, height: 600),
       marginBottom: 50,
       body: Container(
         alignment: Alignment.center,
@@ -61,7 +61,7 @@ class Account {
         width: 2.0,
         style: BorderStyle.solid,
       ),
-      modelSize: ModelSize(width: 700, height: 350),
+      ModalSize: ModalSize(width: 700, height: 350),
       marginBottom: 50,
       body: Container(
         alignment: Alignment.center,

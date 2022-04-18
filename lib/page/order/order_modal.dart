@@ -16,7 +16,7 @@ class Order {
         style: BorderStyle.solid,
       ),
       marginBottom: 20,
-      modelSize: ModelSize(width: null, height: 510),
+      ModalSize: ModalSize(width: null, height: 510),
       body: Container(
         alignment: Alignment.center,
         height: 470,
