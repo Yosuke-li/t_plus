@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:transaction_plus/page/order/order_select.dart';
+
 import 'package:transaction_plus/utils/navigator.dart';
+import 'package:transaction_plus/widget/modal_utils.dart';
 
-import '../../widget/modal_utils.dart';
+import 'order_history_more.dart';
 
-class Order {
-  static Future<void> Modal(BuildContext context,
-      {void Function()? onFunc}) async {
+class OrderHModal {
+  static Future<void> Modal(BuildContext context) async {
     await ModalUtils.showModal(
       context,
       modalBackgroundColor: const Color(0xff323337),
@@ -15,11 +15,10 @@ class Order {
         width: 2.0,
         style: BorderStyle.solid,
       ),
-      marginBottom: 20,
-      modalSize: ModalSize(width: null, height: 510),
+      modalSize: ModalSize(width: 900, height: 400),
       body: Container(
         alignment: Alignment.center,
-        height: 470,
+        height: 400,
         child: Column(
           children: [
             Container(
@@ -28,24 +27,25 @@ class Order {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '选择合约',
+                      '成交单历史',
                       style: TextStyle(fontSize: 20),
                     ),
                     InkWell(
                       onTap: () {
                         NavigatorUtils.pop(context);
                       },
-                      child: Icon(Icons.close),
+                      child: const Icon(Icons.close),
                     )
                   ],
                 )
             ),
             Expanded(
-              child: OrderSelect(),
+              child: OrderHistoryMore(),
             ),
           ],
         ),
       ),
     );
   }
+
 }

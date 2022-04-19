@@ -16,7 +16,7 @@ class Setting {
         width: 2.0,
         style: BorderStyle.solid,
       ),
-      ModalSize: ModalSize(width: null, height: 510),
+      modalSize: ModalSize(width: null, height: 510),
       body: Container(
         alignment: Alignment.center,
         height: 470,
@@ -48,7 +48,7 @@ class Setting {
         width: 1.0,
         style: BorderStyle.solid,
       ),
-      ModalSize: ModalSize(width: 300, height: type == OtherType.Delete ? 210 : 220),
+      modalSize: ModalSize(width: 300, height: type == OtherType.Delete ? 210 : 220),
       body: Container(
         alignment: Alignment.center,
         height: type == OtherType.Delete ? 180 : 190,

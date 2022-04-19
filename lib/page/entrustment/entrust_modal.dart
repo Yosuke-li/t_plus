@@ -17,7 +17,7 @@ class EntrustModal {
         width: 2.0,
         style: BorderStyle.solid,
       ),
-      ModalSize: size ?? ModalSize(width: null, height: 510),
+      modalSize: size ?? ModalSize(width: null, height: 510),
       body: Container(
         alignment: Alignment.center,
         height: height,
