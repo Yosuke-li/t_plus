@@ -1,14 +1,11 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:native_context_menu/native_context_menu.dart';
-import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/model/entrust.dart';
 import 'package:transaction_plus/page/entrustment/page/change_order.dart';
 import 'package:transaction_plus/page/entrustment/page/delete_order.dart';
 import 'package:transaction_plus/utils/log_utils.dart';
-import 'package:transaction_plus/widget/common/button.dart';
 import 'package:transaction_plus/widget/management/widget/common_form.dart';
 import 'package:transaction_plus/widget/modal_utils.dart';
 
@@ -209,14 +206,20 @@ class _EntrustState extends State<EntrustPage> {
           title: '改单',
           onSelected: () async {
             final bool? reBack = await EntrustModal.Modal(context,
-                child: ChangeOrder(), title: '编辑改单', size: ModalSize(width: 445, height: 310));
+                child: ChangeOrder(),
+                title: '编辑改单',
+                size: ModalSize(width: 445, height: 310));
           },
         ),
         MenuItem(
           title: '撤单',
           onSelected: () async {
-            final bool? reBack = await EntrustModal.Modal(context,
-                child: DeleteOrder(), title: '操作确认', size: ModalSize(width: 400, height: 210),);
+            final bool? reBack = await EntrustModal.Modal(
+              context,
+              child: DeleteOrder(),
+              title: '操作确认',
+              size: ModalSize(width: 400, height: 210),
+            );
           },
         ),
         MenuItem(
@@ -242,103 +245,182 @@ class _EntrustState extends State<EntrustPage> {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: Container(
-        color: Color(0xff000000),
+        color: const Color(0xff323337),
         child: CommonForm<Entrust>(
           canDrag: true,
+          titleColor: const Color(0x401C1D21),
+          formColor: const Color(0xff1C1D21),
           height: 200,
           rightMenuFunc: _rightMenuFunc,
           columns: [
             FormColumn<Entrust>(
-              title: Text(
+              title: const Text(
                 '报价编号',
                 style: TextStyle(color: Color(0xBFffffff)),
               ),
               builder: (_, v) => Container(
-                child: Text('${v.id ?? ''}'),
+                child: Text(
+                  '${v.id ?? ''}',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ),
             ),
             FormColumn<Entrust>(
-              title: Text(
+              title: const Text(
                 '合约',
                 style: TextStyle(color: Color(0xBFffffff)),
               ),
               builder: (_, v) => Container(
                 child: Text(
                   '${v.cell ?? ''}',
-                  style: TextStyle(color: Colors.amberAccent),
+                  style: const TextStyle(
+                    color: Colors.amberAccent,
+                    fontSize: 13,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
               ),
             ),
             FormColumn<Entrust>(
-              title: Text(
+              title: const Text(
                 '买卖',
                 style: TextStyle(color: Color(0xBFffffff)),
               ),
               builder: (_, v) => Container(
-                child: Text('${v.buy ?? ''}'),
+                child: Text(
+                  '${v.buy ?? ''}',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ),
             ),
             FormColumn<Entrust>(
-              title: Text(
+              title: const Text(
                 '开平',
                 style: TextStyle(color: Color(0xBFffffff)),
               ),
               builder: (_, v) => Container(
-                child: Text('${v.open ?? ''}'),
+                child: Text(
+                  '${v.open ?? ''}',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ),
             ),
             FormColumn<Entrust>(
-              title: Text(
+              title: const Text(
                 '挂单状态',
                 style: TextStyle(color: Color(0xBFffffff)),
               ),
               builder: (_, v) => Container(
-                child: Text('${v.status ?? ''}'),
+                child: Text(
+                  '${v.status ?? ''}',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ),
             ),
             FormColumn<Entrust>(
-              title: Text(
+              title: const Text(
                 '报单价格',
                 style: TextStyle(color: Color(0xBFffffff)),
               ),
               builder: (_, v) => Container(
-                child: Text('${v.price ?? ''}'),
+                child: Text(
+                  '${v.price ?? ''}',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ),
             ),
             FormColumn<Entrust>(
-              title: Text(
+              title: const Text(
                 '报单手数',
                 style: TextStyle(color: Color(0xBFffffff)),
               ),
               builder: (_, v) => Container(
-                child: Text('${v.head ?? ''}'),
+                child: Text(
+                  '${v.head ?? ''}',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ),
             ),
             FormColumn<Entrust>(
-              title: Text(
+              title: const Text(
                 '未成交数',
                 style: TextStyle(color: Color(0xBFffffff)),
               ),
               builder: (_, v) => Container(
-                child: Text('${v.unsettled ?? ''}'),
+                child: Text(
+                  '${v.unsettled ?? ''}',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ),
             ),
             FormColumn<Entrust>(
-              title: Text(
+              title: const Text(
                 '成交手数',
                 style: TextStyle(color: Color(0xBFffffff)),
               ),
               builder: (_, v) => Container(
-                child: Text('${v.settled ?? ''}'),
+                child: Text(
+                  '${v.settled ?? ''}',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ),
             ),
             FormColumn<Entrust>(
-              title: Text(
+              title: const Text(
                 '详细状态',
                 style: TextStyle(color: Color(0xBFffffff)),
               ),
               builder: (_, v) => Container(
-                child: Text('${v.detail ?? ''}'),
+                child: Text(
+                  '${v.detail ?? ''}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 13,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ),
             ),
           ],

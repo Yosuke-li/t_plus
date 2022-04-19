@@ -110,11 +110,10 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
 
   Widget buildTitleRow() {
     return Container(
-      decoration: BoxDecoration(color: widget.titleColor),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: widget.columns
-            .map((e) => warpWidget(child: e.title, width: e.width))
+            .map((e) => warpWidget(child: e.title, width: e.width, color: widget.titleColor))
             .toList(growable: false),
       ),
     );
@@ -135,12 +134,14 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
         },
         //绘制widget
         builder: (context, data, rejects) {
-          return buildRow(ArrayHelper.get(widget.values, index)!);
+          return buildRow(ArrayHelper.get(widget.values, index)!, color: widget.formColor);
         },
       ),
+      delay: const Duration(milliseconds: 100),
       feedback: Container(
         decoration: BoxDecoration(
           border: Border.all(width: 0.4, color: Colors.red),
+          color: Colors.red,
         ),
         child: buildRow(ArrayHelper.get(widget.values, index)!),
       ),
@@ -148,7 +149,7 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
   }
 
   ///实现table的每一行
-  Widget buildRow(T value) {
+  Widget buildRow(T value, {Color? color}) {
     return Listener(
       onPointerDown: (e) {
         shouldReact = e.kind == PointerDeviceKind.mouse &&
@@ -177,7 +178,7 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
         }
       },
       child: Container(
-        decoration: BoxDecoration(color: widget.formColor),
+        decoration: BoxDecoration(color: color),
         child: GestureDetector(
           onTap: () {
             widget.onTapFunc?.call(value);
@@ -196,7 +197,7 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
   Widget warpWidget({required Widget child, Color? color, double? width}) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(width: 0.4, color: Color(0xE6797979)),
+          border: Border.all(width: 0.1, color: const Color(0xE6797979)),
           color: color),
       height: 25,
       width: width ?? 125,
@@ -216,7 +217,7 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
         children.add(buildDragTitleRow(x));
       }
     } else {
-      children.addAll(widget.values.map((e) => buildRow(e)));
+      children.addAll(widget.values.map((e) => buildRow(e, color: widget.formColor)));
     }
 
     return Scrollbar(

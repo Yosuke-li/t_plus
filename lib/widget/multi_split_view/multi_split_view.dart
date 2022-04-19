@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import 'controller.dart';
@@ -143,7 +142,7 @@ class _MultiSplitViewState extends State<MultiSplitView> {
   }
 
   /// Updates the highlighted divider index.
-  _updatesHighlightedDividerIndex(int? index) {
+  void _updatesHighlightedDividerIndex(int? index) {
     if (_highlightedDividerIndex != index && widget.dividerPainter != null) {
       setState(() {
         _highlightedDividerIndex = index;
@@ -152,7 +151,7 @@ class _MultiSplitViewState extends State<MultiSplitView> {
   }
 
   /// Applies the horizontal layout
-  _populateHorizontalChildren(BuildContext context, BoxConstraints constraints,
+  Stack _populateHorizontalChildren(BuildContext context, BoxConstraints constraints,
       List<Widget> children, double minimalWeight) {
     double totalChildrenSize = constraints.maxWidth - _totalDividerSize;
     double totalRemainingWeight = 1;
@@ -204,7 +203,7 @@ class _MultiSplitViewState extends State<MultiSplitView> {
   }
 
   /// Applies the vertical layout
-  _populateVerticalChildren(BuildContext context, BoxConstraints constraints,
+  void _populateVerticalChildren(BuildContext context, BoxConstraints constraints,
       List<Widget> children, double minimalWeight) {
     double totalChildrenSize = constraints.maxHeight - _totalDividerSize;
     double totalRemainingWeight = 1;
@@ -271,7 +270,7 @@ class _MultiSplitViewState extends State<MultiSplitView> {
     return Container(color: widget.dividerColor);
   }
 
-  _updateInitialValues(int childIndex, double pos, double totalChildrenSize) {
+  void _updateInitialValues(int childIndex, double pos, double totalChildrenSize) {
     _initialDragPos = pos;
     _initialChild1Weight = _controller.getWeight(childIndex);
     _initialChild2Weight = _controller.getWeight(childIndex + 1);
@@ -279,7 +278,7 @@ class _MultiSplitViewState extends State<MultiSplitView> {
   }
 
   /// Calculates the new weights and sets if they are different from the current one.
-  _updateDifferentWeights(
+  void _updateDifferentWeights(
       int childIndex, double diffPos, double minimalWeight) {
     double newChild1Weight =
         ((_initialChild1Size + diffPos) * _initialChild1Weight) /

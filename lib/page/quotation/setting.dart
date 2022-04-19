@@ -16,20 +16,31 @@ class Setting {
         width: 2.0,
         style: BorderStyle.solid,
       ),
-      modalSize: ModalSize(width: null, height: 510),
+      modalSize: ModalSize(width: 720, height: 510),
       body: Container(
         alignment: Alignment.center,
         height: 470,
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(bottom: 30),
-              child: Text(
-                '合约设置',
-                style: TextStyle(fontSize: 20),
-              ),
+                padding: const EdgeInsets.only(bottom: 30, right: 20, left: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      '合约设置',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        NavigatorUtils.pop(context);
+                      },
+                      child: const Icon(Icons.close),
+                    )
+                  ],
+                )
             ),
-            Expanded(
+            const Expanded(
               child: SettingSearch(),
             ),
           ],
@@ -55,19 +66,19 @@ class Setting {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(bottom: 30, right: 20, left: 20),
+              padding: const EdgeInsets.only(bottom: 30, right: 20, left: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     '${title ?? ''}',
-                    style: TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 20),
                   ),
                   InkWell(
                     onTap: () {
                       NavigatorUtils.pop(context);
                     },
-                    child: Icon(Icons.close),
+                    child: const Icon(Icons.close),
                   )
                 ],
               )

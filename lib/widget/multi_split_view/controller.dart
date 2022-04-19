@@ -36,7 +36,7 @@ class MultiSplitViewController {
   /// Adjusts the weights according to the number of children.
   /// New children will receive a percentage of current children.
   /// Excluded children will distribute their weights to the existing ones.
-  validateAndAdjust(int childrenCount) {
+  void validateAndAdjust(int childrenCount) {
     childrenCount = math.max(childrenCount, 0);
     if (_weights.length == childrenCount) {
       return;

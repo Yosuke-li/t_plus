@@ -22,11 +22,11 @@ class OrderHModal {
         child: Column(
           children: [
             Container(
-                padding: EdgeInsets.only(bottom: 30, right: 20, left: 20),
+                padding: const EdgeInsets.only(bottom: 30, right: 20, left: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       '成交单历史',
                       style: TextStyle(fontSize: 20),
                     ),
@@ -39,7 +39,7 @@ class OrderHModal {
                   ],
                 )
             ),
-            Expanded(
+            const Expanded(
               child: OrderHistoryMore(),
             ),
           ],

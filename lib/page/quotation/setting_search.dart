@@ -159,7 +159,7 @@ class _SettingSearchState extends State<SettingSearch> {
               children: [
                 Expanded(
                   child: Container(
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                         top: 30, right: 20, left: 20, bottom: 30),
                     child: Row(
                       children: [
