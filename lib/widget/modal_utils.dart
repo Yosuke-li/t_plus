@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:transaction_plus/utils/log_utils.dart';
 import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/screen.dart';
 
 class ModalUtils {
-  static Future<bool?> showModal(BuildContext context,
+  static Future<bool?>? showModal(BuildContext context,
       {Color? modalBackgroundColor,
-        Text? title,
-        Widget? icon,
-        String? message,
-        Widget? body,
-        Border? border,
-        Text? button1,
-        ModalSize? modalSize,
-        bool outsideDismiss = true,
-        bool cleanFocus = true,
-        bool autoClose = false,
-        double? marginBottom, //距离底部的高，使model偏上
-        void Function(BuildContext context)? onFun1,
-        Text? button2,
-        void Function(BuildContext context)? onFun2,
-        Text? button3,
-        void Function(BuildContext context)? onFun3,
-        Widget? dynamicBottom}) {
+      Text? title,
+      Widget? icon,
+      String? message,
+      Widget? body,
+      Border? border,
+      bool? isDrag,
+      Text? button1,
+      ModalSize? modalSize,
+      bool outsideDismiss = true,
+      bool cleanFocus = true,
+      bool autoClose = false,
+      double? marginBottom, //距离底部的高，使model偏上
+      void Function(BuildContext context)? onFun1,
+      Text? button2,
+      void Function(BuildContext context)? onFun2,
+      Text? button3,
+      void Function(BuildContext context)? onFun3,
+      Widget? dynamicBottom}) {
     modalBackgroundColor ??= const Color(0xffffffff);
     Widget Function(ModalStyle style)? header;
     if (title != null) {
@@ -179,6 +181,7 @@ class ModalUtils {
                 border: border,
                 modalSize: modalSize,
                 bottom: bottom,
+                isDrag: isDrag,
                 autoClose: autoClose,
                 modalColor: modalBackgroundColor,
                 marginBottom: marginBottom,
@@ -210,6 +213,7 @@ class _ModalWidget extends StatefulWidget {
 
   Border? border;
   ModalSize? modalSize;
+  bool? isDrag;
 
   _ModalWidget({
     Key? key,
@@ -222,6 +226,7 @@ class _ModalWidget extends StatefulWidget {
     this.outsideDismiss,
     this.modalSize,
     this.autoClose,
+    this.isDrag,
     this.modalColor,
     this.marginBottom,
   })  : assert(context != null),
@@ -232,11 +237,13 @@ class _ModalWidget extends StatefulWidget {
 }
 
 class _Modal extends State<_ModalWidget> {
+  Offset offset = Offset.zero;
+
   @override
   void initState() {
     super.initState();
     if (widget.autoClose == true) {
-      Future.delayed(Duration(seconds: 2)).then((_) {
+      Future.delayed(const Duration(seconds: 2)).then((_) {
         Navigator.pop(widget.context!);
       });
     }
@@ -245,66 +252,111 @@ class _Modal extends State<_ModalWidget> {
   @override
   Widget build(BuildContext context) {
     final ModalStyle? _style = ModalStyleWidget.of(context)?.modalStyle;
+    double maxY = MediaQuery.of(context).size.height - 100;
     return Stack(children: <Widget>[
       Opacity(
         opacity: 0.4,
-        child: ConstrainedBox(
+        child: GestureDetector(
+          onTap: () {
+            if (widget.outsideDismiss!) {
+              NavigatorUtils.pop(context);
+            }
+          },
+          child: ConstrainedBox(
             constraints: const BoxConstraints.expand(),
             child: const DecoratedBox(
-                decoration: BoxDecoration(color: Color(0xff000000)))),
+              decoration: BoxDecoration(
+                color: Color(0xff000000),
+              ),
+            ),
+          ),
+        ),
       ),
-      Center(
-          child: GestureDetector(
-            onTap: () {
-              if (widget.outsideDismiss!) {
-                NavigatorUtils.pop(context);
-              }
-            },
-            child: Material(
-                color: Colors.transparent,
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Center(
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            bottom: widget.marginBottom ?? screenUtil.adaptive(200)),
-                        child: Container(
-                          padding: EdgeInsets.only(
-                            top: screenUtil.adaptive(22),
-                          ),
-                          decoration: BoxDecoration(
-                            color: widget.modalColor,
-                            border: widget.border,
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.elliptical(
-                                screenUtil.adaptive(20),
-                                screenUtil.adaptive(20),
-                              ),
-                              bottom: Radius.elliptical(
-                                screenUtil.adaptive(20),
-                                screenUtil.adaptive(20),
-                              ),
-                            ),
-                          ),
-                          width: widget.modalSize?.width ?? screenUtil.adaptive(858),
-                          height: widget.modalSize?.height,
-                          child: ListView(
-                            padding: const EdgeInsets.all(0),
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: <Widget>[
-                              if (widget.header != null) widget.header!(_style!),
-                              if (widget.messageBody != null)
-                                widget.messageBody!(_style!),
-                              if (widget.body != null) widget.body!,
-                              if (widget.bottom != null) widget.bottom!(_style!),
-                            ],
-                          ),
-                        ),
-                      )),
-                )),
-          ))
+      Positioned(
+        top: offset.dy < 50
+            ? 50
+            : offset.dy > maxY
+                ? maxY
+                : offset.dy,
+        left: offset.dx,
+        bottom: offset == Offset.zero
+            ? 0
+            : null,
+        right: offset == Offset.zero
+            ? 0
+            : null,
+        child: GestureDetector(
+          onTap: () {
+            if (widget.outsideDismiss!) {
+              NavigatorUtils.pop(context);
+            }
+          },
+          child: Material(
+            color: Colors.transparent,
+            child: GestureDetector(
+              onTap: () {},
+              child: Center(
+                child: Container(
+                  margin: EdgeInsets.only(
+                      bottom: widget.marginBottom ?? screenUtil.adaptive(200)),
+                  child: widget.isDrag == true ?Draggable(
+                    child: DragTarget(
+                      builder: (context, _, __) {
+                        return _buildView(_style!);
+                      },
+                    ),
+                    feedback: _buildView(_style),
+                    childWhenDragging: Container(),
+                    onDragEnd: (detail) {
+                      offset = detail.offset;
+                      setState(() {});
+                    },
+                    ignoringFeedbackSemantics: false,
+                  ) : _buildView(_style!),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     ]);
+  }
+
+  Widget _buildView(ModalStyle? style) {
+    return Material(
+      child: Container(
+        padding: EdgeInsets.only(
+          top: screenUtil.adaptive(22),
+        ),
+        decoration: BoxDecoration(
+          color: widget.modalColor,
+          border: widget.border,
+          borderRadius: BorderRadius.vertical(
+            top: Radius.elliptical(
+              screenUtil.adaptive(20),
+              screenUtil.adaptive(20),
+            ),
+            bottom: Radius.elliptical(
+              screenUtil.adaptive(20),
+              screenUtil.adaptive(20),
+            ),
+          ),
+        ),
+        width: widget.modalSize?.width ?? screenUtil.adaptive(858),
+        height: widget.modalSize?.height,
+        child: ListView(
+          padding: const EdgeInsets.all(0),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          children: <Widget>[
+            if (widget.header != null) widget.header!(style!),
+            if (widget.messageBody != null) widget.messageBody!(style!),
+            if (widget.body != null) widget.body!,
+            if (widget.bottom != null) widget.bottom!(style!),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -316,9 +368,9 @@ class ModalStyle {
 
   ModalStyle(
       {this.titleBackgroundColor,
-        this.messageBackgroundColor,
-        this.messageStyle,
-        this.bottomBackgroundColor});
+      this.messageBackgroundColor,
+      this.messageStyle,
+      this.bottomBackgroundColor});
 
   ModalStyle.fallback()
       : titleBackgroundColor = const Color(0xffffffff),
@@ -329,12 +381,12 @@ class ModalStyle {
   ModalStyle merge(ModalStyle newStyle) {
     return ModalStyle(
       titleBackgroundColor:
-      newStyle.titleBackgroundColor ?? this.titleBackgroundColor,
+          newStyle.titleBackgroundColor ?? this.titleBackgroundColor,
       messageBackgroundColor:
-      newStyle.messageBackgroundColor ?? this.messageBackgroundColor,
+          newStyle.messageBackgroundColor ?? this.messageBackgroundColor,
       messageStyle: newStyle.messageStyle ?? this.messageStyle,
       bottomBackgroundColor:
-      newStyle.bottomBackgroundColor ?? this.bottomBackgroundColor,
+          newStyle.bottomBackgroundColor ?? this.bottomBackgroundColor,
     );
   }
 }
@@ -368,7 +420,9 @@ class ModalStyleWidget extends StatefulWidget {
   _ModalStyleWidgetState createState() => new _ModalStyleWidgetState();
 
   static _ModalStyleWidgetState? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<_InheritedModalStyle>()?.data;
+    return context
+        .dependOnInheritedWidgetOfExactType<_InheritedModalStyle>()
+        ?.data;
   }
 }
 
