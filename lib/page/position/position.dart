@@ -11,7 +11,7 @@ enum PositionType {
 class PositionPage extends StatefulWidget {
   final PositionType type;
 
-  PositionPage({Key? key, required this.type});
+  const PositionPage({Key? key, required this.type}) : super(key: key);
 
   @override
   _PositionState createState() => _PositionState();

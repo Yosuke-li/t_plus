@@ -9,6 +9,9 @@ import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/management/widget/common_form.dart';
 
 class BottomWidgetPage extends StatefulWidget {
+
+  const BottomWidgetPage({Key? key}) : super(key: key);
+
   @override
   _BottomWidgetState createState() => _BottomWidgetState();
 }

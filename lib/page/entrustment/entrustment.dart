@@ -22,7 +22,7 @@ enum EntrustType {
 class EntrustPage extends StatefulWidget {
   final EntrustType type;
 
-  EntrustPage({required this.type});
+  const EntrustPage({Key? key, required this.type}) : super(key: key);
 
   @override
   _EntrustState createState() => _EntrustState();

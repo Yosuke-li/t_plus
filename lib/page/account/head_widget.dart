@@ -7,6 +7,7 @@ import 'package:transaction_plus/utils/screen.dart';
 import 'account_modal.dart';
 
 class HeadWidgetPage extends StatefulWidget {
+  const HeadWidgetPage({Key? key}) : super(key: key);
 
   @override
   _HeadWidgetState createState() => _HeadWidgetState();
@@ -31,8 +32,7 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
         Container(
           child: Text(
             '  ${isHide ? '*****' : value}',
-            style: TextStyle(
-                color: Color(0xBFFFFFFF), fontSize: 14),
+            style: TextStyle(color: Color(0xBFFFFFFF), fontSize: 14),
           ),
         ),
       ],
@@ -72,13 +72,13 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
                         value: value,
                         isExpanded: true,
                         items: list.map((e) {
-                              return DropdownMenuItem(
-                                  child: Text(
-                                    '$e',
-                                    style: TextStyle(color: Color(0xBFFFFFFF)),
-                                  ),
-                                  value: e);
-                            }).toList(),
+                          return DropdownMenuItem(
+                              child: Text(
+                                '$e',
+                                style: TextStyle(color: Color(0xBFFFFFFF)),
+                              ),
+                              value: e);
+                        }).toList(),
                         onChanged: (String? key) {
                           value = key!;
                           setState(() {});
@@ -131,16 +131,17 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
                       Account.Modal(context);
                     },
                     child: Container(
-                      child: Icon(Icons.account_balance_wallet, size: 14,),
+                      child: Icon(
+                        Icons.account_balance_wallet,
+                        size: 14,
+                      ),
                     ),
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   InkWell(
-                    onTap: () {
-
-                    },
+                    onTap: () {},
                     child: Container(
                       child: Icon(
                         Icons.settings,

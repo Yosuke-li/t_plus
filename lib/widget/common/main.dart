@@ -26,10 +26,8 @@ class _DockingMainState extends State<DockingMainPage>
   PositionType positionType = PositionType.Simple;
 
   /// widget list
-  Widget QuotationWidget = new QuotationPage();
-  Widget HeadWidget = new HeadWidgetPage();
-  Widget EntrustWidget = new EntrustPage(type: EntrustType.All);
-  Widget PositionWidget = new PositionPage(type: PositionType.Simple);
+  Widget EntrustWidget = const EntrustPage(type: EntrustType.All);
+  Widget PositionWidget = const PositionPage(type: PositionType.Simple);
 
   @override
   void initState() {
@@ -96,13 +94,13 @@ class _DockingMainState extends State<DockingMainPage>
                                   )
                                 ],
                               )),
-                          QuotationWidget,
+                          const QuotationPage(),
                         ],
                       ),
                     ),
                   ),
                 ),
-                HeadWidget,
+                const HeadWidgetPage(),
                 Expanded(
                   child: Column(
                     children: [
@@ -490,7 +488,7 @@ class _DockingMainState extends State<DockingMainPage>
                     ],
                   ),
                 ),
-                BottomWidgetPage(),
+                const BottomWidgetPage(),
               ],
             ),
           ),

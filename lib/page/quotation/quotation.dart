@@ -9,6 +9,8 @@ import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/management/widget/common_form.dart';
 
 class QuotationPage extends StatefulWidget {
+  const QuotationPage({Key? key}) : super(key: key);
+
   @override
   _QuotationState createState() => _QuotationState();
 }

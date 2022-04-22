@@ -290,8 +290,6 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
       stream: controller.stream,
       initialData: columns,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        final String a = (snapshot.data as List<FormColumn<T>>).toString();
-        Log.info(a);
         return RepaintBoundary(
           child: Scrollbar(
             controller: hController,
