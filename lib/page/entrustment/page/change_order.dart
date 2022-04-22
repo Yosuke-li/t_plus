@@ -51,7 +51,7 @@ class _ChangeOrderState extends State<ChangeOrder> {
                       margin: const EdgeInsets.only(left: 20, right: 10),
                       child: Row(
                         children: [
-                          Text('合约:'),
+                          const Text('合约:'),
                           const SizedBox(
                             width: 15,
                           ),
@@ -59,7 +59,7 @@ class _ChangeOrderState extends State<ChangeOrder> {
                             child: Container(
                               height: 30,
                               child: TextFormField(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   enabled: false,
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 0, horizontal: 10),

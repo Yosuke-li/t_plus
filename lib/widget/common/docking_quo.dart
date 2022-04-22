@@ -29,7 +29,7 @@ class _DockingQuoPageState extends State<DockingQuoPage> {
   void initState() {
     super.initState();
     area = [
-      DockingItem(name: '自选', widget: Quotation()),
+      DockingItem(name: '自选', widget: QuotationPage()),
     ];
     setState(() {});
   }

@@ -8,12 +8,12 @@ import 'package:transaction_plus/utils/log_utils.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/management/widget/common_form.dart';
 
-class Quotation extends StatefulWidget {
+class QuotationPage extends StatefulWidget {
   @override
   _QuotationState createState() => _QuotationState();
 }
 
-class _QuotationState extends State<Quotation> {
+class _QuotationState extends State<QuotationPage> {
   List<User> users = [
     User()
       ..username = '1'
@@ -70,6 +70,7 @@ class _QuotationState extends State<Quotation> {
 
   List<String> groups = ['123', '456'];
   late RightMenuFunc _rightMenuFunc;
+  bool canDrag = true;
 
   @override
   void initState() {
@@ -108,9 +109,22 @@ class _QuotationState extends State<Quotation> {
       ShowMenuArgs(
         MediaQuery.of(context).devicePixelRatio,
         position,
-        [MenuItem(title: '添加合约'), MenuItem(title: '标记排序')],
+        [
+          MenuItem(title: '添加合约'),
+          MenuItem(
+            title: '标记排序',
+            onSelected: () {
+              canDrag = !canDrag;
+              setState(() {});
+            },
+          ),
+        ],
       ),
     );
+
+    if (selectedItem != null) {
+      selectedItem.onSelected?.call();
+    }
   }
 
   @override
@@ -167,7 +181,12 @@ class _QuotationState extends State<Quotation> {
                           child: Text(
                             e,
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white, fontSize: 10),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.normal,
+                              decoration: TextDecoration.none,
+                            ),
                           ),
                         ),
                       ),
@@ -177,7 +196,7 @@ class _QuotationState extends State<Quotation> {
             ),
             CommonForm<User>(
               height: MediaQuery.of(context).size.height * 0.25,
-              canDrag: true,
+              canDrag: canDrag,
               titleColor: const Color(0x401C1D21),
               formColor: const Color(0xff1C1D21),
               onTapFunc: (User value) {
@@ -211,16 +230,21 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '合约',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.username ?? ''}',
-                      style: TextStyle(
-                        fontSize: 13,
+                      style: const TextStyle(
                         color: Colors.white,
+                        fontSize: 13,
                         decoration: TextDecoration.none,
                         fontWeight: FontWeight.normal,
                       ),
@@ -228,14 +252,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '合约名',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.username ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -245,14 +274,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '最新价',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -262,14 +296,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '涨幅',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -279,14 +318,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '涨跌',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -296,14 +340,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '买价',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -313,14 +362,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '卖价',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -330,14 +384,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '买量',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -349,7 +408,12 @@ class _QuotationState extends State<Quotation> {
                 FormColumn<User>(
                   title: const Text(
                     '卖量',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
@@ -366,7 +430,12 @@ class _QuotationState extends State<Quotation> {
                 FormColumn<User>(
                   title: const Text(
                     '成交量',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
@@ -383,7 +452,12 @@ class _QuotationState extends State<Quotation> {
                 FormColumn<User>(
                   title: const Text(
                     '持仓量',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
@@ -398,14 +472,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '现量',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -415,14 +494,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '涨停价',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -432,14 +516,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '涨跌价',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -449,14 +538,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '今开盘',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -466,14 +560,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '昨收盘',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -483,14 +582,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '最高价',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -500,14 +604,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '最低价',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -517,14 +626,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '成交额',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -534,14 +648,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '交易所',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,
@@ -551,14 +670,19 @@ class _QuotationState extends State<Quotation> {
                   ),
                 ),
                 FormColumn<User>(
-                  title: Text(
+                  title: const Text(
                     '行情更新时间',
-                    style: TextStyle(color: Color(0xBFffffff)),
+                    style: TextStyle(
+                      color: Color(0xBFffffff),
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   builder: (_, v) => Container(
                     child: Text(
                       '${v.password ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                         decoration: TextDecoration.none,

@@ -256,7 +256,12 @@ class _EntrustState extends State<EntrustPage> {
             FormColumn<Entrust>(
               title: const Text(
                 '报价编号',
-                style: TextStyle(color: Color(0xBFffffff)),
+                style: TextStyle(
+                  color: Color(0xBFffffff),
+                  fontSize: 13,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               builder: (_, v) => Container(
                 child: Text(
@@ -273,7 +278,12 @@ class _EntrustState extends State<EntrustPage> {
             FormColumn<Entrust>(
               title: const Text(
                 '合约',
-                style: TextStyle(color: Color(0xBFffffff)),
+                style: TextStyle(
+                  color: Color(0xBFffffff),
+                  fontSize: 13,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               builder: (_, v) => Container(
                 child: Text(
@@ -290,7 +300,12 @@ class _EntrustState extends State<EntrustPage> {
             FormColumn<Entrust>(
               title: const Text(
                 '买卖',
-                style: TextStyle(color: Color(0xBFffffff)),
+                style: TextStyle(
+                  color: Color(0xBFffffff),
+                  fontSize: 13,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               builder: (_, v) => Container(
                 child: Text(
@@ -307,7 +322,12 @@ class _EntrustState extends State<EntrustPage> {
             FormColumn<Entrust>(
               title: const Text(
                 '开平',
-                style: TextStyle(color: Color(0xBFffffff)),
+                style: TextStyle(
+                  color: Color(0xBFffffff),
+                  fontSize: 13,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               builder: (_, v) => Container(
                 child: Text(
@@ -324,7 +344,12 @@ class _EntrustState extends State<EntrustPage> {
             FormColumn<Entrust>(
               title: const Text(
                 '挂单状态',
-                style: TextStyle(color: Color(0xBFffffff)),
+                style: TextStyle(
+                  color: Color(0xBFffffff),
+                  fontSize: 13,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               builder: (_, v) => Container(
                 child: Text(
@@ -341,7 +366,12 @@ class _EntrustState extends State<EntrustPage> {
             FormColumn<Entrust>(
               title: const Text(
                 '报单价格',
-                style: TextStyle(color: Color(0xBFffffff)),
+                style: TextStyle(
+                  color: Color(0xBFffffff),
+                  fontSize: 13,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               builder: (_, v) => Container(
                 child: Text(
@@ -358,7 +388,12 @@ class _EntrustState extends State<EntrustPage> {
             FormColumn<Entrust>(
               title: const Text(
                 '报单手数',
-                style: TextStyle(color: Color(0xBFffffff)),
+                style: TextStyle(
+                  color: Color(0xBFffffff),
+                  fontSize: 13,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               builder: (_, v) => Container(
                 child: Text(
@@ -375,7 +410,12 @@ class _EntrustState extends State<EntrustPage> {
             FormColumn<Entrust>(
               title: const Text(
                 '未成交数',
-                style: TextStyle(color: Color(0xBFffffff)),
+                style: TextStyle(
+                  color: Color(0xBFffffff),
+                  fontSize: 13,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               builder: (_, v) => Container(
                 child: Text(
@@ -392,7 +432,12 @@ class _EntrustState extends State<EntrustPage> {
             FormColumn<Entrust>(
               title: const Text(
                 '成交手数',
-                style: TextStyle(color: Color(0xBFffffff)),
+                style: TextStyle(
+                  color: Color(0xBFffffff),
+                  fontSize: 13,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               builder: (_, v) => Container(
                 child: Text(
@@ -409,7 +454,12 @@ class _EntrustState extends State<EntrustPage> {
             FormColumn<Entrust>(
               title: const Text(
                 '详细状态',
-                style: TextStyle(color: Color(0xBFffffff)),
+                style: TextStyle(
+                  color: Color(0xBFffffff),
+                  fontSize: 13,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               builder: (_, v) => Container(
                 child: Text(

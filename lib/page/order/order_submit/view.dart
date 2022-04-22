@@ -89,7 +89,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
           child: Container(
             alignment: Alignment.center,
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 500, minWidth: 300),
+              constraints: const BoxConstraints(maxWidth: 500, minWidth: 300),
               child: Form(
                 key: state.formKey,
                 child: Column(
@@ -112,11 +112,11 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                       bottom: screenUtil.adaptive(10)),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         children: [
-                                          Text(
+                                          const Text(
                                             '合约',
                                             style: TextStyle(
                                               color: Color(0xBFffffff),
@@ -126,7 +126,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                             onTap: () {
                                               Order.Modal(context);
                                             },
-                                            child: Icon(
+                                            child: const Icon(
                                               Icons.search,
                                               size: 18,
                                             ),
@@ -136,7 +136,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                       InkWell(
                                         onTap: () {
                                           state.readOnly.value =
-                                          !state.readOnly.value;
+                                              !state.readOnly.value;
                                         },
                                         child: Icon(
                                           state.readOnly.value
@@ -155,18 +155,17 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                     readOnly: state.readOnly.value,
                                     hint: '选择合约',
                                     searchAlignVertical:
-                                    TextAlignVertical.bottom,
+                                        TextAlignVertical.bottom,
                                     initialValue: _suggestions[2],
                                     searchInputDecoration: InputDecoration(
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                          color:
-                                          Colors.black.withOpacity(0.8),
+                                          color: Colors.black.withOpacity(0.8),
                                         ),
                                       ),
-                                      border: OutlineInputBorder(
+                                      border: const OutlineInputBorder(
                                         borderSide:
-                                        BorderSide(color: Colors.red),
+                                            BorderSide(color: Colors.red),
                                       ),
                                     ),
                                     maxSuggestionsInViewPort: 4,
@@ -191,7 +190,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   margin: EdgeInsets.only(
                                       top: screenUtil.adaptive(15),
                                       bottom: screenUtil.adaptive(10)),
-                                  child: Text(
+                                  child: const Text(
                                     '手数',
                                     style: TextStyle(
                                       color: Color(0xBFffffff),
@@ -199,19 +198,36 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   ),
                                 ),
                                 Container(
-                                  height: screenUtil.adaptive(30),
-                                  alignment: Alignment.centerLeft,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Color(0xE6797979),
-                                      width: 1.0,
-                                    ),
-                                  ),
                                   child: TextInputNumberUpDown(
+                                    height: screenUtil.adaptive(30),
                                     onSave: (String? value) {
                                       state.create.ordQty =
                                           int.tryParse(value!);
                                     },
+                                    rulesFunc: RulesFunc(
+                                      UpRule: (controller) {
+                                        if (controller.text.isEmpty == true) {
+                                          controller.text = '1';
+                                        } else {
+                                          controller.text =
+                                              (int.tryParse(controller.text)! +
+                                                  1)
+                                                  .toString();
+                                        }
+                                      },
+                                      DownRule: (controller) {
+                                        if (controller.text.isEmpty == true) {
+                                          controller.text = '0';
+                                        } else if (int.tryParse(
+                                            controller.text)! >
+                                            0) {
+                                          controller.text =
+                                              (int.tryParse(controller.text)! -
+                                                  1)
+                                                  .toString();
+                                        }
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
@@ -236,7 +252,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   margin: EdgeInsets.only(
                                       top: screenUtil.adaptive(15),
                                       bottom: screenUtil.adaptive(10)),
-                                  child: Text(
+                                  child: const Text(
                                     '价格',
                                     style: TextStyle(
                                       color: Color(0xBFffffff),
@@ -244,19 +260,36 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   ),
                                 ),
                                 Container(
-                                  height: screenUtil.adaptive(30),
-                                  alignment: Alignment.centerLeft,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Color(0xE6797979),
-                                      width: 1.0,
-                                    ),
-                                  ),
                                   child: TextInputNumberUpDown(
+                                    height: screenUtil.adaptive(30),
                                     onSave: (String? value) {
                                       state.create.ordQty =
                                           int.tryParse(value!);
                                     },
+                                    rulesFunc: RulesFunc(
+                                      UpRule: (controller) {
+                                        if (controller.text.isEmpty == true) {
+                                          controller.text = '1';
+                                        } else {
+                                          controller.text =
+                                              (int.tryParse(controller.text)! +
+                                                      1)
+                                                  .toString();
+                                        }
+                                      },
+                                      DownRule: (controller) {
+                                        if (controller.text.isEmpty == true) {
+                                          controller.text = '0';
+                                        } else if (int.tryParse(
+                                                controller.text)! >
+                                            0) {
+                                          controller.text =
+                                              (int.tryParse(controller.text)! -
+                                                      1)
+                                                  .toString();
+                                        }
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
@@ -273,7 +306,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   margin: EdgeInsets.only(
                                       top: screenUtil.adaptive(15),
                                       bottom: screenUtil.adaptive(10)),
-                                  child: Text(
+                                  child: const Text(
                                     '方向',
                                     style: TextStyle(
                                       color: Color(0xBFffffff),
@@ -285,12 +318,12 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   alignment: Alignment.centerLeft,
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Color(0xE6797979),
+                                      color: const Color(0xE6797979),
                                       width: 1.0,
                                     ),
                                   ),
                                   child: Obx(
-                                        () => DownMenuWidget<int>(
+                                    () => DownMenuWidget<int>(
                                       select: state.side.value,
                                       menus: state.sides,
                                       selectFunc: (value) {
@@ -313,7 +346,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   margin: EdgeInsets.only(
                                       top: screenUtil.adaptive(15),
                                       bottom: screenUtil.adaptive(10)),
-                                  child: Text(
+                                  child: const Text(
                                     '开平',
                                     style: TextStyle(
                                       color: Color(0xBFffffff),
@@ -325,12 +358,12 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   alignment: Alignment.centerLeft,
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Color(0xE6797979),
+                                      color: const Color(0xE6797979),
                                       width: 1.0,
                                     ),
                                   ),
                                   child: Obx(
-                                        () => DownMenuWidget<int>(
+                                    () => DownMenuWidget<int>(
                                       select: state.openFlag.value,
                                       menus: state.openFlags,
                                       selectFunc: (value) {
@@ -361,7 +394,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   margin: EdgeInsets.only(
                                       top: screenUtil.adaptive(15),
                                       bottom: screenUtil.adaptive(10)),
-                                  child: Text(
+                                  child: const Text(
                                     '投保',
                                     style: TextStyle(
                                       color: Color(0xBFffffff),
@@ -373,12 +406,12 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   alignment: Alignment.centerLeft,
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Color(0xE6797979),
+                                      color: const Color(0xE6797979),
                                       width: 1.0,
                                     ),
                                   ),
                                   child: Obx(
-                                        () => DownMenuWidget<int>(
+                                    () => DownMenuWidget<int>(
                                       select: state.hedgeFlag.value,
                                       menus: state.hedgeFlags,
                                       selectFunc: (value) {
@@ -418,7 +451,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                     ),
                                   ),
                                   child: Obx(
-                                        () => DownMenuWidget<int>(
+                                    () => DownMenuWidget<int>(
                                       select: state.ordType.value,
                                       menus: state.ordTypes,
                                       selectFunc: (value) {
@@ -458,7 +491,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                     ),
                                   ),
                                   child: Obx(
-                                        () => DownMenuWidget<int>(
+                                    () => DownMenuWidget<int>(
                                       select: state.tif.value,
                                       menus: state.tifs,
                                       selectFunc: (value) {

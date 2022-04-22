@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:transaction_plus/helper/security_keyboard.dart';
+import 'package:flutter/services.dart';
 import 'package:transaction_plus/utils/screen.dart';
+
+class RulesFunc {
+  void Function(TextEditingController controller) UpRule;
+  void Function(TextEditingController controller) DownRule;
+
+  RulesFunc({required this.UpRule, required this.DownRule});
+}
 
 class TextInputNumberUpDown extends StatefulWidget {
   final FormFieldSetter<String> onSave;
+  final double? height;
+  final Decoration? decoration;
+  final RulesFunc rulesFunc;
 
-  TextInputNumberUpDown({required this.onSave});
+  const TextInputNumberUpDown({
+    Key? key,
+    required this.onSave,
+    required this.rulesFunc,
+    this.height,
+    this.decoration,
+  }) : super(key: key);
 
   @override
   _TextInputNumberUpDownState createState() => _TextInputNumberUpDownState();
@@ -23,18 +39,44 @@ class _TextInputNumberUpDownState extends State<TextInputNumberUpDown> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: widget.height ?? 30,
+      alignment: Alignment.centerLeft,
+      decoration: widget.decoration ??
+          BoxDecoration(
+            border: Border.all(
+              color: const Color(0xE6797979),
+              width: 1.0,
+            ),
+          ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: TextFormField(
-              controller: controller,
-              textAlignVertical: TextAlignVertical.center,
-              decoration: InputDecoration(
-                border: InputBorder.none,
+            child: Container(
+              height: widget.height ?? 30,
+              child: TextFormField(
+                controller: controller,
+                style: const TextStyle(fontSize: 13),
+                decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0x00ffffff),
+                        width: 0.0,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0x00ffffff),
+                        width: 0.0,
+                      ),
+                    ),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 0, horizontal: 6)),
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                ],
+                onSaved: widget.onSave,
               ),
-              keyboardType: SecurityKeyboardCenter.number,
-              onSaved: widget.onSave,
             ),
           ),
           Container(
@@ -46,33 +88,21 @@ class _TextInputNumberUpDownState extends State<TextInputNumberUpDown> {
               children: [
                 InkWell(
                   onTap: () {
-                    if (controller.text == null ||
-                        controller.text.isEmpty == true) {
-                      controller.text = '1';
-                    } else {
-                      controller.text =
-                          (int.tryParse(controller.text)! + 1).toString();
-                    }
+                    widget.rulesFunc.UpRule.call(controller);
                   },
                   child: Icon(
                     Icons.keyboard_arrow_up,
-                    color: Color(0xBFffffff),
+                    color: const Color(0xBFffffff),
                     size: screenUtil.adaptive(12),
                   ),
                 ),
                 InkWell(
                   onTap: () {
-                    if (controller.text == null ||
-                        controller.text.isEmpty == true) {
-                      controller.text = '0';
-                    } else {
-                      controller.text =
-                          (int.tryParse(controller.text)! - 1).toString();
-                    }
+                    widget.rulesFunc.DownRule.call(controller);
                   },
                   child: Icon(
                     Icons.keyboard_arrow_down,
-                    color: Color(0xBFffffff),
+                    color: const Color(0xBFffffff),
                     size: screenUtil.adaptive(12),
                   ),
                 ),

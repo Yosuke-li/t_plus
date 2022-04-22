@@ -24,19 +24,19 @@ class EntrustModal {
         child: Column(
           children: [
             Container(
-                padding: EdgeInsets.only(bottom: 30, right: 20, left: 20),
+                padding: const EdgeInsets.only(bottom: 30, right: 20, left: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       '${title}',
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     ),
                     InkWell(
                       onTap: () {
                         NavigatorUtils.pop(context);
                       },
-                      child: Icon(Icons.close),
+                      child: const Icon(Icons.close),
                     )
                   ],
                 )

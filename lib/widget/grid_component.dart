@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:transaction_plus/global/dll_text.dart';
 import 'package:transaction_plus/page/order/order_submit/view.dart';
 
 class PageModel {
@@ -23,10 +22,6 @@ class GridComponentPageState extends State<GridComponentPage> {
       PageModel()
         ..name = '下单'
         ..pageUrl = OrderSubmitPage(),
-      if (Platform.isWindows)
-        PageModel()
-          ..name = 'dll'
-          ..pageUrl = DllTextPage(),
     ];
   }
 
@@ -35,7 +30,7 @@ class GridComponentPageState extends State<GridComponentPage> {
     return Container(
       height: 200,
       child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
         ),
         itemCount: _page.length,

@@ -1,8 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:native_context_menu/native_context_menu.dart';
 import 'package:transaction_plus/utils/array_helper.dart';
+import 'package:transaction_plus/utils/log_utils.dart';
 import 'package:transaction_plus/widget/management/common/function_util.dart';
 
 FormColumn<T> buildTextFormColumn<T>(
@@ -56,7 +59,10 @@ class FormColumn<T> {
   final ColorFunc<T>? color;
   final WidgetBuilderFunc<T> builder;
 
-  FormColumn({required this.title, required this.builder, this.width, this.color});
+  FormColumn(
+      {required this.title, required this.builder, this.width, this.color});
+
+
 }
 
 /// 点击的回调方法[onTapFunc]
@@ -76,7 +82,7 @@ class FormColumn<T> {
 class CommonForm<T> extends StatefulWidget {
   final List<FormColumn<T>> columns;
   final List<T> values;
-  final bool? canDrag;
+  final bool canDrag;
   final TapCallBack<T>? onTapFunc; //点击回调
   final DragCallBack<T>? onDragFunc; //拖拽后的回调
   final double height;
@@ -89,7 +95,7 @@ class CommonForm<T> extends StatefulWidget {
       {Key? key,
       required this.columns,
       required this.values,
-      this.canDrag,
+      this.canDrag = false,
       this.onDragFunc,
       this.onTapFunc,
       this.titleColor,
@@ -102,19 +108,75 @@ class CommonForm<T> extends StatefulWidget {
   _CommonFormState<T> createState() => _CommonFormState<T>();
 }
 
+///
+/// 通过[StreamBuilder]和[StreamController]实现列的拖拽。
+/// 每一次拖拽触发一次[StreamController.sink]，
+/// 并通过widget生态的[didUpdateWidget]进行更新，使用[RepaintBoundary]优化组件
+///
+
 class _CommonFormState<T> extends State<CommonForm<T>> {
   ScrollController hController = ScrollController();
   ScrollController vController = ScrollController();
 
   bool shouldReact = false;
 
-  Widget buildTitleRow() {
+  final StreamController<List<FormColumn<T>>> controller =
+      StreamController<List<FormColumn<T>>>();
+  List<FormColumn<T>> columns = <FormColumn<T>>[];
+
+  @override
+  void initState() {
+    super.initState();
+    columns = widget.columns;
+    setState(() {});
+  }
+
+  @override
+  void didUpdateWidget(covariant CommonForm<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget != this) {
+      columns = widget.columns;
+      controller.sink.add(columns);
+      setState(() {});
+    }
+  }
+
+  Widget buildTitleRow(List<FormColumn<T>> formList) {
     return Container(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: widget.columns
-            .map((e) => warpWidget(child: e.title, width: e.width, color: widget.titleColor))
-            .toList(growable: false),
+        children: widget.canDrag
+            ? formList
+                .map((e) => LongPressDraggable(
+                    child: DragTarget<FormColumn<T>>(
+                      onAccept: (data) {
+                        final index = columns.indexOf(e);
+                        setState(() {
+                          columns.remove(data);
+                          columns.insert(index, data);
+                          controller.sink.add(columns);
+                        });
+                      },
+                      builder: (context, data, rejects) {
+                        return warpWidget(
+                            child: e.title,
+                            width: e.width,
+                            color: widget.titleColor);
+                      },
+                    ),
+                    data: e,
+                    delay: const Duration(milliseconds: 100),
+                    feedback: warpWidget(
+                        child: e.title,
+                        width: e.width,
+                        color: widget.titleColor)))
+                .toList(growable: false)
+            : formList
+                .map(
+                  (e) => warpWidget(
+                      child: e.title, width: e.width, color: widget.titleColor),
+                )
+                .toList(growable: false),
       ),
     );
   }
@@ -134,7 +196,8 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
         },
         //绘制widget
         builder: (context, data, rejects) {
-          return buildRow(ArrayHelper.get(widget.values, index)!, color: widget.formColor);
+          return buildRow(ArrayHelper.get(widget.values, index)!,
+              color: widget.formColor);
         },
       ),
       delay: const Duration(milliseconds: 100),
@@ -186,7 +249,9 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
           child: Row(
             children: widget.columns
                 .map((e) => warpWidget(
-                    child: e.builder(context, value), color: e.color?.call(value), width: e.width))
+                    child: e.builder(context, value),
+                    color: e.color?.call(value),
+                    width: e.width))
                 .toList(growable: false),
           ),
         ),
@@ -217,34 +282,45 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
         children.add(buildDragTitleRow(x));
       }
     } else {
-      children.addAll(widget.values.map((e) => buildRow(e, color: widget.formColor)));
+      children.addAll(
+          widget.values.map((e) => buildRow(e, color: widget.formColor)));
     }
 
-    return Scrollbar(
-      controller: hController,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        controller: hController,
-        child: Container(
-          height: widget.height,
-          child: Column(
-            children: [
-              buildTitleRow(),
-              Expanded(
-                child: Scrollbar(
-                  controller: vController,
-                  child: SingleChildScrollView(
-                    controller: vController,
-                    child: Column(
-                      children: children,
+    return StreamBuilder<List<FormColumn<T>>>(
+      stream: controller.stream,
+      initialData: columns,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        final String a = (snapshot.data as List<FormColumn<T>>).toString();
+        Log.info(a);
+        return RepaintBoundary(
+          child: Scrollbar(
+            controller: hController,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              controller: hController,
+              child: Container(
+                height: widget.height,
+                child: Column(
+                  children: [
+                    buildTitleRow(snapshot.data as List<FormColumn<T>>),
+                    Expanded(
+                      child: Scrollbar(
+                        controller: vController,
+                        child: SingleChildScrollView(
+                          controller: vController,
+                          child: Column(
+                            children: children,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

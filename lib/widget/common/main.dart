@@ -25,6 +25,12 @@ class _DockingMainState extends State<DockingMainPage>
   DiskPortType diskType = DiskPortType.TypeOne;
   PositionType positionType = PositionType.Simple;
 
+  /// widget list
+  Widget QuotationWidget = new QuotationPage();
+  Widget HeadWidget = new HeadWidgetPage();
+  Widget EntrustWidget = new EntrustPage(type: EntrustType.All);
+  Widget PositionWidget = new PositionPage(type: PositionType.Simple);
+
   @override
   void initState() {
     super.initState();
@@ -83,20 +89,20 @@ class _DockingMainState extends State<DockingMainPage>
                                       top: screenUtil.adaptive(3),
                                       bottom: screenUtil.adaptive(3),
                                     ),
-                                    color: Color(0xff7C7F80),
-                                    child: Text(
+                                    color: const Color(0xff7C7F80),
+                                    child: const Text(
                                       '报价表',
                                     ),
                                   )
                                 ],
                               )),
-                          Quotation(),
+                          QuotationWidget,
                         ],
                       ),
                     ),
                   ),
                 ),
-                HeadWidgetPage(),
+                HeadWidget,
                 Expanded(
                   child: Column(
                     children: [
@@ -121,7 +127,7 @@ class _DockingMainState extends State<DockingMainPage>
                                             top: screenUtil.adaptive(3),
                                             bottom: screenUtil.adaptive(3),
                                           ),
-                                          child: Text(
+                                          child: const Text(
                                             '盘口信息[合约]',
                                             style: TextStyle(fontSize: 12),
                                           ),
@@ -137,7 +143,7 @@ class _DockingMainState extends State<DockingMainPage>
                                           child: Container(
                                             margin: EdgeInsets.only(
                                                 right: screenUtil.adaptive(8)),
-                                            child: Icon(
+                                            child: const Icon(
                                               Icons.switch_left,
                                               size: 16,
                                             ),
@@ -147,18 +153,19 @@ class _DockingMainState extends State<DockingMainPage>
                                     ),
                                   ),
                                   Expanded(
-                                      child: RepaintBoundary(
-                                    child: DiskPortDetailPage(
-                                      type: diskType,
+                                    child: RepaintBoundary(
+                                      child: DiskPortDetailPage(
+                                        type: diskType,
+                                      ),
                                     ),
-                                  )),
+                                  ),
                                 ],
                               ),
                             ),
                             SizedBox(
                               width: 1,
                               child: Container(
-                                color: Color(0xff797979),
+                                color: const Color(0xff797979),
                               ),
                             ),
                             Expanded(
@@ -177,8 +184,8 @@ class _DockingMainState extends State<DockingMainPage>
                                                 top: screenUtil.adaptive(3),
                                                 bottom: screenUtil.adaptive(3),
                                               ),
-                                              color: Color(0xff7C7F80),
-                                              child: Text(
+                                              color: const Color(0xff7C7F80),
+                                              child: const Text(
                                                 '标准下单板',
                                               ),
                                             )
@@ -196,7 +203,7 @@ class _DockingMainState extends State<DockingMainPage>
                             SizedBox(
                               width: 1,
                               child: Container(
-                                color: Color(0xff797979),
+                                color: const Color(0xff797979),
                               ),
                             ),
                             Expanded(
@@ -216,13 +223,13 @@ class _DockingMainState extends State<DockingMainPage>
                                             top: screenUtil.adaptive(3),
                                             bottom: screenUtil.adaptive(3),
                                           ),
-                                          color: Color(0xff7C7F80),
-                                          child: Text(
+                                          color: const Color(0xff7C7F80),
+                                          child: const Text(
                                             '委托',
                                           ),
                                         ),
                                         Container(
-                                          margin: EdgeInsets.only(right: 10),
+                                          margin: const EdgeInsets.only(right: 10),
                                           child: Row(
                                             children: [
                                               Container(
@@ -232,22 +239,23 @@ class _DockingMainState extends State<DockingMainPage>
                                                       scale: 0.8,
                                                       child: Checkbox(
                                                         activeColor:
-                                                            Color(0xcc4285F4),
+                                                            const Color(0xcc4285F4),
                                                         value: type ==
                                                             EntrustType.All,
                                                         onChanged:
                                                             (bool? value) {
                                                           type =
                                                               EntrustType.All;
+                                                          EntrustWidget = EntrustPage(type: type);
                                                           setState(() {});
                                                         },
                                                       ),
                                                     ),
-                                                    Text('全部'),
+                                                    const Text('全部'),
                                                   ],
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 5,
                                               ),
                                               Container(
@@ -257,25 +265,24 @@ class _DockingMainState extends State<DockingMainPage>
                                                       scale: 0.8,
                                                       child: Checkbox(
                                                         activeColor:
-                                                            Color(0xcc4285F4),
+                                                            const Color(0xcc4285F4),
                                                         value: type ==
                                                                 EntrustType
-                                                                    .Order ||
-                                                            type ==
-                                                                EntrustType.All,
+                                                                    .Order,
                                                         onChanged:
                                                             (bool? value) {
                                                           type =
                                                               EntrustType.Order;
+                                                          EntrustWidget = EntrustPage(type: type);
                                                           setState(() {});
                                                         },
                                                       ),
                                                     ),
-                                                    Text('挂单'),
+                                                    const Text('挂单'),
                                                   ],
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 5,
                                               ),
                                               Container(
@@ -285,25 +292,24 @@ class _DockingMainState extends State<DockingMainPage>
                                                       scale: 0.8,
                                                       child: Checkbox(
                                                         activeColor:
-                                                            Color(0xcc4285F4),
+                                                            const Color(0xcc4285F4),
                                                         value: type ==
                                                                 EntrustType
-                                                                    .Finish ||
-                                                            type ==
-                                                                EntrustType.All,
+                                                                    .Finish,
                                                         onChanged:
                                                             (bool? value) {
                                                           type = EntrustType
                                                               .Finish;
+                                                          EntrustWidget = EntrustPage(type: type);
                                                           setState(() {});
                                                         },
                                                       ),
                                                     ),
-                                                    Text('成交'),
+                                                    const Text('成交'),
                                                   ],
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 5,
                                               ),
                                               Container(
@@ -313,21 +319,20 @@ class _DockingMainState extends State<DockingMainPage>
                                                       scale: 0.8,
                                                       child: Checkbox(
                                                         activeColor:
-                                                            Color(0xcc4285F4),
+                                                            const Color(0xcc4285F4),
                                                         value: type ==
                                                                 EntrustType
-                                                                    .Delete ||
-                                                            type ==
-                                                                EntrustType.All,
+                                                                    .Delete,
                                                         onChanged:
                                                             (bool? value) {
                                                           type = EntrustType
                                                               .Delete;
+                                                          EntrustWidget = EntrustPage(type: type);
                                                           setState(() {});
                                                         },
                                                       ),
                                                     ),
-                                                    Text('已撤/废单'),
+                                                    const Text('已撤/废单'),
                                                   ],
                                                 ),
                                               ),
@@ -338,8 +343,8 @@ class _DockingMainState extends State<DockingMainPage>
                                     ),
                                   ),
                                   Expanded(
-                                    child: EntrustPage(
-                                      type: type,
+                                    child: RepaintBoundary(
+                                      child: EntrustWidget,
                                     ),
                                   ),
                                 ],
@@ -350,7 +355,7 @@ class _DockingMainState extends State<DockingMainPage>
                       ),
                       Expanded(
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             border: Border(
                               top: BorderSide(
                                   color: Color(0xff000000),
@@ -373,6 +378,7 @@ class _DockingMainState extends State<DockingMainPage>
                                               onTap: () {
                                                 positionType =
                                                     PositionType.Simple;
+                                                PositionWidget = PositionPage(type: positionType);
                                                 setState(() {});
                                               },
                                               child: Container(
@@ -386,7 +392,7 @@ class _DockingMainState extends State<DockingMainPage>
                                                 ),
                                                 color: positionType ==
                                                         PositionType.Simple
-                                                    ? Color(0xff7C7F80)
+                                                    ? const Color(0xff7C7F80)
                                                     : null,
                                                 child: const Text(
                                                   '持仓',
@@ -397,6 +403,7 @@ class _DockingMainState extends State<DockingMainPage>
                                               onTap: () {
                                                 positionType =
                                                     PositionType.Detail;
+                                                PositionWidget = PositionPage(type: positionType);
                                                 setState(() {});
                                               },
                                               child: Container(
@@ -410,7 +417,7 @@ class _DockingMainState extends State<DockingMainPage>
                                                 ),
                                                 color: positionType ==
                                                         PositionType.Detail
-                                                    ? Color(0xff7C7F80)
+                                                    ? const Color(0xff7C7F80)
                                                     : null,
                                                 child: const Text(
                                                   '详细持仓',
@@ -422,8 +429,8 @@ class _DockingMainState extends State<DockingMainPage>
                                       ),
                                     ),
                                     Expanded(
-                                      child: PositionPage(
-                                        type: positionType,
+                                      child: RepaintBoundary(
+                                        child: PositionWidget,
                                       ),
                                     ),
                                   ],
@@ -453,8 +460,8 @@ class _DockingMainState extends State<DockingMainPage>
                                                 top: screenUtil.adaptive(3),
                                                 bottom: screenUtil.adaptive(3),
                                               ),
-                                              color: Color(0xff7C7F80),
-                                              child: Text(
+                                              color: const Color(0xff7C7F80),
+                                              child: const Text(
                                                 '成交记录',
                                               ),
                                             ),
@@ -462,14 +469,14 @@ class _DockingMainState extends State<DockingMainPage>
                                               onTap: () {},
                                               child: Container(
                                                 margin:
-                                                    EdgeInsets.only(right: 10),
-                                                child: Text('查看更多'),
+                                                    const EdgeInsets.only(right: 10),
+                                                child: const Text('查看更多'),
                                               ),
                                             ),
                                           ],
                                         ),
                                       ),
-                                      Expanded(
+                                      const Expanded(
                                         child: OrderHistory(),
                                       ),
                                     ],

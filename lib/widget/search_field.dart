@@ -244,7 +244,7 @@ class _SearchFieldState extends State<SearchField> {
             height = snapshot.data!.length * widget.itemHeight;
           }
           return AnimatedContainer(
-            duration: isUp ? Duration.zero : Duration(milliseconds: 300),
+            duration: isUp ? Duration.zero : const Duration(milliseconds: 300),
             height: height,
             alignment: Alignment.centerLeft,
             decoration: widget.suggestionsDecoration ??
@@ -268,8 +268,8 @@ class _SearchFieldState extends State<SearchField> {
               reverse: isUp,
               itemCount: snapshot.data!.length,
               physics: snapshot.data!.length == 1
-                  ? NeverScrollableScrollPhysics()
-                  : ScrollPhysics(),
+                  ? const NeverScrollableScrollPhysics()
+                  : const ScrollPhysics(),
               itemBuilder: (_focus, index) => GestureDetector(
                 onTap: () {
                   sourceController.text = snapshot.data![index];
@@ -285,8 +285,8 @@ class _SearchFieldState extends State<SearchField> {
                 },
                 child: Container(
                   height: widget.itemHeight,
-                  padding: EdgeInsets.symmetric(horizontal: 5) +
-                      EdgeInsets.only(left: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 5) +
+                      const EdgeInsets.only(left: 8),
                   alignment: Alignment.centerLeft,
                   decoration: widget.suggestionItemDecoration?.copyWith(
                         border: Border(
