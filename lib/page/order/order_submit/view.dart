@@ -5,6 +5,7 @@ import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common_input/text_input_lock.dart';
 import 'package:transaction_plus/widget/common_input/text_input_number.dart';
 import 'package:transaction_plus/widget/down_menu.dart';
+import 'package:transaction_plus/widget/drop_menu/overlay_field.dart';
 import 'package:transaction_plus/widget/search_field.dart';
 
 import 'logic.dart';
@@ -316,18 +317,25 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                 Container(
                                   height: screenUtil.adaptive(30),
                                   alignment: Alignment.centerLeft,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: const Color(0xE6797979),
-                                      width: 1.0,
-                                    ),
-                                  ),
                                   child: Obx(
-                                    () => DownMenuWidget<int>(
-                                      select: state.side.value,
-                                      menus: state.sides,
-                                      selectFunc: (value) {
-                                        state.side.value = value;
+                                    () => OverlayField<int>(
+                                      key: const Key('Side'),
+                                      maxHeight: 40,
+                                      initValue: '${state.side.value}',
+                                      lists: state.sides,
+                                      textStyle: const TextStyle(
+                                          fontSize: 14
+                                      ),
+                                      onChange: (int e) {
+                                        state.side.value = e;
+                                      },
+                                      child: (int e) {
+                                        return Container(
+                                          height: 20,
+                                          alignment: Alignment.centerLeft,
+                                          margin: const EdgeInsets.only(left: 4),
+                                          child: Text('$e'),
+                                        );
                                       },
                                     ),
                                   ),
@@ -356,18 +364,25 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                 Container(
                                   height: screenUtil.adaptive(30),
                                   alignment: Alignment.centerLeft,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: const Color(0xE6797979),
-                                      width: 1.0,
-                                    ),
-                                  ),
                                   child: Obx(
-                                    () => DownMenuWidget<int>(
-                                      select: state.openFlag.value,
-                                      menus: state.openFlags,
-                                      selectFunc: (value) {
-                                        state.openFlag.value = value;
+                                    () => OverlayField<int>(
+                                      key: const Key('OpenFlag'),
+                                      maxHeight: 100,
+                                      initValue: '${state.openFlag.value}',
+                                      lists: state.openFlags,
+                                      textStyle: const TextStyle(
+                                          fontSize: 14
+                                      ),
+                                      onChange: (int e) {
+                                        state.openFlag.value = e;
+                                      },
+                                      child: (int e) {
+                                        return Container(
+                                          height: 20,
+                                          alignment: Alignment.centerLeft,
+                                          margin: const EdgeInsets.only(left: 4),
+                                          child: Text('$e'),
+                                        );
                                       },
                                     ),
                                   ),
@@ -404,18 +419,25 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                 Container(
                                   height: screenUtil.adaptive(30),
                                   alignment: Alignment.centerLeft,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: const Color(0xE6797979),
-                                      width: 1.0,
-                                    ),
-                                  ),
                                   child: Obx(
-                                    () => DownMenuWidget<int>(
-                                      select: state.hedgeFlag.value,
-                                      menus: state.hedgeFlags,
-                                      selectFunc: (value) {
-                                        state.hedgeFlag.value = value;
+                                    () => OverlayField<int>(
+                                      key: const Key('HedgeFlag'),
+                                      maxHeight: 100,
+                                      initValue: '${state.hedgeFlag.value}',
+                                      lists: state.hedgeFlags,
+                                      textStyle: const TextStyle(
+                                          fontSize: 14
+                                      ),
+                                      onChange: (int e) {
+                                        state.hedgeFlag.value = e;
+                                      },
+                                      child: (int e) {
+                                        return Container(
+                                          height: 20,
+                                          alignment: Alignment.centerLeft,
+                                          margin: const EdgeInsets.only(left: 4),
+                                          child: Text('$e'),
+                                        );
                                       },
                                     ),
                                   ),
@@ -423,7 +445,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
@@ -434,7 +456,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   margin: EdgeInsets.only(
                                       top: screenUtil.adaptive(15),
                                       bottom: screenUtil.adaptive(10)),
-                                  child: Text(
+                                  child: const Text(
                                     '类型',
                                     style: TextStyle(
                                       color: Color(0xBFffffff),
@@ -444,18 +466,24 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                 Container(
                                   height: screenUtil.adaptive(30),
                                   alignment: Alignment.centerLeft,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Color(0xE6797979),
-                                      width: 1.0,
-                                    ),
-                                  ),
                                   child: Obx(
-                                    () => DownMenuWidget<int>(
-                                      select: state.ordType.value,
-                                      menus: state.ordTypes,
-                                      selectFunc: (value) {
-                                        state.ordType.value = value;
+                                    () => OverlayField<int>(
+                                      key: const Key('OrdType'),
+                                      initValue: '${state.ordType.value}',
+                                      lists: state.ordTypes,
+                                      textStyle: const TextStyle(
+                                          fontSize: 14
+                                      ),
+                                      onChange: (int e) {
+                                        state.ordType.value = e;
+                                      },
+                                      child: (int e) {
+                                        return Container(
+                                          height: 20,
+                                          alignment: Alignment.centerLeft,
+                                          margin: const EdgeInsets.only(left: 4),
+                                          child: Text('$e'),
+                                        );
                                       },
                                     ),
                                   ),
@@ -463,7 +491,7 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
@@ -474,8 +502,8 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                   margin: EdgeInsets.only(
                                       top: screenUtil.adaptive(15),
                                       bottom: screenUtil.adaptive(10)),
-                                  child: Text(
-                                    'TIF',
+                                  child: const Text(
+                                    'TIF类',
                                     style: TextStyle(
                                       color: Color(0xBFffffff),
                                     ),
@@ -483,19 +511,26 @@ class _OrderSubmitPageState extends State<OrderSubmitPage> {
                                 ),
                                 Container(
                                   height: screenUtil.adaptive(30),
-                                  alignment: Alignment.centerLeft,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Color(0xE6797979),
-                                      width: 1.0,
-                                    ),
-                                  ),
+                                  alignment: Alignment.center,
                                   child: Obx(
-                                    () => DownMenuWidget<int>(
-                                      select: state.tif.value,
-                                      menus: state.tifs,
-                                      selectFunc: (value) {
-                                        state.tif.value = value;
+                                    () => OverlayField<int>(
+                                      key: const Key('Tif'),
+                                      maxHeight: 100,
+                                      initValue: '${state.tif.value}',
+                                      lists: state.tifs,
+                                      textStyle: const TextStyle(
+                                        fontSize: 14
+                                      ),
+                                      onChange: (int e) {
+                                        state.tif.value = e;
+                                      },
+                                      child: (int e) {
+                                        return Container(
+                                          height: 20,
+                                          alignment: Alignment.centerLeft,
+                                          margin: const EdgeInsets.only(left: 4),
+                                          child: Text('$e'),
+                                        );
                                       },
                                     ),
                                   ),

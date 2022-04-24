@@ -5,8 +5,8 @@ import 'package:transaction_plus/page/quotation/setting.dart';
 import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/api_call_back.dart';
+import 'package:transaction_plus/widget/drop_menu/overlay_field.dart';
 import 'package:transaction_plus/widget/management/widget/common_form.dart';
-import 'package:transaction_plus/widget/miral_drop_menu/miral_drop.dart';
 
 class SettingSearch extends StatefulWidget {
   const SettingSearch({Key? key}) : super(key: key);
@@ -17,9 +17,9 @@ class SettingSearch extends StatefulWidget {
 
 class _SettingSearchState extends State<SettingSearch> {
   // init数据
-  List<String> _exchange = <String>['1', '2', '3'];
+  List<String> _exchange = <String>['1', '2', '3', '32', '4', '13', '23'];
   final TextEditingController _controller = TextEditingController();
-  late ValueNotifier<String> valueNotifier;
+  late String exchange;
 
   List<String> exchanges = ['12', '23', '4', '61', '56'];
 
@@ -34,12 +34,10 @@ class _SettingSearchState extends State<SettingSearch> {
 
   @override
   void initState() {
-    valueNotifier = ValueNotifier<String>(
-      _exchange.first,
-    );
+    super.initState();
+    exchange = exchanges.first;
     _show_list = exchanges;
     setState(() {});
-    super.initState();
   }
 
   // 搜索
@@ -101,18 +99,18 @@ class _SettingSearchState extends State<SettingSearch> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xff323337),
+      color: const Color(0xff323337),
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(right: 20, left: 20),
+            padding: const EdgeInsets.only(right: 20, left: 20),
             child: Row(
               children: [
                 Container(
                   width: 150,
                   height: 30,
                   child: TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                         border: OutlineInputBorder(
@@ -126,7 +124,7 @@ class _SettingSearchState extends State<SettingSearch> {
                     },
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 50,
                 ),
                 Container(
@@ -134,17 +132,17 @@ class _SettingSearchState extends State<SettingSearch> {
                   height: 31,
                   child: Row(
                     children: [
-                      Text('交易所：'),
+                      const Text('交易所：'),
                       Expanded(
-                        child: MiraiDropdownWidget(
-                          valueNotifier: valueNotifier,
-                          showSeparator: true,
-                          itemWidget: (int index, String item) {
-                            return MiraiDropDownItemWidget(item: item);
+                        child: OverlayField<String>(
+                          initValue: exchange,
+                          child: (String item) {
+                            return Text(item);
                           },
-                          children: _exchange,
-                          onChanged: (String value) {
-                            valueNotifier.value = value;
+                          lists: _exchange,
+                          onChange: (String value) {
+                            exchange = value;
+                            setState(() {});
                           },
                         ),
                       ),
@@ -332,7 +330,7 @@ class _SettingSearchState extends State<SettingSearch> {
                             children: [
                               Container(
                                 height: 25,
-                                margin: EdgeInsets.only(bottom: 5),
+                                margin: const EdgeInsets.only(bottom: 5),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -340,17 +338,15 @@ class _SettingSearchState extends State<SettingSearch> {
                                   children: [
                                     Container(
                                       width: 100,
-                                      child: MiraiDropdownWidget(
-                                        valueNotifier: valueNotifier,
-                                        showSeparator: true,
-                                        underline: true,
-                                        itemWidget: (int index, String item) {
-                                          return MiraiDropDownItemWidget(
-                                              item: item);
+                                      child: OverlayField<String>(
+                                        initValue: exchange,
+                                        child: (String item) {
+                                          return Text(item);
                                         },
-                                        children: _exchange,
-                                        onChanged: (String value) {
-                                          valueNotifier.value = value;
+                                        lists: _exchange,
+                                        onChange: (String value) {
+                                          exchange = value;
+                                          setState(() {});
                                         },
                                       ),
                                     ),

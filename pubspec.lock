@@ -132,15 +132,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_doraemonkit:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "271d9a5f7d44aa16d4493793ca707ea98f00df4a"
-      url: "https://github.com/NayoLx/flutter_doraemonkit_plugin.git"
-    source: git
-    version: "0.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -200,20 +191,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  mirai_dropdown_menu:
-    dependency: "direct main"
-    description:
-      name: mirai_dropdown_menu
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   mqtt_client:
     dependency: "direct main"
     description:
       name: mqtt_client
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.6.6"
+    version: "9.6.7"
   native_context_menu:
     dependency: "direct main"
     description:
@@ -416,5 +400,5 @@ packages:
     source: hosted
     version: "0.2.0+1"
 sdks:
-  dart: ">=2.16.2 <3.0.0"
+  dart: ">=2.15.0 <3.0.0"
   flutter: ">=2.8.0"

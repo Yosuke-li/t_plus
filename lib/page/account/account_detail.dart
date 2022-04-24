@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transaction_plus/utils/screen.dart';
-import 'package:transaction_plus/widget/miral_drop_menu/miral_drop.dart';
+import 'package:transaction_plus/widget/drop_menu/overlay_field.dart';
 
 import 'account_modal.dart';
 
@@ -13,17 +13,15 @@ class AccountDetails extends StatefulWidget {
 
 class _AccountDetailsState extends State<AccountDetails> {
   // init data
-  late ValueNotifier<String> valueNotifier;
-  final List<String> accounts = ['1'];
+  late String account;
+  final List<String> accounts = ['1', '2'];
   List<String> groups = ['123', '456'];
 
   @override
   void initState() {
-    valueNotifier = ValueNotifier<String>(
-      accounts.first,
-    );
-    setState(() {});
     super.initState();
+    account = accounts.first;
+    setState(() {});
   }
 
   @override
@@ -43,25 +41,28 @@ class _AccountDetailsState extends State<AccountDetails> {
                         child: Row(
                           children: [
                             Container(
-                              child: Text('账户：'),
+                              child: const Text('账户：'),
                             ),
                             Expanded(
-                              child: MiraiDropdownWidget(
-                                valueNotifier: valueNotifier,
-                                showSeparator: true,
-                                itemWidget: (int index, String item) {
-                                  return MiraiDropDownItemWidget(item: item);
-                                },
-                                children: accounts,
-                                onChanged: (String value) {
-                                  valueNotifier.value = value;
-                                },
+                              child: Container(
+                                height: 30,
+                                child: OverlayField<String>(
+                                  initValue: account,
+                                  child: (String item) {
+                                    return Text(item);
+                                  },
+                                  lists: accounts,
+                                  onChange: (String value) {
+                                    account = value;
+                                    setState(() {});
+                                  },
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Container(
@@ -69,25 +70,28 @@ class _AccountDetailsState extends State<AccountDetails> {
                         child: Row(
                           children: [
                             Container(
-                              child: Text('账户名称：'),
+                              child: const Text('账户名称：'),
                             ),
                             Expanded(
-                              child: MiraiDropdownWidget(
-                                valueNotifier: valueNotifier,
-                                showSeparator: true,
-                                itemWidget: (int index, String item) {
-                                  return MiraiDropDownItemWidget(item: item);
-                                },
-                                children: accounts,
-                                onChanged: (String value) {
-                                  valueNotifier.value = value;
-                                },
+                              child: Container(
+                                height: 30,
+                                child: OverlayField<String>(
+                                  initValue: account,
+                                  child: (String item) {
+                                    return Text(item);
+                                  },
+                                  lists: accounts,
+                                  onChange: (String value) {
+                                    account = value;
+                                    setState(() {});
+                                  },
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Container(
@@ -95,25 +99,28 @@ class _AccountDetailsState extends State<AccountDetails> {
                         child: Row(
                           children: [
                             Container(
-                              child: Text('代表货币：'),
+                              child: const Text('代表货币：'),
                             ),
                             Expanded(
-                              child: MiraiDropdownWidget(
-                                valueNotifier: valueNotifier,
-                                showSeparator: true,
-                                itemWidget: (int index, String item) {
-                                  return MiraiDropDownItemWidget(item: item);
-                                },
-                                children: accounts,
-                                onChanged: (String value) {
-                                  valueNotifier.value = value;
-                                },
+                              child: Container(
+                                height: 30,
+                                child: OverlayField<String>(
+                                  initValue: account,
+                                  child: (String item) {
+                                    return Text(item);
+                                  },
+                                  lists: accounts,
+                                  onChange: (String value) {
+                                    account = value;
+                                    setState(() {});
+                                  },
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Container(
@@ -121,19 +128,22 @@ class _AccountDetailsState extends State<AccountDetails> {
                         child: Row(
                           children: [
                             Container(
-                              child: Text('币种组：'),
+                              child: const Text('币种组：'),
                             ),
                             Expanded(
-                              child: MiraiDropdownWidget(
-                                valueNotifier: valueNotifier,
-                                showSeparator: true,
-                                itemWidget: (int index, String item) {
-                                  return MiraiDropDownItemWidget(item: item);
-                                },
-                                children: accounts,
-                                onChanged: (String value) {
-                                  valueNotifier.value = value;
-                                },
+                              child: Container(
+                                height: 30,
+                                child: OverlayField<String>(
+                                  initValue: account,
+                                  child: (String item) {
+                                    return Text(item);
+                                  },
+                                  lists: accounts,
+                                  onChange: (String value) {
+                                    account = value;
+                                    setState(() {});
+                                  },
+                                ),
                               ),
                             ),
                           ],
@@ -144,7 +154,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                 ),
                 ElevatedButton(
                   onPressed: () {},
-                  child: Text('查询'),
+                  child: const Text('查询'),
                 )
               ],
             ),

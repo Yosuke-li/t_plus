@@ -24,7 +24,7 @@ class OrderSubmitLogic extends GetxController {
 
   void _setData() {
     state.sides = [1, 2];
-    state.tifs = [1, 2, 3];
+    state.tifs = [1, 2, 3, 6, 5,45,45,4,45,454,54,5,4,54,5,4,54,5,4,5,4,5,4,4,5,4];
     state.ordTypes = [1, 2, 3, 4];
     state.openFlags = [1, 2, 3, 4, 5];
     state.hedgeFlags = [1, 2, 3, 4, 5];

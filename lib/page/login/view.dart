@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_doraemonkit/flutter_doraemonkit.dart';
+
 import 'package:get/get.dart';
 import 'package:transaction_plus/global/dll_text.dart';
 import 'package:transaction_plus/global/event.dart';
 import 'package:transaction_plus/global/global.dart';
-import 'package:transaction_plus/global/mouse_text.dart';
 import 'package:transaction_plus/helper/security_keyboard.dart';
 import 'package:transaction_plus/utils/event_bus_helper.dart';
 import 'package:transaction_plus/utils/navigator.dart';
@@ -213,23 +212,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Text(
                   "切换主题",
-                  style: TextStyle(fontSize: 13.0),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Checkbox(
-                  value: Global.isDoraemonkit,
-                  onChanged: (bool? value) {
-                    Global.isDoraemonkit = value!;
-                    FlutterDoraemonkit.toggle();
-                    setState(() {});
-                  },
-                ),
-                Text(
-                  "是否打开哆啦A梦(仅适用于安卓手机）",
                   style: TextStyle(fontSize: 13.0),
                 ),
               ],

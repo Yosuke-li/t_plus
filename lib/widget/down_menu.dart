@@ -9,10 +9,10 @@ class DownMenuWidget<T> extends StatefulWidget {
   DownMenuWidget({required this.menus, required this.selectFunc, required this.select});
 
   @override
-  _DownMenuWidget createState() => _DownMenuWidget();
+  _DownMenuWidget<T> createState() => _DownMenuWidget<T>();
 }
 
-class _DownMenuWidget<T> extends State<DownMenuWidget> {
+class _DownMenuWidget<T> extends State<DownMenuWidget<T>> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonHideUnderline(
@@ -24,7 +24,9 @@ class _DownMenuWidget<T> extends State<DownMenuWidget> {
                 return DropdownMenuItem<T>(child: Text('$e'), value: e);
               }).toList(),
           onChanged: (T? value) {
-            widget.selectFunc.call(value);
+            if (value !=null) {
+              widget.selectFunc.call(value);
+            }
           },
       ),
     );

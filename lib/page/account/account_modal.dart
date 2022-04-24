@@ -11,6 +11,7 @@ class Account {
     await ModalUtils.showModal(
       context,
       modalBackgroundColor: const Color(0xff323337),
+      isDrag: true,
       border: Border.all(
         color: Colors.black,
         width: 2.0,
