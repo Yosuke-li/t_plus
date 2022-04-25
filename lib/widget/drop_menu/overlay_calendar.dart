@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:transaction_plus/utils/log_utils.dart';
 
 import 'some_normal.dart';
 
-typedef OverlayItem<T> = Widget Function(T value);
-typedef OnChange<T> = void Function(T value);
-
-class OverlayField<T> extends StatefulWidget {
-  List<T> lists;
-  OverlayItem<T> child;
+class OverlayCalendar extends StatefulWidget {
   String initValue;
-  OnChange<T>? onChange;
+  void Function()? onChange;
   double maxHeight;
   Decoration? decoration;
   TextStyle? textStyle;
 
-  OverlayField({
+  OverlayCalendar({
     Key? key,
-    required this.lists,
-    required this.child,
     required this.initValue,
     this.maxHeight = 40,
     this.decoration,
@@ -26,10 +22,10 @@ class OverlayField<T> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _OverlayFieldState<T> createState() => _OverlayFieldState<T>();
+  _OverlayCalendarState createState() => _OverlayCalendarState();
 }
 
-class _OverlayFieldState<T> extends State<OverlayField<T>> {
+class _OverlayCalendarState extends State<OverlayCalendar> {
   final FocusNode _focusNode = FocusNode();
 
   OverlayEntry? _overlayEntry;
@@ -37,6 +33,31 @@ class _OverlayFieldState<T> extends State<OverlayField<T>> {
   final LayerLink _layerLink = LayerLink();
   bool _hasOverlay = false;
   late TextEditingController _controller;
+
+  String _selectedDate = '';
+  String _dateCount = '';
+  String _range = '';
+  String _rangeCount = '';
+
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    Log.info(args.value);
+    setState(() {
+      if (args.value is PickerDateRange) {
+        _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+            // ignore: lines_longer_than_80_chars
+            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+        closeOverlay();
+      } else if (args.value is DateTime) {
+        _selectedDate = args.value.toString();
+        closeOverlay();
+      } else if (args.value is List<DateTime>) {
+        _dateCount = args.value.length.toString();
+        closeOverlay();
+      } else {
+        _rangeCount = args.value.length.toString();
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -60,7 +81,7 @@ class _OverlayFieldState<T> extends State<OverlayField<T>> {
   }
 
   @override
-  void didUpdateWidget(covariant OverlayField<T> oldWidget) {
+  void didUpdateWidget(covariant OverlayCalendar oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.initValue != oldWidget.initValue) {
       _setText();
@@ -73,7 +94,7 @@ class _OverlayFieldState<T> extends State<OverlayField<T>> {
 
     return OverlayEntry(
       builder: (BuildContext context) => Positioned(
-        width: size.width,
+        width: 300,
         child: CompositedTransformFollower(
           link: _layerLink,
           showWhenUnlinked: false,
@@ -81,25 +102,16 @@ class _OverlayFieldState<T> extends State<OverlayField<T>> {
           child: Material(
             elevation: 4,
             child: RepaintBoundary(
-              child: SingleChildScrollView(
-                child: widget.lists.length > 0 ? Container(
-                  height: widget.maxHeight,
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    children: widget.lists
-                        .map(
-                          (T e) => InkWell(
-                        onTap: () {
-                          widget.onChange?.call(e);
-                          closeOverlay();
-                        },
-                        child: widget.child.call(e),
-                      ),
-                    )
-                        .toList(),
-                  ),
-                ) : Container(),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(_focusNode);
+                },
+                child: SfDateRangePicker(
+                  showNavigationArrow: true,
+                  onSelectionChanged: _onSelectionChanged,
+                  selectionMode: DateRangePickerSelectionMode.single,
+                  maxDate: DateTime.now(),
+                ),
               ),
             ),
           ),
@@ -134,7 +146,7 @@ class _OverlayFieldState<T> extends State<OverlayField<T>> {
                 textAlignVertical: TextAlignVertical.center,
                 decoration: const InputDecoration(
                   contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 3),
+                      EdgeInsets.symmetric(vertical: 0, horizontal: 3),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0x00ffffff),
@@ -156,7 +168,10 @@ class _OverlayFieldState<T> extends State<OverlayField<T>> {
               onTap: () {
                 FocusScope.of(context).requestFocus(_focusNode);
               },
-              child: const Icon(Icons.keyboard_arrow_down_outlined, size: 18,),
+              child: const Icon(
+                Icons.calendar_month,
+                size: 18,
+              ),
             ),
           ],
         ),

@@ -10,6 +10,7 @@ class OrderHModal {
     await ModalUtils.showModal(
       context,
       modalBackgroundColor: const Color(0xff323337),
+      isDrag: true,
       border: Border.all(
         color: Colors.black,
         width: 2.0,
@@ -18,7 +19,7 @@ class OrderHModal {
       modalSize: ModalSize(width: 900, height: 400),
       body: Container(
         alignment: Alignment.center,
-        height: 400,
+        height: 370,
         child: Column(
           children: [
             Container(

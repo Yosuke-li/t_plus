@@ -1,6 +1,8 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 import 'package:transaction_plus/global/event.dart';
 import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/page/login/view.dart';
@@ -67,6 +69,15 @@ class _IndexPageState extends State<IndexPage> {
             navigatorObservers: <NavigatorObserver>[
               BotToastNavigatorObserver()
             ],
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              SfGlobalLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('zh', "CH"),
+            ],
+            locale: const Locale('zh'),
             home: KeyboardRootWidget(
               child: Navigator(
                 onGenerateRoute: (RouteSettings setting) {

@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations: # Add this line
+    sdk: flutter
   cupertino_icons: ^1.0.2
   dio: ^4.0.0
   cookie_jar: ^3.0.1
@@ -26,6 +28,8 @@ dependencies:
   focusable_control_builder: 0.1.0+1
   window_manager: ^0.2.1
   native_context_menu: ^0.2.1+4
+  syncfusion_flutter_datepicker: ^20.1.48
+  syncfusion_localizations: ^20.1.50
 
 dev_dependencies:
   flutter_test:

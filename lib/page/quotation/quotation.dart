@@ -71,6 +71,7 @@ class _QuotationState extends State<QuotationPage> {
   ];
 
   List<String> groups = ['123', '456'];
+  String select_group = '123';
   late RightMenuFunc _rightMenuFunc;
   bool canDrag = true;
 
@@ -154,14 +155,18 @@ class _QuotationState extends State<QuotationPage> {
                           },
                           builder: (context, _, __) {
                             return InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                select_group = e;
+                                setState(() {});
+                              },
                               child: Container(
                                 width: 35,
                                 height: 20,
                                 margin: EdgeInsets.all(screenUtil.adaptive(10)),
                                 decoration: BoxDecoration(
+                                  color: select_group == e ? Colors.blue : null,
                                   border: Border.all(
-                                      color: Colors.white,
+                                      color: select_group == e ? Colors.blue : Colors.white,
                                       width: 1.0,
                                       style: BorderStyle.solid),
                                 ),

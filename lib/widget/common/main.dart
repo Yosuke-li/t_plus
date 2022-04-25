@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:transaction_plus/global/event.dart';
 import 'package:transaction_plus/page/order_history/order_history.dart';
+import 'package:transaction_plus/page/order_history/order_modal.dart';
 import 'package:transaction_plus/utils/event_bus_helper.dart';
 import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common/bottom_widget.dart';
@@ -464,7 +465,9 @@ class _DockingMainState extends State<DockingMainPage>
                                               ),
                                             ),
                                             InkWell(
-                                              onTap: () {},
+                                              onTap: () {
+                                                OrderHModal.Modal(context);
+                                              },
                                               child: Container(
                                                 margin:
                                                     const EdgeInsets.only(right: 10),

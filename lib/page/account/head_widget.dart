@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:transaction_plus/model/user.dart';
 import 'package:transaction_plus/utils/screen.dart';
+import 'package:transaction_plus/widget/drop_menu/overlay_field.dart';
 
 import 'account_modal.dart';
 
@@ -16,8 +17,15 @@ class HeadWidgetPage extends StatefulWidget {
 class _HeadWidgetState extends State<HeadWidgetPage> {
   List<User> users = [];
   List<String> list = ['1', '2', '3'];
-  String? value;
+  late String value;
   bool isHide = false;
+
+  @override
+  void initState() {
+    super.initState();
+    value = list.first;
+    setState(() {});
+  }
 
   Widget headCell({String? title, String? value}) {
     return Row(
@@ -26,13 +34,13 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
         Container(
           child: Text(
             '$title ：',
-            style: TextStyle(color: Color(0xBFFFFFFF)),
+            style: const TextStyle(color: Color(0xBFFFFFFF)),
           ),
         ),
         Container(
           child: Text(
             '  ${isHide ? '*****' : value}',
-            style: TextStyle(color: Color(0xBFFFFFFF), fontSize: 14),
+            style: const TextStyle(color: Color(0xBFFFFFFF), fontSize: 14),
           ),
         ),
       ],
@@ -67,22 +75,21 @@ class _HeadWidgetState extends State<HeadWidgetPage> {
                       left: screenUtil.adaptive(10),
                       right: screenUtil.adaptive(20)),
                   alignment: Alignment.center,
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                        value: value,
-                        isExpanded: true,
-                        items: list.map((e) {
-                          return DropdownMenuItem(
-                              child: Text(
-                                '$e',
-                                style: TextStyle(color: Color(0xBFFFFFFF)),
-                              ),
-                              value: e);
-                        }).toList(),
-                        onChanged: (String? key) {
-                          value = key!;
-                          setState(() {});
-                        }),
+                  child: OverlayField<String>(
+                    lists: list,
+                    maxHeight: 60,
+                    decoration: const BoxDecoration(
+                      border: null,
+                    ),
+                    child: (String v) => Container(
+                      height: 20,
+                      child: Text('$v'),
+                    ),
+                    initValue: value,
+                    onChange: (String v) {
+                      value = v;
+                      setState(() {});
+                    },
                   ),
                 ),
                 Container(
