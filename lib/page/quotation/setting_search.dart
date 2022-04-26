@@ -135,6 +135,7 @@ class _SettingSearchState extends State<SettingSearch> {
                       const Text('交易所：'),
                       Expanded(
                         child: OverlayField<String>(
+                          key: const Key('exchange'),
                           initValue: exchange,
                           child: (String item) {
                             return Text(item);
@@ -169,14 +170,14 @@ class _SettingSearchState extends State<SettingSearch> {
                               Container(
                                 height: 30,
                                 alignment: Alignment.centerLeft,
-                                child: Text(
+                                child: const Text(
                                   '合约列表',
                                   textAlign: TextAlign.start,
                                 ),
                               ),
                               Expanded(
                                 child: Container(
-                                  color: Color(0xff27282B),
+                                  color: const Color(0xff27282B),
                                   child: CommonForm<String>(
                                     height: 300,
                                     titleColor: Color(0x4D797979),
@@ -211,7 +212,7 @@ class _SettingSearchState extends State<SettingSearch> {
                                         ),
                                       ),
                                       FormColumn<String>(
-                                        title: Text(
+                                        title: const Text(
                                           '交易代码',
                                           style: TextStyle(
                                               color: Color(0xBFffffff)),
@@ -339,6 +340,7 @@ class _SettingSearchState extends State<SettingSearch> {
                                     Container(
                                       width: 100,
                                       child: OverlayField<String>(
+                                        key: const Key('group'),
                                         initValue: exchange,
                                         child: (String item) {
                                           return Text(item);

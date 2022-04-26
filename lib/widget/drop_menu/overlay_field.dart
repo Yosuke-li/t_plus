@@ -34,7 +34,7 @@ class _OverlayFieldState<T> extends State<OverlayField<T>> {
 
   OverlayEntry? _overlayEntry;
 
-  final LayerLink _layerLink = LayerLink();
+  final LayerLink _layerLink = new LayerLink();
   bool _hasOverlay = false;
   late TextEditingController _controller;
 

@@ -17,35 +17,29 @@ class Setting {
         width: 2.0,
         style: BorderStyle.solid,
       ),
+      header: Container(
+          padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                '合约设置',
+                style: TextStyle(fontSize: 20),
+              ),
+              InkWell(
+                onTap: () {
+                  NavigatorUtils.pop(context);
+                },
+                child: const Icon(Icons.close),
+              )
+            ],
+          )
+      ),
       modalSize: ModalSize(width: 720, height: 510),
       body: Container(
         alignment: Alignment.center,
-        height: 470,
-        child: Column(
-          children: [
-            Container(
-                padding: const EdgeInsets.only(bottom: 30, right: 20, left: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      '合约设置',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        NavigatorUtils.pop(context);
-                      },
-                      child: const Icon(Icons.close),
-                    )
-                  ],
-                )
-            ),
-            const Expanded(
-              child: SettingSearch(),
-            ),
-          ],
-        ),
+        height: 410,
+        child: const SettingSearch(key: Key('SettingSearch'),),
       ),
     );
   }

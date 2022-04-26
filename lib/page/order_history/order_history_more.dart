@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import 'package:transaction_plus/utils/datetime_utils.dart';
+import 'package:transaction_plus/utils/log_utils.dart';
 import 'package:transaction_plus/widget/drop_menu/overlay_calendar.dart';
 
 import 'package:transaction_plus/widget/drop_menu/overlay_field.dart';
@@ -14,11 +17,12 @@ class OrderHistoryMore extends StatefulWidget {
   State<OrderHistoryMore> createState() => _OrderHistoryMoreState();
 }
 
-class _OrderHistoryMoreState extends State<OrderHistoryMore> {
+class _OrderHistoryMoreState extends State<OrderHistoryMore>{
   List<SearchType> types = [SearchType.Date, SearchType.Day];
   SearchType _type = SearchType.Day;
 
   List<User> users = [];
+  List<int> timeRange = <int>[];
 
   @override
   void initState() {
@@ -27,6 +31,10 @@ class _OrderHistoryMoreState extends State<OrderHistoryMore> {
   }
 
   Future<void> init() async {
+    timeRange = [
+      (DateTime.now().millisecondsSinceEpoch / 1000).floor(),
+      (DateTime.now().millisecondsSinceEpoch / 1000).floor(),
+    ];
     users = [
       User()
         ..accessToken = '买'
@@ -47,6 +55,7 @@ class _OrderHistoryMoreState extends State<OrderHistoryMore> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(right: 20, left: 20),
       child: Column(
         children: [
           Container(
@@ -110,14 +119,59 @@ class _OrderHistoryMoreState extends State<OrderHistoryMore> {
                     width: 200,
                     child: Row(
                       children: [
-                        const Text('开始时间'),
+                        const Text('开始时间: '),
                         Expanded(
-                          child: OverlayCalendar(
-                            initValue: '2012',
+                          child: Container(
+                            height: 30,
+                            child: OverlayCalendar(
+                              initValue:
+                                  '${DateTimeHelper.datetimeFormat(timeRange[0], 'yyyy-MM-dd')}',
+                              textStyle: const TextStyle(fontSize: 13),
+                              onChange: (value) {
+                                Log.info((value.value as DateTime)
+                                    .millisecondsSinceEpoch);
+                                timeRange[0] = ((value.value as DateTime)
+                                            .millisecondsSinceEpoch /
+                                        1000)
+                                    .floor();
+                                setState(() {});
+                              },
+                            ),
                           ),
                         ),
                       ],
                     ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Container(
+                    width: 200,
+                    child: Row(
+                      children: [
+                        const Text('结束时间: '),
+                        Expanded(
+                          child: Container(
+                            height: 30,
+                            child: OverlayCalendar(
+                              initValue:
+                                  '${DateTimeHelper.datetimeFormat(timeRange[1], 'yyyy-MM-dd')}',
+                              textStyle: const TextStyle(fontSize: 13),
+                              onChange: (value) {
+                                timeRange[1] = ((value.value as DateTime)
+                                            .millisecondsSinceEpoch /
+                                        1000)
+                                    .floor();
+                                setState(() {});
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
                   ),
                   InkWell(
                     onTap: () {},

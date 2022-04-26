@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:transaction_plus/utils/datetime_utils.dart';
 import 'package:transaction_plus/utils/log_utils.dart';
 
 import 'some_normal.dart';
 
 class OverlayCalendar extends StatefulWidget {
   String initValue;
-  void Function()? onChange;
+  void Function(DateRangePickerSelectionChangedArgs value)? onChange;
   double maxHeight;
   Decoration? decoration;
   TextStyle? textStyle;
@@ -33,30 +34,12 @@ class _OverlayCalendarState extends State<OverlayCalendar> {
   final LayerLink _layerLink = LayerLink();
   bool _hasOverlay = false;
   late TextEditingController _controller;
-
-  String _selectedDate = '';
-  String _dateCount = '';
-  String _range = '';
-  String _rangeCount = '';
+  DateRangePickerController _dateRangePickerController = DateRangePickerController();
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     Log.info(args.value);
-    setState(() {
-      if (args.value is PickerDateRange) {
-        _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
-            // ignore: lines_longer_than_80_chars
-            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
-        closeOverlay();
-      } else if (args.value is DateTime) {
-        _selectedDate = args.value.toString();
-        closeOverlay();
-      } else if (args.value is List<DateTime>) {
-        _dateCount = args.value.length.toString();
-        closeOverlay();
-      } else {
-        _rangeCount = args.value.length.toString();
-      }
-    });
+    widget.onChange?.call(args);
+    closeOverlay();
   }
 
   @override
@@ -67,8 +50,6 @@ class _OverlayCalendarState extends State<OverlayCalendar> {
         _overlayEntry = _createOverlay();
         Overlay.of(context)?.insert(_overlayEntry!);
         _hasOverlay = true;
-      } else {
-        closeOverlay();
       }
       setState(() {});
     });
@@ -76,6 +57,8 @@ class _OverlayCalendarState extends State<OverlayCalendar> {
   }
 
   void _setText() {
+    Log.info(widget.initValue);
+    _dateRangePickerController.selectedDate = DateTime.parse(widget.initValue);
     _controller = TextEditingController(text: widget.initValue);
     setState(() {});
   }
@@ -83,7 +66,7 @@ class _OverlayCalendarState extends State<OverlayCalendar> {
   @override
   void didUpdateWidget(covariant OverlayCalendar oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.initValue != oldWidget.initValue) {
+    if (this.widget.initValue != oldWidget.initValue) {
       _setText();
     }
   }
@@ -102,15 +85,21 @@ class _OverlayCalendarState extends State<OverlayCalendar> {
           child: Material(
             elevation: 4,
             child: RepaintBoundary(
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(context).requestFocus(_focusNode);
+              child: MouseRegion(
+                onExit: (_) {
+                  closeOverlay();
                 },
                 child: SfDateRangePicker(
                   showNavigationArrow: true,
+                  controller: _dateRangePickerController,
                   onSelectionChanged: _onSelectionChanged,
+                  onViewChanged: (a) {
+                    Log.info(a.view);
+                    _focusNode.unfocus();
+                  },
                   selectionMode: DateRangePickerSelectionMode.single,
                   maxDate: DateTime.now(),
+                  minDate: DateTime.utc(2000),
                 ),
               ),
             ),
@@ -122,6 +111,7 @@ class _OverlayCalendarState extends State<OverlayCalendar> {
 
   void closeOverlay() {
     if (_hasOverlay) {
+      Log.info('close');
       _overlayEntry!.remove();
       _focusNode.unfocus();
       setState(() {
@@ -136,6 +126,7 @@ class _OverlayCalendarState extends State<OverlayCalendar> {
       link: _layerLink,
       child: Container(
         decoration: widget.decoration ?? NormalInput.normal,
+        padding: const EdgeInsets.only(right: 4),
         child: Row(
           children: [
             Expanded(
@@ -146,7 +137,7 @@ class _OverlayCalendarState extends State<OverlayCalendar> {
                 textAlignVertical: TextAlignVertical.center,
                 decoration: const InputDecoration(
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 0, horizontal: 3),
+                      EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0x00ffffff),

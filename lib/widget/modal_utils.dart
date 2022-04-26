@@ -10,6 +10,7 @@ class ModalUtils {
       Widget? icon,
       String? message,
       Widget? body,
+      Widget? header,
       Border? border,
       bool? isDrag,
       Text? button1,
@@ -25,38 +26,6 @@ class ModalUtils {
       void Function(BuildContext context)? onFun3,
       Widget? dynamicBottom}) {
     modalBackgroundColor ??= const Color(0xffffffff);
-    Widget Function(ModalStyle style)? header;
-    if (title != null) {
-      header = (ModalStyle style) {
-        return Stack(
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                color: style.titleBackgroundColor,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.elliptical(
-                      screenUtil.adaptive(20), screenUtil.adaptive(20)),
-                ),
-              ),
-              alignment: Alignment.center,
-              height: screenUtil.adaptive(150),
-              child: title,
-            ),
-            if (icon != null)
-              Positioned(
-                left: screenUtil.adaptive(20),
-                top: 0,
-                right: 0,
-                bottom: 0,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: icon,
-                ),
-              )
-          ],
-        );
-      };
-    }
     Widget Function(ModalStyle style)? bottom;
     if (button1 == null && button2 == null && button3 == null) {
       if (dynamicBottom != null) {
@@ -202,7 +171,7 @@ class ModalSize {
 class _ModalWidget extends StatefulWidget {
   @required
   BuildContext? context;
-  Widget Function(ModalStyle style)? header;
+  Widget? header;
   Widget Function(ModalStyle style)? messageBody;
   Widget? body;
   Widget Function(ModalStyle style)? bottom;
@@ -238,6 +207,7 @@ class _ModalWidget extends StatefulWidget {
 
 class _Modal extends State<_ModalWidget> {
   Offset offset = Offset.zero;
+  GlobalKey _key = GlobalKey();
 
   @override
   void initState() {
@@ -247,12 +217,45 @@ class _Modal extends State<_ModalWidget> {
         Navigator.pop(widget.context!);
       });
     }
+
+    //组件完成之后的回调方法
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      _position();
+    });
+  }
+
+  void _position() {
+    final RenderBox renderBoxRed =
+        _key.currentContext?.findRenderObject() as RenderBox;
+    offset = renderBoxRed.localToGlobal(Offset.zero);
+    setState(() {});
+  }
+
+  Offset _calOffset(Size size, Offset offset, Offset nextOffset) {
+    double dx = 0;
+    if (offset.dx + nextOffset.dx <= 0) {
+      dx = 0;
+    } else if (offset.dx + nextOffset.dx >= (size.width - 50)) {
+      dx = size.width - 50;
+    } else {
+      dx = offset.dx + nextOffset.dx;
+    }
+    double dy = 0;
+    if (offset.dy + nextOffset.dy >= (size.height - 100)) {
+      dy = size.height - 50;
+    } else if (offset.dy + nextOffset.dy <= kToolbarHeight) {
+      dy = kToolbarHeight;
+    } else {
+      dy = offset.dy + nextOffset.dy;
+    }
+    return Offset(dx, dy);
   }
 
   @override
   Widget build(BuildContext context) {
     final ModalStyle? _style = ModalStyleWidget.of(context)?.modalStyle;
     double maxY = MediaQuery.of(context).size.height - 100;
+
     return Stack(children: <Widget>[
       Opacity(
         opacity: 0.4,
@@ -279,12 +282,8 @@ class _Modal extends State<_ModalWidget> {
                 ? maxY
                 : offset.dy,
         left: offset.dx,
-        bottom: offset == Offset.zero
-            ? 0
-            : null,
-        right: offset == Offset.zero
-            ? 0
-            : null,
+        bottom: offset == Offset.zero ? 0 : null,
+        right: offset == Offset.zero ? 0 : null,
         child: GestureDetector(
           onTap: () {
             if (widget.outsideDismiss!) {
@@ -297,22 +296,26 @@ class _Modal extends State<_ModalWidget> {
               onTap: () {},
               child: Center(
                 child: Container(
+                  key: _key,
                   margin: EdgeInsets.only(
                       bottom: widget.marginBottom ?? screenUtil.adaptive(200)),
-                  child: widget.isDrag == true ?Draggable(
-                    child: DragTarget(
-                      builder: (context, _, __) {
-                        return _buildView(_style!);
-                      },
-                    ),
-                    feedback: _buildView(_style),
-                    childWhenDragging: Container(),
-                    onDragEnd: (detail) {
-                      offset = detail.offset;
-                      setState(() {});
-                    },
-                    ignoringFeedbackSemantics: false,
-                  ) : _buildView(_style!),
+                  child: widget.isDrag == true
+                      ? GestureDetector(
+                          onPanStart: (details) {
+                            Log.info('onPanStart: ${details}');
+                          },
+                          onPanEnd: (details) {
+                            Log.info('onPanEnd: ${details}');
+                          },
+                          onPanUpdate: (detail) {
+                            setState(() {
+                              offset = _calOffset(MediaQuery.of(context).size,
+                                  offset, detail.delta);
+                            });
+                          },
+                          child: _buildView(_style!),
+                        )
+                      : _buildView(_style!),
                 ),
               ),
             ),
@@ -330,17 +333,6 @@ class _Modal extends State<_ModalWidget> {
         ),
         decoration: BoxDecoration(
           color: widget.modalColor,
-          border: widget.border,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.elliptical(
-              screenUtil.adaptive(20),
-              screenUtil.adaptive(20),
-            ),
-            bottom: Radius.elliptical(
-              screenUtil.adaptive(20),
-              screenUtil.adaptive(20),
-            ),
-          ),
         ),
         width: widget.modalSize?.width ?? screenUtil.adaptive(858),
         height: widget.modalSize?.height,
@@ -349,7 +341,7 @@ class _Modal extends State<_ModalWidget> {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[
-            if (widget.header != null) widget.header!(style!),
+            if (widget.header != null) widget.header!,
             if (widget.messageBody != null) widget.messageBody!(style!),
             if (widget.body != null) widget.body!,
             if (widget.bottom != null) widget.bottom!(style!),
