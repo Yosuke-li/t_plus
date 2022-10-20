@@ -45,6 +45,6 @@ class Quotation {
       this.turnover,
       this.updateTime,
       this.volume});
-
-
 }
+
+

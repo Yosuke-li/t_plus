@@ -78,14 +78,12 @@ class _IndexPageState extends State<IndexPage> {
               Locale('zh', "CH"),
             ],
             locale: const Locale('zh'),
-            home: KeyboardRootWidget(
-              child: Navigator(
-                onGenerateRoute: (RouteSettings setting) {
-                  return MaterialPageRoute(
-                    builder: (BuildContext context) => LoginPage(),
-                  );
-                },
-              ),
+            home: Navigator(
+              onGenerateRoute: (RouteSettings setting) {
+                return MaterialPageRoute(
+                  builder: (BuildContext context) => LoginPage(),
+                );
+              },
             ),
           ),
         ),

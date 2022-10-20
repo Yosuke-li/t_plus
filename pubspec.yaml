@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations: # Add this line
+  flutter_localizations:
     sdk: flutter
   cupertino_icons: ^1.0.2
   dio: ^4.0.0
@@ -30,6 +30,11 @@ dependencies:
   native_context_menu: ^0.2.1+4
   syncfusion_flutter_datepicker: ^20.1.48
   syncfusion_localizations: ^20.1.50
+  json_dynamic_widget: 4.1.1+1
+
+  #webview 版本
+  webview_flutter: ^3.0.2 #android & ios
+  flutter_macos_webview: ^0.0.6 #macos
 
 dev_dependencies:
   flutter_test:

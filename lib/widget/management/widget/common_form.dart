@@ -3,9 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:native_context_menu/native_context_menu.dart';
+import 'package:native_context_menu/native_context_menu.dart' as native;
 import 'package:transaction_plus/utils/array_helper.dart';
-import 'package:transaction_plus/utils/log_utils.dart';
 import 'package:transaction_plus/widget/management/common/function_util.dart';
 
 FormColumn<T> buildTextFormColumn<T>(
@@ -165,7 +164,7 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
                       },
                     ),
                     data: e,
-                    delay: const Duration(milliseconds: 100),
+                    delay: const Duration(milliseconds: 300),
                     feedback: warpWidget(
                         child: e.title,
                         width: e.width,
@@ -227,8 +226,8 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
           e.position.dy + Offset.zero.dy,
         );
 
-        final selectedItem = await showContextMenu(
-          ShowMenuArgs(
+        final selectedItem = await native.showContextMenu(
+          native.ShowMenuArgs(
             MediaQuery.of(context).devicePixelRatio,
             position,
             widget.rightMenuFunc?.menuItems ?? [],
@@ -324,8 +323,8 @@ class _CommonFormState<T> extends State<CommonForm<T>> {
 }
 
 class RightMenuFunc {
-  List<MenuItem>? menuItems;
-  void Function(MenuItem item, int index)? onItemSelected;
+  List<native.MenuItem>? menuItems;
+  void Function(native.MenuItem item, int index)? onItemSelected;
 
   RightMenuFunc({this.menuItems, this.onItemSelected});
 }

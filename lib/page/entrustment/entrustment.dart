@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:native_context_menu/native_context_menu.dart';
+import 'package:native_context_menu/native_context_menu.dart' as native;
 import 'package:transaction_plus/model/entrust.dart';
 import 'package:transaction_plus/page/entrustment/page/change_order.dart';
 import 'package:transaction_plus/page/entrustment/page/delete_order.dart';
@@ -197,12 +197,12 @@ class _EntrustState extends State<EntrustPage> {
   void init() {
     Log.info('init: ${widget.type}');
     _rightMenuFunc = RightMenuFunc()
-      ..onItemSelected = (MenuItem item, int index) {
+      ..onItemSelected = (native.MenuItem item, int index) {
         Log.info('index: $index');
         item.onSelected?.call();
       }
       ..menuItems = [
-        MenuItem(
+        native.MenuItem(
           title: '改单',
           onSelected: () async {
             final bool? reBack = await EntrustModal.Modal(context,
@@ -211,7 +211,7 @@ class _EntrustState extends State<EntrustPage> {
                 size: ModalSize(width: 445, height: 310));
           },
         ),
-        MenuItem(
+        native.MenuItem(
           title: '撤单',
           onSelected: () async {
             final bool? reBack = await EntrustModal.Modal(
@@ -222,7 +222,7 @@ class _EntrustState extends State<EntrustPage> {
             );
           },
         ),
-        MenuItem(
+        native.MenuItem(
           title: '全撤',
           onSelected: () async {
             final bool? reBack = await EntrustModal.Modal(context,

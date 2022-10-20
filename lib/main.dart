@@ -12,14 +12,15 @@ import 'helper/security_keyboard.dart';
 
 /// 添加[windowManager]桌面端方法
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-    WidgetsFlutterBinding.ensureInitialized();
     await windowManager.ensureInitialized();
 
     windowManager.waitUntilReadyToShow().then((value) async {
       // await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
-      await windowManager.setSize(Size(1280, 800));
-      await windowManager.setMinimumSize(Size(1280, 800));
+      await windowManager.setSize(const Size(1280, 800));
+      await windowManager.setMinimumSize(const Size(1280, 800));
       await windowManager.center();
       await windowManager.show();
     });

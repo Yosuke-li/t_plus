@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
-import 'package:transaction_plus/global/dll_text.dart';
 import 'package:transaction_plus/global/event.dart';
 import 'package:transaction_plus/global/global.dart';
 import 'package:transaction_plus/helper/security_keyboard.dart';
@@ -12,6 +11,7 @@ import 'package:transaction_plus/utils/screen.dart';
 import 'package:transaction_plus/widget/common/main.dart';
 import 'package:transaction_plus/widget/down_menu.dart';
 
+import '../quotation/quotation_data.dart';
 import 'logic.dart';
 import 'state.dart';
 
@@ -45,8 +45,6 @@ class _LoginPageState extends State<LoginPage> {
           GestureDetector(
             onTap: () {
               NavigatorUtils.pushWidget(context, DockingMainPage());
-              // NavigatorUtils.pushWidget(context, MouseTextPage());
-              // NavigatorUtils.pushWidget(context, DllTextPage());
             },
             child: Center(
               child: Container(

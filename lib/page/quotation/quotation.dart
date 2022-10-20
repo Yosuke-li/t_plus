@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:native_context_menu/native_context_menu.dart';
+import 'package:native_context_menu/native_context_menu.dart' as native;
 import 'package:transaction_plus/model/user.dart';
 import 'package:transaction_plus/page/quotation/setting.dart';
 import 'package:transaction_plus/utils/log_utils.dart';
@@ -84,20 +84,20 @@ class _QuotationState extends State<QuotationPage> {
   //右键菜单栏
   void _init() {
     _rightMenuFunc = RightMenuFunc()
-      ..onItemSelected = (MenuItem item, int index) {
+      ..onItemSelected = (native.MenuItem item, int index) {
         Log.info('index: $index');
         item.onSelected?.call();
       }
       ..menuItems = [
-        MenuItem(title: '下单'),
-        MenuItem(
-            title: '移动到', items: [MenuItem(title: '1'), MenuItem(title: '2')]),
-        MenuItem(
+        native.MenuItem(title: '下单'),
+        native.MenuItem(
+            title: '移动到', items: [native.MenuItem(title: '1'), native.MenuItem(title: '2')]),
+        native.MenuItem(
             title: '设置合约',
             onSelected: () {
               Setting.Modal(context);
             }),
-        MenuItem(title: '删除'),
+        native.MenuItem(title: '删除'),
       ];
     setState(() {});
   }
@@ -108,13 +108,13 @@ class _QuotationState extends State<QuotationPage> {
       e.globalPosition.dy + Offset.zero.dy,
     );
 
-    final selectedItem = await showContextMenu(
-      ShowMenuArgs(
+    final selectedItem = await native.showContextMenu(
+      native.ShowMenuArgs(
         MediaQuery.of(context).devicePixelRatio,
         position,
         [
-          MenuItem(title: '添加合约'),
-          MenuItem(
+          native.MenuItem(title: '添加合约'),
+          native.MenuItem(
             title: '标记排序',
             onSelected: () {
               canDrag = !canDrag;

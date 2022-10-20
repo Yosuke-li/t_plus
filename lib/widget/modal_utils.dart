@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:transaction_plus/utils/log_utils.dart';
+
 import 'package:transaction_plus/utils/navigator.dart';
 import 'package:transaction_plus/utils/screen.dart';
 
@@ -301,12 +301,6 @@ class _Modal extends State<_ModalWidget> {
                       bottom: widget.marginBottom ?? screenUtil.adaptive(200)),
                   child: widget.isDrag == true
                       ? GestureDetector(
-                          onPanStart: (details) {
-                            Log.info('onPanStart: ${details}');
-                          },
-                          onPanEnd: (details) {
-                            Log.info('onPanEnd: ${details}');
-                          },
                           onPanUpdate: (detail) {
                             setState(() {
                               offset = _calOffset(MediaQuery.of(context).size,
